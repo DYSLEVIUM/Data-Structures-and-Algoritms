@@ -98,8 +98,9 @@ inline void setup() {
 
 using namespace std;
 
+//  https://www.geeksforgeeks.org/josephus-problem-set-1-a-on-solution/
 ll josephus(ll n, ll k) {
-    return n > 1 ? (josephus(n - 1, k) + k - 1) % n : 1;
+    return n > 1 ? (josephus(n - 1, k) + k - 1) % n + 1 : 1;
 }
 
 inline void solve() {
