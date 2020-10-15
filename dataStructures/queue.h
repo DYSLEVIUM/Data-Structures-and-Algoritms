@@ -29,7 +29,7 @@ class Queue {
     }
 
     int64_t size() {
-        return this->t_back - this->t_front + 1;
+        return this->empty() ? 0 : this->t_back - this->t_front + 1;
     }
 
     bool empty() {
