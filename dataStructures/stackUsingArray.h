@@ -28,7 +28,7 @@ class Stack {
     }
 
     bool empty() {
-        return this->t_top == -1;
+        return this->t_top < 0;
     }
 
     bool full() {
@@ -63,13 +63,38 @@ class Stack {
 
     T peek(uint64_t pos) {
         try {
-            if ((int64_t)pos >= this->t_top) throw true;
+            if ((int64_t)pos > this->t_top) throw true;
 
             return this->data[pos];
         } catch (bool err) {
             cout << "\nOut of bounds.\n";
             return (T)-1;
         }
+    }
+
+    void reverse() {
+        if (this->size() == 1) return;
+
+        //  take out the top element and decrease the size
+        T temp = this->pop();
+
+        //  call reverse on smaller stack
+        this->reverse();
+
+        //  this function places the element at bottom of stack
+        this->insertReverseHelper(temp);
+    }
+
+    void insertReverseHelper(T ele) {
+        if (this->size() == 0) {
+            this->push(ele);
+            return;
+        }
+
+        T temp = this->pop();
+
+        insertReverseHelper(ele);
+        this->push(temp);
     }
 
     ~Stack() {
