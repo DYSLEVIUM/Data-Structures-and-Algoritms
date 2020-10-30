@@ -100,17 +100,31 @@ using namespace std;
 
 //  https://www.geeksforgeeks.org/write-a-program-to-reverse-an-array-or-string/
 
-void revArr(int* arr, int size, int start, int end) {
+void revArr1(int* arr, int start, int end) {
     while (start < end) {
-        swap(arr[start], arr[end]);
-        ++start;
-        --end;
+        swap(arr[start++], arr[end--]);
     }
+}
+
+void revArr2(int* arr, int start, int end) {
+    if (start > end) return;
+
+    swap(arr[start++], arr[end--]);
+    revArr2(arr, start, end);
+}
+
+void disArr(int* arr, int n) {
+    fo(i, n) cout << arr[i] << ' ';
+    cout << '\n';
 }
 
 inline void solve() {
     int arr[] = {1, 2, 3, 4, 5, 6};
     int n = sizeof(arr) / sizeof(arr[0]);
 
-    revArr(arr, n, 0, n - 1);
+    revArr1(arr, 0, n - 1);
+    disArr(arr, n);
+
+    revArr2(arr, 0, n - 1);
+    disArr(arr, n);
 }
