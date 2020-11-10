@@ -21,11 +21,11 @@ class Queue {
     }
 
     int64_t front() {
-        return this->t_front;
+        return data[this->t_front];
     }
 
     int64_t back() {
-        return this->t_back;
+        return data[this->t_back];
     }
 
     int64_t size() {
@@ -74,6 +74,30 @@ class Queue {
             cout << "\nQueue Underflow.\n";
             return -1;
         }
+    }
+
+    void reverseUsingStack() {
+        stack<T> s;
+
+        while (!this->empty())
+            s.push(this->dequeue());
+
+        while (!s.empty()) {
+            this->enqueue(s.top());
+            s.pop();
+        }
+
+        return;
+    }
+
+    void reverseUsingRecursion() {
+        if (this->empty()) return;
+
+        T temp = this->dequeue();
+
+        reverseUsingRecursion();
+
+        this->enqueue(temp);
     }
 
     ~Queue() {
