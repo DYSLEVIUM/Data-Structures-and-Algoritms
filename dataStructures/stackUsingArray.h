@@ -1,18 +1,17 @@
 template <typename T>
-class Queue {
+class Stack {
    private:
-    int64_t t_front;
-    int64_t t_back;
+    int64_t t_top;
     uint64_t t_size;
     T* data;
 
    public:
-    Queue() : t_front(-1), t_back(-1), t_size(5), data(new T[this->t_size]) {
+    Stack() : t_top(-1), t_size(5), data(new T[this->t_size]) {  //  default constructor with data size 5
         memset(this->data, 0, this->t_size * sizeof(T));
     }
 
-    Queue(uint64_t size) {
-        this->t_front = this->t_back = -1;
+    Stack(uint64_t size) {
+        this->t_top = -1;
         this->t_size = size;
 
         this->data = new T[this->t_size];
@@ -20,87 +19,85 @@ class Queue {
         memset(this->data, 0, this->t_size * sizeof(T));
     }
 
-    int64_t front() {
-        return data[this->t_front];
+    T top() {
+        return this->data[this->t_top];
     }
 
-    int64_t back() {
-        return data[this->t_back];
-    }
-
-    int64_t size() {
-        return this->empty() ? 0 : this->t_back - this->t_front + 1;
+    uint64_t size() {
+        return this->t_top + 1;
     }
 
     bool empty() {
-        return this->t_front == -1 && this->t_back == -1;
+        return this->t_top < 0;
     }
 
     bool full() {
-        return this->t_back == (int64_t)this->t_size - 1;
+        return this->t_top == (int64_t)this->t_size - 1;
     }
 
-    void enqueue(T val) {
+    void push(T val) {
         try {
             if (this->full()) throw true;
 
-            if (this->empty()) {
-                this->t_front = this->t_back = 0;
-                data[this->t_back] = val;
-            } else {
-                data[++(this->t_back)] = val;
-            }
-
+            ++this->t_top;
+            this->data[this->t_top] = val;
         } catch (bool err) {
-            cout << "\nQueue Overflow.\n";
+            cout << "\nStack Overflow.\n";
             return;
         }
     }
 
-    T dequeue() {
+    T pop() {
         try {
             if (this->empty()) throw true;
 
-            T temp = this->data[this->t_front];
+            T popVal = this->data[this->t_top];
 
-            if (this->t_front == this->t_back) {
-                this->t_back = this->t_front = -1;
-            } else {
-                ++this->t_front;
-            }
-
-            return temp;
+            --this->t_top;
+            return popVal;
         } catch (bool err) {
-            cout << "\nQueue Underflow.\n";
-            return -1;
+            cout << "\nStack Underflow.\n";
+            return (T)-1;
         }
     }
 
-    void reverseUsingStack() {
-        stack<T> s;
+    T peek(uint64_t pos) {
+        try {
+            if ((int64_t)pos > this->t_top) throw true;
 
-        while (!this->empty())
-            s.push(this->dequeue());
+            return this->data[pos];
+        } catch (bool err) {
+            cout << "\nOut of bounds.\n";
+            return (T)-1;
+        }
+    }
 
-        while (!s.empty()) {
-            this->enqueue(s.top());
-            s.pop();
+    void reverse() {
+        if (this->size() == 1) return;
+
+        //  take out the top element and decrease the size
+        T temp = this->pop();
+
+        //  call reverse on smaller stack
+        this->reverse();
+
+        //  this function places the element at bottom of stack
+        this->insertReverseHelper(temp);
+    }
+
+    void insertReverseHelper(T ele) {
+        if (this->size() == 0) {
+            this->push(ele);
+            return;
         }
 
-        return;
+        T temp = this->pop();
+
+        insertReverseHelper(ele);
+        this->push(temp);
     }
 
-    void reverseUsingRecursion() {
-        if (this->empty()) return;
-
-        T temp = this->dequeue();
-
-        reverseUsingRecursion();
-
-        this->enqueue(temp);
-    }
-
-    ~Queue() {
+    ~Stack() {
         delete[] data;
     }
 };
