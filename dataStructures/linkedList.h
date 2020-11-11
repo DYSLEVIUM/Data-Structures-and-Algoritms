@@ -1,4 +1,27 @@
 template <typename T>
+class List;
+
+template <typename T>
+class ListNode {
+   private:
+    friend class List<T>;  //  making list class to access private members of ListNode
+    T data;
+    ListNode* next;
+
+   public:
+    ListNode(T da) : data(da), next(nullptr) {}
+
+    getData() {
+        return this->data;
+    }
+
+    virtual ~ListNode() {
+        next = nullptr;
+        delete next;
+    }
+};
+
+template <typename T>
 class List {
    private:
     ListNode<T>* t_head;
@@ -105,25 +128,33 @@ class List {
         }
     }
 
-    // void insert(int pos, T da) {
-    //     ListNode<T>* newNode = new ListNode<T>(da);
+    void insert(int pos, T da) {
+        try {
+            if (pos < 0 || pos > this->t_size) throw true;
+            ListNode<T>* newNode = new ListNode<T>(da);
 
-    //     this->temp = this->t_head;
+            if (pos == 0) {
+                newNode->next = this->t_head;
+                this->t_head = newNode;
+            } else {
+                ListNode<T>* temp = this->t_head;
+                while (--pos > 0) {
+                    temp = temp->next;
+                }
 
-    //     while (pos--) {
-    //         this->temp = this->temp->next;
-    //     }
+                newNode->next = temp->next;
 
-    //     newNode->next = this->temp->next;
+                temp->next = newNode;
 
-    //     this->temp->next = newNode;
-    // }
-    // void erase() {}
-    // void reverse() {}
-
-    // ListNode<T>* getHead() {
-    //     return this->t_head;
-    // }
+                temp = nullptr;
+            }
+            ++this->t_size;
+        } catch (bool err) {
+            cout << "\nIndex is out of range.\n";
+        }
+    }
+    void erase() {}
+    void reverse() {}
 
     void display() {
         ListNode<T>* currNode = this->t_head;
