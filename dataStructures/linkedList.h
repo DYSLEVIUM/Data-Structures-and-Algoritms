@@ -1,19 +1,20 @@
 template <typename T>
 class List {
    private:
-    ListNode<T>* head;
+    ListNode<T>* t_head;
+    uint16_t t_size;
 
    public:
-    List() : head(nullptr) {}
+    List() : t_head(nullptr), t_size(0) {}
 
     bool empty() {
-        return this->head == nullptr;
+        return this->t_size == 0;
     }
 
     T front() {
         try {
             if (this->empty()) throw true;
-            return this->head->data;
+            return this->t_head->data;
         } catch (bool err) {
             cout << "\nList is empty.\n";
             return T(-1);
@@ -24,7 +25,7 @@ class List {
         try {
             if (this->empty()) throw true;
 
-            ListNode<T>* currNode = this->head;
+            ListNode<T>* currNode = this->t_head;
 
             while (currNode->next != nullptr) {  //  traversing through the list
                 currNode = currNode->next;
@@ -45,8 +46,9 @@ class List {
     void push_front(T da) {
         ListNode<T>* newNode = new ListNode<T>(da);  //  making a new node
 
-        newNode->next = this->head;
-        this->head = newNode;
+        newNode->next = this->t_head;
+        this->t_head = newNode;
+        ++this->t_size;
     }
 
     void push_back(T da) {
@@ -54,9 +56,9 @@ class List {
         newNode->next = nullptr;                     //  pushing it to the last of the list so next is nullptr
 
         if (this->empty()) {  //  we can't access pointer if it is nullptr
-            this->head = newNode;
+            this->t_head = newNode;
         } else {
-            ListNode<T>* currNode = this->head;
+            ListNode<T>* currNode = this->t_head;
 
             while (currNode->next != nullptr) {
                 currNode = currNode->next;
@@ -66,17 +68,20 @@ class List {
 
             currNode = nullptr;
         }
+
+        ++this->t_size;
     }
 
     void pop_front() {
         try {
             if (this->empty()) throw true;
 
-            ListNode<T>* temp = this->head;
-            this->head = this->head->next;
+            ListNode<T>* temp = this->t_head;
+            this->t_head = this->t_head->next;
 
             delete temp;
             temp = nullptr;
+            --this->t_size;
         } catch (bool err) {
             cout << "List is empty.\n";
         }
@@ -86,14 +91,15 @@ class List {
         try {
             if (this->empty()) throw true;
 
-            ListNode<T>* currNode = this->head;
+            ListNode<T>* currNode = this->t_head;
 
             while (currNode->next->next != nullptr) {
                 currNode = currNode->next;
             }
 
-            delete currNode->next;
+            delete currNode->next;  //  using secong last node to delete ; because deleteing from last node deletes the address of the node also and the second last node is left dangling
             currNode->next = nullptr;
+            --this->t_size;
         } catch (bool err) {
             cout << "\nList is empty.\n";
         }
@@ -102,7 +108,7 @@ class List {
     // void insert(int pos, T da) {
     //     ListNode<T>* newNode = new ListNode<T>(da);
 
-    //     this->temp = this->head;
+    //     this->temp = this->t_head;
 
     //     while (pos--) {
     //         this->temp = this->temp->next;
@@ -116,11 +122,11 @@ class List {
     // void reverse() {}
 
     // ListNode<T>* getHead() {
-    //     return this->head;
+    //     return this->t_head;
     // }
 
     void display() {
-        ListNode<T>* currNode = this->head;
+        ListNode<T>* currNode = this->t_head;
         while (currNode != nullptr) {
             cout << currNode->data << " -> ";
             currNode = currNode->next;
@@ -128,11 +134,19 @@ class List {
         cout << "nullptr\n";
     }
 
+    ListNode<T>* head() {
+        return this->t_head;
+    }
+
+    uint16_t size() {
+        return this->t_size;
+    }
+
     ~List() {
         if (!this->empty()) {
-            while (this->head != nullptr) {
-                ListNode<T>* currNode = this->head;
-                this->head = this->head->next;
+            while (this->t_head != nullptr) {
+                ListNode<T>* currNode = this->t_head;
+                this->t_head = this->t_head->next;
 
                 delete currNode;
                 currNode = nullptr;
