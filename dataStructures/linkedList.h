@@ -138,7 +138,7 @@ class List {
                 this->t_head = newNode;
             } else {
                 ListNode<T>* temp = this->t_head;
-                while (--pos > 0) {
+                while (--pos > 0) {  //  --pos because we are traversing to the node just before the insertion place
                     temp = temp->next;
                 }
 
@@ -153,7 +153,37 @@ class List {
             cout << "\nIndex is out of range.\n";
         }
     }
-    void erase() {}
+    void erase(int pos) {
+        try {
+            if (pos < 0 || pos > this->t_size - 1) throw true;
+
+            if (pos == 0) {
+                ListNode<T>* temp = this->t_head;  //  saving this node to delete it
+                this->t_head = this->t_head->next;
+
+                delete temp;
+                temp = nullptr;
+            } else if (pos == this->t_size - 1) {
+                this->pop_back();
+            } else {
+                ListNode<T>* currNode = this->t_head;
+                ListNode<T>* prevNode;
+
+                while (pos-- > 0) {  //  pos-- because we are traversing to the node to be deleted
+                    prevNode = currNode;
+                    currNode = currNode->next;
+                }
+
+                prevNode->next = currNode->next;
+                delete currNode;
+                currNode = nullptr;
+            }
+
+            --this->t_size;
+        } catch (bool err) {
+            cout << "\nIndex is out of range.\n";
+        }
+    }
     void reverse() {}
 
     void display() {
