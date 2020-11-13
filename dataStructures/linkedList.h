@@ -197,7 +197,18 @@ class List {
         this->t_head = prevNode;
     }
 
-    void reverseUsingRecursion() {
+    void reverseUsingRecursion(ListNode<T>* currNode) {
+        if (currNode->next == nullptr) {  //  base case when only one node is left that will become head
+            this->t_head = currNode;
+            return;
+        }
+
+        this->reverseUsingRecursion(currNode->next);  //  reversing the remaining list
+
+        //  suppose we have two node (one currentNode and the other is full list considered as only one node), so we just have to swap the nodes' links
+        ListNode<T>* prevNode = currNode->next;
+        prevNode->next = currNode;
+        currNode->next = nullptr;
     }
 
     void display() {
