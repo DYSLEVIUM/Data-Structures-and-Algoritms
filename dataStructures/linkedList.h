@@ -184,7 +184,21 @@ class List {
             cout << "\nIndex is out of range.\n";
         }
     }
-    void reverse() {}
+    void reverse() {
+        ListNode<T>*currNode = this->t_head, *prevNode = nullptr, *nextNode = nullptr;
+
+        while (currNode != nullptr) {
+            nextNode = currNode->next;  //  saving next node to use it to traverse
+            currNode->next = prevNode;  //  changing pointer to point to the previous node
+            prevNode = currNode;        //  changing previous for next iteration
+            currNode = nextNode;        //  changing current node to the next node for next iteration
+        }
+
+        this->t_head = prevNode;
+    }
+
+    void reverseUsingRecursion() {
+    }
 
     void display() {
         ListNode<T>* currNode = this->t_head;
