@@ -153,6 +153,7 @@ class List {
             cout << "\nIndex is out of range.\n";
         }
     }
+   
     void erase(int pos) {
         try {
             if (pos < 0 || pos > this->t_size - 1) throw true;
