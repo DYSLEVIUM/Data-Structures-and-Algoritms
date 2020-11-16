@@ -101,6 +101,9 @@ using namespace std;
 /*
     In this algorithm adjacent elements in an array are compared and positions are swapped, 
     eventually the largest/smallest element bubbles to the end of the array
+
+    Time : O(n*n)
+    Space : O(1)
 */
 template <typename T>
 void bubbleSort(T* arr, uint16_t n) {
