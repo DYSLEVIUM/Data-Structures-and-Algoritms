@@ -115,6 +115,16 @@ void bubbleSort(T* arr, uint16_t n) {
 }
 
 template <typename T>
+void recursiveBubbleSort(T* arr, uint16_t n) {
+    if (n == 1) return;
+
+    fo(i, n - 1) {
+        if (arr[i] > arr[i + 1]) swap(arr[i], arr[i + 1]);
+    }
+    recursiveBubbleSort(arr, n - 1);
+}
+
+template <typename T>
 void printArr(T* arr, uint16_t n) {
     fo(i, n) cout << arr[i] << ' ';
 }
