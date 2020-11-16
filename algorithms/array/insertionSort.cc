@@ -109,16 +109,33 @@ template <typename T>
 void insertionSort(T* arr, uint16_t n) {
     //  first element belongs to the sorted sublist
     Fo(i, 1, n) {
-        T temp = arr[i];
+        T key = arr[i];
         int j = i - 1;
 
-        while (j >= 0 && arr[j] > temp) {
+        while (j >= 0 && arr[j] > key) {
             arr[j + 1] = arr[j];
             --j;
         }
 
-        arr[j + 1] = temp;
+        arr[j + 1] = key;
     }
+}
+
+template <typename T>
+void recursiveInsertionSort(T* arr, uint16_t n) {
+    if (n == 1) return;
+
+    recursiveInsertionSort(arr, n - 1);
+
+    T key = arr[n - 1];
+    int j = n - 2;
+
+    while (j >= 0 && arr[j] > key) {
+        arr[j + 1] = arr[j];
+        --j;
+    }
+
+    arr[j + 1] = key;
 }
 
 template <typename T>
