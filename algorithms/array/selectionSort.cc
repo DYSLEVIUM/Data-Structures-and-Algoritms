@@ -101,7 +101,7 @@ using namespace std;
 /*
     In this algorithm, we divide the array into two sublist of ordered list and unordered list.
     We find the minimum for every unordered list and put it in the sorted list.
-    As a result, the list becomes sorted
+    As a result, the list becomes sorted.
 */
 template <typename T>
 void selectionSort(T* arr, uint16_t n) {
