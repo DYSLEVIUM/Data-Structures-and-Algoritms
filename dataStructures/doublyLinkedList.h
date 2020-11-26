@@ -5,6 +5,7 @@ template <typename T>
 class DListNode {
    private:
     friend class DList<T>;  //  making dList class to access private members of DListNode
+
     T data;
     DListNode* next;
     DListNode* prev;
@@ -70,6 +71,13 @@ class DList {
     void push_front(T da) {
         DListNode<T>* newNode = new DListNode<T>(da);
 
+        if (this->t_head == nullptr) {
+            this->t_head = newNode;
+            ++this->t_size;
+            return;
+        }
+
+        this->t_head->prev = newNode;
         newNode->next = this->t_head;
         this->t_head = newNode;
         ++this->t_size;
@@ -77,6 +85,12 @@ class DList {
 
     void push_back(T da) {
         DListNode<T>* newNode = new DListNode<T>(da);
+
+        if (this->t_head == nullptr) {
+            this->t_head = newNode;
+            ++this->t_size;
+            return;
+        }
 
         DListNode<T>* currNode = this->t_head;
 
@@ -93,6 +107,12 @@ class DList {
         try {
             if (this->empty()) throw true;
 
+            if (this->t_head->next == nullptr) {  //  only one element is present in the list
+                delete this->t_head;
+                this->t_head = nullptr;
+                --this->t_size;
+                return;
+            }
             DListNode<T>* temp = this->t_head;
 
             this->t_head = this->t_head->next;
@@ -100,6 +120,7 @@ class DList {
 
             delete temp;
             temp = nullptr;
+
             --this->t_size;
         } catch (bool err) {
             cout << "\nList is empty.\n";
@@ -110,15 +131,22 @@ class DList {
         try {
             if (this->empty()) throw true;
 
+            if (this->t_head->next == nullptr) {  //  only one element is present in the list
+                delete this->t_head;
+                this->t_head = nullptr;
+                --this->t_size;
+                return;
+            }
+
             DListNode<T>* secondLast = this->t_head;
 
             while (secondLast->next->next != nullptr) {
                 secondLast = secondLast->next;
             }
 
-            secondLast->next = nullptr;  // secondLast becomes the last node
-
             DListNode<T>* temp = secondLast->next;
+
+            secondLast->next = nullptr;  // secondLast becomes the last node
 
             delete temp;
             temp = nullptr;
@@ -193,17 +221,42 @@ class DList {
     }
 
     void reverse() {
+        DListNode<T>* currNode = this->t_head;
+        DListNode<T>* prevNode = nullptr;
+
+        while (currNode != nullptr) {
+            prevNode = currNode->prev;
+            currNode->prev = currNode->next;
+            currNode->next = prevNode;
+            currNode = currNode->prev;
+        }
+
+        if (prevNode != nullptr) {  //  checking for nullptr for when list is empty
+            this->t_head = prevNode->prev;
+        }
     }
 
     void print() {
         DListNode<T>* currNode = this->t_head;  //  making newNode to traverse the dList
 
         cout << "nullptr <-> ";
-        while (currNode != nullptr) {
+        while (currNode->next != nullptr) {
             cout << currNode->data << " <-> ";
             currNode = currNode->next;
         }
+        cout << currNode->data << " <-> ";
         cout << "nullptr\n";
+
+        DListNode<T>* tempNode = currNode;  //  making newNode to traverse the dList
+        cout << "\n<====\n";
+        cout << "nullptr <-> ";
+        while (tempNode->prev != nullptr) {
+            cout << tempNode->data << " <-> ";
+            tempNode = tempNode->prev;
+        }
+        cout << tempNode->data << " <-> ";
+        cout << "nullptr\n";
+        cout << "====>\n";
     }
 
     DListNode<T>* head() {
