@@ -129,6 +129,72 @@ class DList {
         }
     }
 
+    void insert(int pos, T da) {
+        try {
+            if (pos < 0 || pos > this->t_size) throw true;
+
+            if (pos == 0) {
+                this->push_front(da);
+            } else {
+                DListNode<T>* newNode = new DListNode<T>(da);
+                DListNode<T>* temp = this->t_head;
+
+                while (--pos > 0) {  //  --pos because we are traversing to the node just before the insertion place
+                    temp = temp->next;
+                }
+
+                newNode->prev = temp;
+
+                if (temp->next == nullptr) {  //  edge case if the node is at last
+                    newNode->next = nullptr;
+                } else {
+                    newNode->next = temp->next;
+                    temp->next->prev = newNode;
+                }
+
+                temp->next = newNode;
+            }
+            ++this->t_size;
+        } catch (bool err) {
+            cout << "\nIndex is out of range.\n";
+        }
+    }
+
+    void erase(int pos) {
+        try {
+            if (pos < 0 || pos > this->t_size - 1) throw true;
+
+            if (pos == 0) {
+                this->pop_front();
+            } else if (pos == this->t_size - 1) {
+                this->pop_back();
+            } else {
+                DListNode<T>* penUltimate = this->t_head;  //  going to the node just before the deletion node
+                --pos;                                     //  --pos so that we reach the node just before the to be deleted node
+                while (pos-- > 0) {                        //  pos-- because we are traversing to the node to be deleted
+                    penUltimate = penUltimate->next;
+                }
+                DListNode<T>* nodeToDelete = penUltimate->next;
+
+                if (penUltimate->next->next == nullptr) {
+                    penUltimate->next = nullptr;
+                } else {
+                    penUltimate->next = nodeToDelete->next;
+                    nodeToDelete->next->prev = penUltimate;
+                }
+
+                delete nodeToDelete;
+                nodeToDelete = nullptr;
+            }
+            --this->t_size;
+        } catch (bool err) {
+            cout << "\nIndex is out of range.\n";
+        }
+    }
+
+    void reverse() {
+    }
+
     void print() {
         DListNode<T>* currNode = this->t_head;  //  making newNode to traverse the dList
 
