@@ -228,35 +228,37 @@ class DList {
             prevNode = currNode->prev;
             currNode->prev = currNode->next;
             currNode->next = prevNode;
-            currNode = currNode->prev;
+            currNode = currNode->prev;  //  currNode = currNode->prev because we changed the order
         }
 
-        if (prevNode != nullptr) {  //  checking for nullptr for when list is empty
+        if (prevNode != nullptr) {  //  checking for nullptr for when list is empty and assigning head to appropriate node
             this->t_head = prevNode->prev;
         }
+    }
+
+    void reverseUsingRecursion(DListNode<T>* currNode) {
+        if (currNode == nullptr) return;  //  empty list and last condition
+
+        DListNode<T>* temp = currNode->next;
+        currNode->next = currNode->prev;
+        currNode->prev = temp;
+
+        if (currNode->prev == nullptr) {  //  if prev (because we changed the order) is null, the list is fully reversed and assigning head
+            this->t_head = currNode;
+        }
+
+        return reverseUsingRecursion(currNode->prev);
     }
 
     void print() {
         DListNode<T>* currNode = this->t_head;  //  making newNode to traverse the dList
 
         cout << "nullptr <-> ";
-        while (currNode->next != nullptr) {
+        while (currNode != nullptr) {
             cout << currNode->data << " <-> ";
             currNode = currNode->next;
         }
-        cout << currNode->data << " <-> ";
         cout << "nullptr\n";
-
-        DListNode<T>* tempNode = currNode;  //  making newNode to traverse the dList
-        cout << "\n<====\n";
-        cout << "nullptr <-> ";
-        while (tempNode->prev != nullptr) {
-            cout << tempNode->data << " <-> ";
-            tempNode = tempNode->prev;
-        }
-        cout << tempNode->data << " <-> ";
-        cout << "nullptr\n";
-        cout << "====>\n";
     }
 
     DListNode<T>* head() {
