@@ -54,12 +54,7 @@ class List {
                 currNode = currNode->next;
             }
 
-            T temp = currNode->data;  //  storing value to return it
-
-            delete currNode;
-            currNode = nullptr;
-
-            return temp;
+            return currNode->data;
         } catch (bool err) {
             cout << "\nList is empty.\n";
             return T(-1);
