@@ -270,5 +270,14 @@ class DList {
     }
 
     ~DList() {
+        if (!this->empty()) {
+            while (this->t_head != nullptr) {
+                DListNode<T>* currNode = this->t_head;
+                this->t_head = this->t_head->next;
+
+                delete currNode;
+                currNode = nullptr;
+            }
+        }
     }
 };
