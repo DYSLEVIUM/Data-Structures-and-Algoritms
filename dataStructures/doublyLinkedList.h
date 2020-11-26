@@ -35,11 +35,98 @@ class DList {
    public:
     DList() : t_head(nullptr), t_size(0) {}
 
+    bool empty() {
+        return this->t_size == 0;
+    }
+
+    T front() {
+        try {
+            if (this->empty()) throw true;
+
+            return this->t_head->data;
+        } catch (bool err) {
+            cout << "\nList is empty.\n";
+            return T(-1);
+        }
+    }
+
+    T back() {
+        try {
+            if (this->empty()) throw true;
+
+            DListNode<T>* currNode = this->t_head;
+            while (currNode->next != nullptr) {
+                currNode = currNode->next;
+            }
+
+            return currNode->data;
+
+        } catch (bool err) {
+            cout << "\nList is empty.\n";
+            return T(-1);
+        }
+    }
+
     void push_front(T da) {
         DListNode<T>* newNode = new DListNode<T>(da);
 
         newNode->next = this->t_head;
         this->t_head = newNode;
+        ++this->t_size;
+    }
+
+    void push_back(T da) {
+        DListNode<T>* newNode = new DListNode<T>(da);
+
+        DListNode<T>* currNode = this->t_head;
+
+        while (currNode->next != nullptr) {
+            currNode = currNode->next;
+        }
+
+        currNode->next = newNode;
+        newNode->prev = currNode;
+        ++this->t_size;
+    }
+
+    void pop_front() {
+        try {
+            if (this->empty()) throw true;
+
+            DListNode<T>* temp = this->t_head;
+
+            this->t_head = this->t_head->next;
+            this->t_head->prev = nullptr;
+
+            delete temp;
+            temp = nullptr;
+            --this->t_size;
+        } catch (bool err) {
+            cout << "\nList is empty.\n";
+        }
+    }
+
+    void pop_back() {
+        try {
+            if (this->empty()) throw true;
+
+            DListNode<T>* secondLast = this->t_head;
+
+            while (secondLast->next->next != nullptr) {
+                secondLast = secondLast->next;
+            }
+
+            secondLast->next = nullptr;  // secondLast becomes the last node
+
+            DListNode<T>* temp = secondLast->next;
+
+            delete temp;
+            temp = nullptr;
+
+            --this->t_size;
+        } catch (bool err) {
+            cout << "\nList is empty.\n";
+        }
     }
 
     void print() {
