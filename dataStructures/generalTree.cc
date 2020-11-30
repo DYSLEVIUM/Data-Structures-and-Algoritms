@@ -109,29 +109,30 @@ class TreeNode {
     }
 };
 
-void levelOrderTraversal(TreeNode* root) {
-        if (root == nullptr) return;
+template <typename T>
+void levelOrderTraversal(TreeNode<T>* root) {
+    if (root == nullptr) return;
 
-        queue<TreeNode*> q;
-        q.push(root);
+    queue<TreeNode<T>*> q;
+    q.push(root);
 
-        while (!q.empty()) {
-            int n = q.size();
+    while (!q.empty()) {
+        int n = q.size();
 
-            while (n--) {
-                //  dequeue an item from queue and print it
-                TreeNode* p = q.front();
-                q.pop();
-                cout << p->getData() << ' ';
+        while (n--) {
+            //  dequeue an item from queue and print it
+            TreeNode<T>* p = q.front();
+            q.pop();
+            cout << p->getData() << ' ';
 
-                //  enqueue all children of the dequeued item
-                for (int i = 0; i < p->children.size(); ++i) {
-                    q.push(p->children[i]);
-                }
+            //  enqueue all children of the dequeued item
+            for (int i = 0; i < p->children.size(); ++i) {
+                q.push(p->children[i]);
             }
-            cout << '\n';
         }
+        cout << '\n';
     }
+}
 
 inline void solve() {
     TreeNode<int>* root = new TreeNode<int>(10);
