@@ -107,8 +107,9 @@ class TreeNode {
     T getData() {
         return this->data;
     }
+};
 
-    void levelOrderTraversal(TreeNode* root) {
+void levelOrderTraversal(TreeNode* root) {
         if (root == nullptr) return;
 
         queue<TreeNode*> q;
@@ -131,7 +132,6 @@ class TreeNode {
             cout << '\n';
         }
     }
-};
 
 inline void solve() {
     TreeNode<int>* root = new TreeNode<int>(10);
@@ -147,5 +147,5 @@ inline void solve() {
     (root->children[3]->children).emplace_back(new TreeNode<int>(9));
 
     cout << "Level order traversal Before Mirroring\n";
-    root->levelOrderTraversal(root);
+    levelOrderTraversal(root);
 }
