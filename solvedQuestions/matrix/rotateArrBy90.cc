@@ -100,7 +100,7 @@ using namespace std;
 
 void rotateBy90(int* arr, int n) {
     //  transpose
-    fo(i, n) Fo(j, i, n)  //  j is starting from i as we don't want to rotate tiwce
+    fo(i, n) Fo(j, i, n)  //  j is starting from i as we don't want to rotate twice
         swap(arr[i * n + j], arr[j * n + i]);
 
     //  mirror on the y-axis about the center
