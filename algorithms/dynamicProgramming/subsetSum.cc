@@ -96,19 +96,11 @@ int main(int argc, char* argv[]) {
 
 using namespace std;
 
-inline void solve() {
-    ll arr[] = {2, 3, 7, 8, 10};
-    ll sum = 11;
-
-    ll n = sizeof(arr) / sizeof(arr[0]);
-
+bool subsetSumExist(ll* arr, ll n, ll sum) {
     mk(dp, (n + 1) * (sum + 1), bool);
 
     //  if sum is greater than sum of all elements of the array
-    if (sum > accumulate(arr, arr + n, 0)) {
-        cout << "No";
-        return;
-    }
+    if (sum > accumulate(arr, arr + n, 0)) return 0;
 
     fo(i, n + 1) {
         fo(j, sum + 1) {
@@ -131,6 +123,18 @@ inline void solve() {
         }
     }
 
-    cout << (dp[n * (sum + 1) + sum] == 1 ? "Yes" : "No");
+    bool ans = dp[n * (sum + 1) + sum];
+
     delete[] dp;
+
+    return ans;
+}
+
+inline void solve() {
+    ll arr[] = {2, 3, 7, 8, 10};
+    ll sum = 11;
+
+    ll n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << (subsetSumExist(arr, n, sum) == 1 ? "Yes" : "No");
 }
