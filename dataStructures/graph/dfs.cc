@@ -48,7 +48,7 @@ void dfs(vector<vector<int>> adjList, int startNode) {
     vector<int> neighbors = adjList[startNode];  // getting all the nodes connected to currentNode
 
     for (auto x : neighbors) {
-        dfs(adjList, x);  //	dfs on all other nodes connected to currentNode
+        if (!visited[x]) dfs(adjList, x);  //	dfs on all other nodes connected to currentNode and isn't visited
     }
 }
 
@@ -71,8 +71,8 @@ inline void solve() {
     adjList.emplace_back(vector<int>{1, 4});
     adjList.emplace_back(vector<int>{0, 2, 4});
     adjList.emplace_back(vector<int>{1, 3});
-    adjList.emplace_back(vector<int>{2, 4, 5});
-    adjList.emplace_back(vector<int>{0, 1, 3});
+    adjList.emplace_back(vector<int>{2, 5});
+    adjList.emplace_back(vector<int>{0, 1});
     adjList.emplace_back(vector<int>{3});
 
     visited.reserve(adjList.size());  //	size of the visited array is total nodes in the list
