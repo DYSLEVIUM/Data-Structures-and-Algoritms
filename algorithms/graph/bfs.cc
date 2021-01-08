@@ -73,9 +73,9 @@ vector<int> reconstructPath(int startNode, int endNode, vector<int> previous) {
     vector<int> path;  //  this will contain the path from startNode to endNode
 
     int currNode = endNode;
-    while (currNode != startNode) {  //  we will traverse back until we get to the startNode
-        if (currNode == -1) break;   // if there is no previous node, there cannot be a path
+    while (currNode != previous[startNode]) {  //  we will traverse back until we get to the startNode and break the loop if we go beyond the startNode or there is no previous node
         path.push_back(currNode);
+        if (previous[currNode] == -1) break;
         currNode = previous[currNode];
     }
 
@@ -118,6 +118,6 @@ inline void solve() {
     vector<int> path = bfs(adjList, 0, 5);  // getting the shortest path
 
     for (auto x : path) {
-        cout << x << "->";
+        cout << x << " -> ";
     }
 }
