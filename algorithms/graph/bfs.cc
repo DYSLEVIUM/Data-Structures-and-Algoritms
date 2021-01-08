@@ -73,8 +73,8 @@ vector<int> reconstructPath(int startNode, int endNode, vector<int> previous) {
     vector<int> path;  //  this will contain the path from startNode to endNode
 
     int currNode = endNode;
-    while (currNode != startNode || currNode != -1) {  //  we will traverse back until we get to the startNode or if there is no previous node
-        if (currNode == -1) break;
+    while (currNode != startNode) {  //  we will traverse back until we get to the startNode
+        if (currNode == -1) break;   // if there is no previous node, there cannot be a path
         path.push_back(currNode);
         currNode = previous[currNode];
     }
