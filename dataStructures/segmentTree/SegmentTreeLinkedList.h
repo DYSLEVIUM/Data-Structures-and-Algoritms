@@ -8,17 +8,20 @@ class SegmentTree {
     //  range sum queries
     T sum;
 
-    SegmentTree(T lm, T rm, T* arr) : leftmost(lm), rightmost(rm) {
-        if (leftmost == rightmost) {
+    SegmentTree(T stIdx, T endIdx, T* arr) : leftmost(stIdx), rightmost(endIdx) {
+        if (this->leftmost == this->rightmost) {
             //  leaf
-            this->sum = arr[leftmost];
+            this->sum = arr[this->leftmost];  //  filling the segment tree from left
+
+            this->leftChild = nullptr;
+            this->rightChild = nullptr;
         } else {
             //  have two children
-            T mid = leftmost + (rightmost - leftmost) / 2;
+            T mid = this->leftmost + (this->rightmost - this->leftmost) / 2;
 
             //  using postorder to calculate sum again
-            this->leftChild = new SegmentTree<T>(leftmost, mid, arr);
-            this->rightChild = new SegmentTree<T>(mid + 1, rightmost, arr);
+            this->leftChild = new SegmentTree<T>(this->leftmost, mid, arr);
+            this->rightChild = new SegmentTree<T>(mid + 1, this->rightmost, arr);
 
             this->sum = this->leftChild->sum + this->rightChild->sum;
         }
@@ -52,6 +55,24 @@ class SegmentTree {
         return this->leftChild->rangeSum(l, r) + this->rightChild->rangeSum(l, r);
     }
 
-    ~SegmentTree() {
-    }
+    //  can't find the bug 😅
+    // ~SegmentTree() {
+    //     stack<SegmentTree<T>*> st;
+
+    //     if (this->leftChild != nullptr) st.push(this->leftChild);
+    //     if (this->rightChild != nullptr) st.push(this->rightChild);
+
+    //     delete this;
+
+    //     while (!st.empty()) {
+    //         SegmentTree<T>* topNode = st.top();
+    //         st.pop();
+
+    //         if (topNode->leftChild != nullptr) st.push(topNode->leftChild);
+
+    //         if (topNode->rightChild != nullptr) st.push(topNode->rightChild);
+
+    //         delete topNode;
+    //     }
+    // }
 };
