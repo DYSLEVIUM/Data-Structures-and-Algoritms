@@ -1,14 +1,15 @@
 template <typename T>
 class SegmentTree {
    public:
-    T leftmost, rightmost;
-    SegmentTree<T>* leftChild;
-    SegmentTree<T>* rightChild;
+    T leftmost, rightmost;  //  extreme points of tree
+
+    SegmentTree<T>* leftChild;   //  left tree
+    SegmentTree<T>* rightChild;  //  right tree
 
     //  range sum queries
     T sum;
 
-    SegmentTree(T stIdx, T endIdx, T* arr) : leftmost(stIdx), rightmost(endIdx) {
+    SegmentTree(T startIdx, T endIdx, T* arr) : leftmost(startIdx), rightmost(endIdx) {
         if (this->leftmost == this->rightmost) {
             //  leaf
             this->sum = arr[this->leftmost];  //  filling the segment tree from left
