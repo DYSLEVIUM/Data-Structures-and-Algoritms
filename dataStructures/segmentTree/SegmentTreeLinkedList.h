@@ -27,6 +27,7 @@ class SegmentTree {
         }
     }
 
+    //  no lazy propagation implemented
     void update(T index, T val) {
         if (this->leftmost == this->rightmost) {
             //  leaf
@@ -55,24 +56,8 @@ class SegmentTree {
         return this->leftChild->rangeSum(l, r) + this->rightChild->rangeSum(l, r);
     }
 
-    //  can't find the bug 😅
-    // ~SegmentTree() {
-    //     stack<SegmentTree<T>*> st;
-
-    //     if (this->leftChild != nullptr) st.push(this->leftChild);
-    //     if (this->rightChild != nullptr) st.push(this->rightChild);
-
-    //     delete this;
-
-    //     while (!st.empty()) {
-    //         SegmentTree<T>* topNode = st.top();
-    //         st.pop();
-
-    //         if (topNode->leftChild != nullptr) st.push(topNode->leftChild);
-
-    //         if (topNode->rightChild != nullptr) st.push(topNode->rightChild);
-
-    //         delete topNode;
-    //     }
-    // }
+    ~SegmentTree() {
+        if (this->leftChild != nullptr) delete this->leftChild;
+        if (this->rightChild != nullptr) delete this->rightChild;
+    }
 };
