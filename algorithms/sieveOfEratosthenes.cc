@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     setup();
 
     long long t = 1;
-    // std::cin >> t;
+    std::cin >> t;
 
     findPrime();
     while (t--) solve();
@@ -45,6 +45,8 @@ bool sieve[1000010];
 
 void findPrime() {
     memset(sieve, true, sizeof(sieve));
+    sieve[0] = false;
+    sieve[1] = false;
 
     for (int i = 2; i * i <= 1000010; ++i) {
         if (sieve[i]) {
