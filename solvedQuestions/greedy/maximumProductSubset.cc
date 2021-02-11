@@ -44,15 +44,29 @@ using namespace std;
 
 int maxProductSubset(int a[], int n) {
     sort(a, a + n);
+  
+    int cntZ=0;
+    for (int i = 0; i < n; ++i) {
+        if (a[i] == 0) ++cntZ;
+    }
+  
+    if (cntZ == n) return 0;
 
     int cntNeg = 0;
     int negIdx = 0;
+    int cntZ = 0;
 
     for (int i = 0; i < n; ++i) {
         if (a[i] >= 0) break;
+        if (a[i] == 0) {
+          ++cntZ;
+          continue;
+        }
         ++cntNeg;
         negIdx = i;
     }
+  
+    if (cntNeg == 1 && cntZ >= 0) return 0;
 
     int prod = 1;
     if (cntNeg & 1) {
