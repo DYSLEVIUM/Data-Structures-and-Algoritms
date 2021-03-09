@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 
 using namespace std;
 
-//  https://www.geeksforgeeks.org/survival/
+//  https://www.geeksforgeeks.org/maximum-product-subset-array/
 
 int maxProductSubset(int a[], int n) {
     sort(a, a + n);
