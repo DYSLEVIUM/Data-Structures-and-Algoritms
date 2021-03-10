@@ -93,10 +93,5 @@ inline void solve() {
             dp[i][j] = dp[i - 1][j];  //  we do not have enough space in our knapsack for the given weight
     }
 
-    fo(i, n + 1) {
-        fo(j, w + 1) cout << dp[i][j] << ' ';
-        cout << '\n';
-    }
-
     cout << dp[n][w];
 }
