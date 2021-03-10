@@ -91,12 +91,13 @@ inline void solve() {
         fo(j, 3) {
             fo(k, 3) {
                 if (k != j)
-                    dp[i][j] = max(dp[i - 1][k] + d[i][j], dp[i][j]);
+                    dp[i][j] = max(dp[i - 1][k] + d[i][j], dp[i][j]);  //  taking previous max + current and calculating all max from this state
             }
         }
     }
 
     ll ans = LONG_LONG_MIN;
+    //  ans will be max happiness of last day
     fo(i, 3)
         ans = max(dp[n - 1][i], ans);
 
