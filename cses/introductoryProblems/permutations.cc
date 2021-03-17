@@ -50,17 +50,6 @@ inline void solve() {
         return;
     }
 
-    long long* x = new long long[n];
-
-    long long temp = 0;
-    for (int i = 0; i < n / 2; ++i) x[i] = ++temp, x[n - i - 1] = ++temp;
-
-    if (n & 1) x[n / 2] = n;
-
-    if (n & 1)
-        reverse(x + n / 2 + 1, x + n);
-    else
-        reverse(x, x + n / 2);
-
-    for (int i = 0; i < n; ++i) cout << x[i] << ' ';
+    for (long long i = 2; i < n + 1; i += 2) cout << i << ' ';
+    for (long long i = 1; i < n + 1; i += 2) cout << i << ' ';
 }
