@@ -53,19 +53,13 @@ inline void solve() {
     long long* x = new long long[n];
 
     long long temp = 0;
-    for (int i = 0; i < n / 2; ++i) {
-        x[i] = ++temp;
-        x[n - i - 1] = ++temp;
-    }
+    for (int i = 0; i < n / 2; ++i) x[i] = ++temp, x[n - i - 1] = ++temp;
 
-    if (n & 1) {
-        x[n / 2] = n;
-    }
+    if (n & 1) x[n / 2] = n;
 
-    if (n & 1) {
+    if (n & 1)
         reverse(x + n / 2 + 1, x + n);
-        reverse(x, x + n);
-    } else
+    else
         reverse(x, x + n / 2);
 
     for (int i = 0; i < n; ++i) cout << x[i] << ' ';
