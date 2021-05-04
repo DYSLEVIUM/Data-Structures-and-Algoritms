@@ -88,7 +88,7 @@ inline void solve() {
     while (n) {
       if (n & 1) res = res * x % MOD;
 
-      x *= x % MOD;
+      x = x * x % MOD;
       n >>= 1;
     }
 
