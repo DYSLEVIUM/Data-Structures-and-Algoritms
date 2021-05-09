@@ -84,15 +84,15 @@ inline void solve() {
   //	?	Compute x^n mod m
   auto binPowIter = [](long long x, long long n, long long MOD) -> long long {
     long long res = 1;
-
     while (n) {
-      if (n & 1) res = res * x % MOD;
+      if (n & 1) res = ((res % MOD) * (x % MOD)) % MOD;
 
-      x = x * x % MOD;
+      x = ((x % MOD) * (x % MOD)) % MOD;
+
       n >>= 1;
     }
 
-    return res;
+    return res % MOD;
   };
   /*	NOTE: if MOD is a prime number, we can speed by the algorithm by calculating x^(n%(MOD-1)) instead of x^n which is a consequent of fermat's little theorem that 
 		a^p === a (mod p) => a^(p-1) === 1 (mod p)
