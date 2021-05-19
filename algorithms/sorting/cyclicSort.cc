@@ -37,7 +37,8 @@ typedef std::priority_queue<int, vi, std::greater<int>> pqi;
 #define zerobits(x) __builtin_ctzll(x)
 #define mk(arr, n, type) type* arr = new type[n]
 
-std::mt19937_64 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+std::mt19937_64 rng(
+    std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 inline void setup() {
   std::ios_base::sync_with_stdio(false);
@@ -66,20 +67,29 @@ int main(int argc, char* argv[]) {
 }
 
 using namespace std;
-//  Compile and run: g++ -g -Wshadow -Wall -DLOCAL_PROJECT main.cc -o a.exe -Ofast -Wno-unused-result && ./a.exe
+//  Compile and run: g++ -g -Wshadow -Wall -DLOCAL_PROJECT main.cc -o a.exe
+//  -Ofast -Wno-unused-result && ./a.exe
 
 inline void solve() {
-  //  here the array elements are 0 to n-1
-  //  think of cyclic sort whenever you want to sort an array and the array elements are n continuous numbers with some offset
-  int arr[] = {4, 5, 6, 7, 0, 2, 1, 3};
-
+  int arr[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
   int n = sizeof(arr) / sizeof(arr[0]);
 
-  fo(i, n) {
-    while (arr[i] != i) {
-      swap(arr[i], arr[arr[i]]);
+  auto cyclicSort = [](int* arr, int n) {
+    for (int i = 0; i < n; ++i) {
+      while (arr[i] - 1 != i) swap(arr[i], arr[arr[i] - 1]);
     }
-  }
+  };
 
-  fo(i, n) cout << arr[i] << ' ';
+  auto printArr = [](int* arr, int n) {
+    for (int i = 0; i < n; ++i) cout << arr[i] << ' ';
+    cout << '\n';
+  };
+
+  cout << "Before sort: ";
+  printArr(arr, n);
+
+  cyclicSort(arr, n);
+
+  cout << "After sort: ";
+  printArr(arr, n);
 }
