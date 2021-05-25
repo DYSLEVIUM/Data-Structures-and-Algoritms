@@ -11,7 +11,7 @@ class ListNode {
    public:
     ListNode(T da) : data(da), next(nullptr) {}
 
-    getData() {
+    T getData() {
         return this->data;
     }
 
