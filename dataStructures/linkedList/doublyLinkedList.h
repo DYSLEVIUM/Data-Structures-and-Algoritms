@@ -14,7 +14,7 @@ class DListNode {
     DListNode(T da) : data(da), next(nullptr), prev(nullptr) {
     }
 
-    getData() {
+    T getData() {
         return this->data;
     }
 
