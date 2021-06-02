@@ -1,7 +1,7 @@
 class Solution {
 public:
     string reorganizeString(string s) {
-        priority_queue<pair<int, char>, vector<pair<int, char>>> maxHeap;
+        priority_queue<pair<int, char>> maxHeap;
         
         map<char, int> mp;
         
@@ -9,9 +9,7 @@ public:
         
         string newStr = "";
         
-        for(auto x:mp){
-            maxHeap.push({x.second,x.first});
-        }
+        for(auto x:mp) maxHeap.push({x.second,x.first});
         
         while(maxHeap.size()>=2){
             pair<int, char> ff=maxHeap.top();
@@ -38,7 +36,6 @@ public:
                 newStr="";
                 return newStr;                
             }
-            for(int i=0;i<maxHeap.top().first;++i)
                 newStr+=maxHeap.top().second;  
         }
         
