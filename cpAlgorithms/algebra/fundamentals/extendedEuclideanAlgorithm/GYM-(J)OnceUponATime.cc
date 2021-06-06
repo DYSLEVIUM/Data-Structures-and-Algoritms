@@ -112,7 +112,7 @@ inline void solve() {
     ll x, y;
     ll d = extendedEuclideanIter(m, a, x, y);
 
-    if (a * d > 1) {
+    if (d == abs(n - k)) {
       cout << n + m * x << '\n';
     } else {
       cout << "Impossible\n";
