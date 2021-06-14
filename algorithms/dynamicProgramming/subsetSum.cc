@@ -100,9 +100,12 @@ inline void solve() {
     fo(j, target + 1) {
       if (i == 0) {
         dp[i][j] = false;
+        continue;
       } else if (j == 0) {
         dp[i][j] = true;
-      } else if (j >= arr[i - 1]) {
+        continue;
+      } 
+      if (j >= arr[i - 1]) {
         dp[i][j] = dp[i - 1][j] || dp[i - 1][j - arr[i - 1]];
       } else {
         dp[i][j] = dp[i - 1][j];
