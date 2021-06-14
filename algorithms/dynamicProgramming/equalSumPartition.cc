@@ -106,11 +106,14 @@ inline void solve() {
 
   fo(i, arr.size() + 1) {
     fo(j, sum + 1) {
-      if (i == 0) {
-        dp[i][j] = false;
-      } else if (j == 0) {
-        dp[i][j] = true;
-      } else if (j >= arr[i - 1]) {
+      if (i == 0 || j == 0) {
+        if (i == 0)
+          dp[i][j] = 0;
+        if (j == 0)
+          dp[i][j] = 1;
+        continue;
+      }
+      if (j >= arr[i - 1]) {
         dp[i][j] = dp[i - 1][j] || dp[i - 1][j - arr[i - 1]];
       } else {
         dp[i][j] = dp[i - 1][j];
