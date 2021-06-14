@@ -1,18 +1,13 @@
-//Compile: g++ -g -Wshadow -Wall main.cpp -o a.exe -Ofast -Wno-unused-result
-//Build: g++ -g -Wshadow -Wall main.cpp -o a.exe -D_GLIBCXX_DEBUG
-//Compile and run: g++ -g -Wshadow -Wall main.cpp -o a.exe -Ofast -Wno-unused-result && a.exe
-
-#pragma GCC optimize("Ofast,fast-math")
+#define _USE_MATH_DEFINES
+#pragma GCC optimize("Ofast,fast-math,unroll-loops")
 
 #include <algorithm>
 #include <bitset>
-#include <cassert>
 #include <chrono>
 #include <cmath>
 #include <cstring>
 #include <ctime>
 #include <deque>
-#include <forward_list>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -44,10 +39,11 @@ typedef std::map<int, int> mii;
 typedef std::priority_queue<int> pqd;
 typedef std::priority_queue<int, vi, std::greater<int>> pqi;
 
+#define pb push_back
 #define eb emplace_back
 #define F first
 #define S second
-#define MOD (long long)1e9 + 7
+#define MOD (long long)(1e9 + 7)
 #define PI 3.14159265358979323846
 #define INF __builtin_inff()
 
@@ -55,8 +51,8 @@ typedef std::priority_queue<int, vi, std::greater<int>> pqi;
 #define Fo(i, k, n) for (ll i = k; k < n ? i < n : i > n; k < n ? ++i : --i)
 #define allC(x) x.begin(), x.end()
 #define clr(x) memset(x, 0, sizeof(x))
-#define deb(x) cout << '\n' \
-                    << #x << " = " << x << '\n'
+#define deb(x) std::cout << '\n' \
+                         << #x << " = " << x << '\n'
 #define sortall(x) sort(x.begin(), x.end())
 #define tr(it, a) for (auto it = a.begin(); it != a.end(); ++it)
 #define ps(x, y) std::fixed << std::setprecision(y) << x
@@ -64,77 +60,55 @@ typedef std::priority_queue<int, vi, std::greater<int>> pqi;
 #define zerobits(x) __builtin_ctzll(x)
 #define mk(arr, n, type) type* arr = new type[n]
 
-std::mt19937_64 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+std::mt19937_64 rng(
+    std::chrono::high_resolution_clock::now().time_since_epoch().count());
 
 inline void setup() {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    std::cout.tie(NULL);
+  std::ios_base::sync_with_stdio(false);
+  std::cin.tie(NULL);
+  std::cout.tie(NULL);
 
 #ifdef LOCAL_PROJECT  // run with -DLOCAL_PROJECT during compilation
-    freopen("input.txt", "r", stdin);
-#else
-#ifndef ONLINE_JUDGE  // runs automatically for supported online judges
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
+  freopen("input.txt", "r", stdin);
+  // freopen("output.txt", "w", stdout);
 #endif
 }
 
 inline void solve();
 
 int main(int argc, char* argv[]) {
-    setup();
+  setup();
 
-    ll t = 1;
-    // std::cin >> t;
+  ll t = 1;
+  // std::cin >> t;
 
-    while (t--) solve();
+  while (t--) solve();
 
-    return 0;
+  return 0;
 }
 
 using namespace std;
-
-bool subsetSumExist(ll* arr, ll n, ll sum) {
-    mk(dp, (n + 1) * (sum + 1), bool);
-
-    //  if sum is greater than sum of all elements of the array
-    if (sum > accumulate(arr, arr + n, 0)) return 0;
-
-    fo(i, n + 1) {
-        fo(j, sum + 1) {
-            if (i == 0) {
-                dp[i * (sum + 1) + j] = 0;
-                continue;
-            }
-
-            if (j == 0) {
-                dp[i * (sum + 1) + j] = 1;
-                continue;
-            }
-
-            //  if currentSum > element
-            if (arr[i - 1] <= j) {
-                dp[i * (sum + 1) + j] = dp[i * (sum + 1) + j - arr[i - 1]] || dp[(i - 1) * (sum + 1) + j];  //  we can take the element or not take it
-            } else {
-                dp[i * (sum + 1) + j] = dp[(i - 1) * (sum + 1) + j];  //  we can not take the element
-            }
-        }
-    }
-
-    bool ans = dp[n * (sum + 1) + sum];
-
-    delete[] dp;
-
-    return ans;
-}
+//  Compile and run: g++ -g -Wshadow -Wall practice.cpp -DLOCAL_PROJECT -o a -Ofast -Wno-unused-result && ./a
 
 inline void solve() {
-    ll arr[] = {2, 3, 7, 8, 10};
-    ll sum = 11;
+  vl arr{2, 3, 7, 8, 10};
+  ll target = 110;
 
-    ll n = sizeof(arr) / sizeof(arr[0]);
+  vector<vector<bool>> dp(arr.size() + 1, vector<bool>(target + 1, false));
 
-    cout << (subsetSumExist(arr, n, sum) == 1 ? "Yes" : "No");
+  fo(i, arr.size() + 1) {
+    fo(j, target + 1) {
+      if (i == 0) {
+        dp[i][j] = false;
+      } else if (j == 0) {
+        dp[i][j] = true;
+      } else if (j >= arr[i - 1]) {
+        dp[i][j] = dp[i - 1][j] || dp[i - 1][j - arr[i - 1]];
+      } else {
+        dp[i][j] = dp[i - 1][j];
+      }
+    }
+  }
+
+  cout << dp[arr.size()][target];
 }
