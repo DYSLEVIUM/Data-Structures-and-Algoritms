@@ -90,7 +90,7 @@ inline void solve() {
   vl arr{1, 2, 3};
   ll sum = 15;
 
-  vvl dp(arr.size() + 1, vl(sum + 1, 0));
+  vvl dp(arr.size() + 1, vl(sum + 1));
 
   fo(i, arr.size() + 1) {
     fo(j, sum + 1) {
