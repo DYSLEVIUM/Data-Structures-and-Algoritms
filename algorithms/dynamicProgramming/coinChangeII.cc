@@ -96,7 +96,7 @@ inline void solve() {
     fo(j, sum + 1) {
       if (i == 0 || j == 0) {
         if (i == 0)
-          dp[i][j] = __LONG_LONG_MAX__;
+          dp[i][j] = __LONG_LONG_MAX__ - 1;  //  we subtract 1 due to overflow
         else
           dp[i][j] = 0;
         continue;
