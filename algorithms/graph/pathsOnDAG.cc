@@ -150,9 +150,9 @@ inline void solve() {
 
         if (!adjEdges.empty()) {
           tr(edge, adjEdges) {
-            ll newDist = dist[nodeIndex] + edge.weight;
+            ll newDist = dist[nodeIndex] + edge->weight;
 
-            dist[edge.to] = min(dist[edge.to], newDist);
+            dist[edge->to] = min(dist[edge->to], newDist);
           }
         }
       }
