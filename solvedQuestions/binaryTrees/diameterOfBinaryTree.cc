@@ -19,9 +19,7 @@ class Solution {
             
             return 1+max(l,r);
         };
-        
-        dia = max(dia, findHeight(root, findHeight));
-        
+
         return dia;
     }
 };
