@@ -7,6 +7,8 @@ class Solution {
         if (root==NULL) return 0;
         
         int dia = 0;
+        
+        //  we check at every node if we have a greater diameter
         auto findHeight = [&dia](Node* node, auto&& findHeight)->int{
             if(!node) return 0;
             
