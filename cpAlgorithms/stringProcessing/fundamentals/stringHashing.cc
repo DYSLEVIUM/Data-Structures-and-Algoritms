@@ -96,8 +96,8 @@ inline void solve() {
     return hash;
   };
 
-  // deb(computeHash("asdsdads"));
-  // deb(computeHash("asdsdads"));
+  deb(computeHash("asdsdads"));
+  deb(computeHash("asdsdads"));
 
   //  search for duplicate strings in an array of strings
   auto groupIdenticalStrings = [&computeHash](vector<string> const& s) {
@@ -123,13 +123,13 @@ inline void solve() {
 
   auto grps = groupIdenticalStrings(s);
 
-  // tr(it, grps) {
-  //   tr(it2, (*it)) {
-  //     cout << *it2 << ' ';
-  //   }
+  tr(it, grps) {
+    tr(it2, (*it)) {
+      cout << *it2 << ' ';
+    }
 
-  //   cout << '\n';
-  // }
+    cout << '\n';
+  }
 
   auto countDistinctSubstrings = [](string const& s) {
     ll n = s.size();
