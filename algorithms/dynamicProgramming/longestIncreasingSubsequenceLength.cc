@@ -72,6 +72,8 @@ using namespace std;
 //  Compile and run: g++ -std=c++17 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a -Ofast -Wno-unused-result && ./a
 
 inline void solve() {
+  //  Time : O(n^2)
+  //  Space : O(n)
   vl arr{5, 8, 7, 1, 9};
 
   vl lis(arr.size());
@@ -91,4 +93,23 @@ inline void solve() {
   fo(i, arr.size()) ans = max(ans, lis[i]);
 
   cout << ans << '\n';
+  
+  //  ---------------------------------------------------------------------------
+  //  adding at least one element in array
+  //  Time : O(n*log n)
+  //  Space : O(n)
+  lisArr.eb(arr[0]);
+
+  Fo(i, 1, arr.size()) {
+    if (lisArr.back() < arr[i])
+      lisArr.eb(arr[i]);
+    else {
+      ll idx = lower_bound(all(lisArr), arr[i]) - lisArr.begin();
+
+      //  updating the lisArray to update it with smallest element so that we increase the probability of getting a better length
+      lisArr[idx] = arr[i];
+    }
+  }
+
+  cout << lisArr.size();
 }
