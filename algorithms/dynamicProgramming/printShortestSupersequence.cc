@@ -106,17 +106,22 @@ inline void solve() {
 
     while (i > 0 && j > 0) {
       if (x[i - 1] == y[j - 1]) {
-        ans.push_back(x[i - 1]);
+        //  both equal, so we take once
+        ans.pb(x[i - 1]);
         --i;
         --j;
       } else if (dp[i - 1][j] > dp[i][j - 1]) {
-        ans.push_back(y[j - 1]);
+        //  take smallest
+        ans.pb(y[j - 1]);
         --j;
       } else {
-        ans.push_back(x[i - 1]);
+        ans.pb(x[i - 1]);
         --i;
       }
     }
+
+    while (i > 0) ans.pb(x[i--]);
+    while (j > 0) ans.pb(y[j--]);
 
     reverse(all(ans));
 
