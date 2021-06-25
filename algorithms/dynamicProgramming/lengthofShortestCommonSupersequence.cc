@@ -95,5 +95,33 @@ inline void solve() {
     return dp[x.length()][y.length()];
   };
 
-  cout << a.length() + b.length() - lcs(a, b);
+  cout << a.length() + b.length() - lcs(a, b) << '\n';
+  
+  //  alternate
+  string a = "aggtab";
+  string b = "axtxayb";
+
+  auto superSeq = [](string x, string y) {
+    vvl dp(x.length() + 1, vl(y.length() + 1));
+
+    fo(i, x.length() + 1) {
+      fo(j, y.length() + 1) {
+        if (i == 0 || j == 0) {
+          if (i == 0)
+            dp[i][j] = j;
+          else
+            dp[i][j] = i;
+        } else {
+          if (x[i - 1] == y[j - 1])
+            dp[i][j] = 1 + dp[i - 1][j - 1];
+          else
+            dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1]);
+        }
+      }
+    }
+
+    return dp[x.length()][y.length()];
+  };
+
+  cout << superSeq(a, b);
 }
