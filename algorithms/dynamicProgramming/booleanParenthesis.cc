@@ -72,7 +72,7 @@ using namespace std;
 //  Compile and run: g++ -std=c++17 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a -Ofast -Wno-unused-result && ./a
 
 inline void solve() {
-  string s = "T|F&T^F";
+  string s = "T|T&F^T";
 
   vector<vvl> dp(s.length() + 1, vvl(s.length() + 1, vl(2, -1)));
 
@@ -83,12 +83,10 @@ inline void solve() {
     if (i > j) return (ll)0;
 
     if (i == j) {
-      if (isTrue && x[i] == 'T')
-        return (ll)1;
-      else if (!isTrue && x[i] == 'F')
-        return (ll)1;
+      if (isTrue)
+        return (x[i] == 'T' ? (ll)1 : (ll)0);
       else
-        return (ll)0;
+        return (x[i] == 'F' ? (ll)1 : (ll)0);
     }
 
     ll ans = 0;
@@ -115,7 +113,7 @@ inline void solve() {
         if (isTrue)
           ans += leftFalse * rightTrue + leftTrue * rightFalse;
         else
-          ans += leftTrue * rightFalse + leftFalse * rightTrue;
+          ans += leftTrue * rightTrue + leftFalse * rightFalse;
       }
 
       ++k;  //  k should always be at operator
