@@ -113,9 +113,9 @@ inline void solve() {
           ans += leftFalse * rightFalse;
       } else {  //  xor
         if (isTrue)
-          ans += leftFalse * rightTrue + leftTrue + rightFalse;
+          ans += leftFalse * rightTrue + leftTrue * rightFalse;
         else
-          ans += leftTrue * rightTrue + leftFalse * rightFalse;
+          ans += leftTrue * rightFalse + leftFalse * rightTrue;
       }
 
       ++k;  //  k should always be at operator
