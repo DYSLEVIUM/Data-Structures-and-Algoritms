@@ -12,7 +12,7 @@ class Solution
       
       queue<Node*> q;
       
-      q.push(node);k
+      q.push(node);
       
       while(!q.empty()){
         Node* f = q.front();
