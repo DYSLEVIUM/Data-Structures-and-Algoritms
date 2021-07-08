@@ -118,37 +118,37 @@ struct Node {
 vector <int> zigZagTraversal(Node* root)
 {
 	// Code here
-    vector<int> ans(0);
+	vector<int> ans(0);
     
 	if(root==NULL) return ans;
-	
+
 	stack<Node*> currLevel;
 	stack<Node*> nextLevel;
-	
+
 	bool leftToRight = true;
-	
+
 	currLevel.push(root);
 
 	while(!currLevel.empty()){
 	    Node* tp = currLevel.top();
 	    currLevel.pop();
-	    
+
 	    ans.push_back(tp->data);
-	    
+
 	    if(leftToRight){
-	        if(tp->left!=NULL) nextLevel.push(tp->left);    
-	        if(tp->right!=NULL) nextLevel.push(tp->right);    
+		if(tp->left!=NULL) nextLevel.push(tp->left);    
+		if(tp->right!=NULL) nextLevel.push(tp->right);    
 	    }else{
-	        if(tp->right!=NULL) nextLevel.push(tp->right);    
-	        if(tp->left!=NULL) nextLevel.push(tp->left);    
+		if(tp->right!=NULL) nextLevel.push(tp->right);    
+		if(tp->left!=NULL) nextLevel.push(tp->left);    
 	    }
-	    
+
 	    //  when the current level is done
 	    if(currLevel.empty()){
-	        leftToRight =! leftToRight; //reversing the direction
-	        swap(currLevel,nextLevel);
+		leftToRight =! leftToRight; //reversing the direction
+		swap(currLevel,nextLevel);
 	    }
 	}
-	
+
 	return ans;
 }
