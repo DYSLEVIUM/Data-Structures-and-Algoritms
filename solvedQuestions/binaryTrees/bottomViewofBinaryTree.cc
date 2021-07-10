@@ -97,7 +97,7 @@ class Solution {
   public:
     vector <int> bottomView(Node *root) {
         // Your Code Here
-vector<int> res(0);
+        vector<int> res(0);
         if(root==NULL) return res;
         
         //  this will store the distance
