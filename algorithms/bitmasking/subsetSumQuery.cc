@@ -103,17 +103,13 @@ using namespace std;
 //  query = {3, 5, 7, 20}
 //  answer = {1, 1, 1, 0}
 inline void solve() {
-    int ar[] = {1, 2, 3, 3};
-    int qr[] = {3, 5, 7, 7, 20};
+    vl arr{1, 2, 3, 3};
+    vl q{3, 5, 7, 7, 20};
 
-    bitset<(ll)1e4> b(0);
+    bitset<(size_t)1e4> b(0);
     b |= 1;  //  as 0 is always possible, setting 0 to be 1
 
-    fo(i, 4) {
-        b = b | (b << ar[i]);
-    }
+    fo(i, arr.size()) b = b | (b << arr[i]);
 
-    fo(i, 5) {
-        cout << b.test(qr[i]) << '\t';
-    }
+    fo(i, q.size()) cout << b.test(q[i]) << '\n';
 }
