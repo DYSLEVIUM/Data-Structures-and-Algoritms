@@ -117,9 +117,7 @@ inline void solve() {
 
     //  test function returns 1 if bit is set else it return 0
     cout << "bool representation of " << b << " : ";
-    fo(i, (ll)b.size())
-            cout
-        << b.test(i) << " ";
+    fo(i, (ll)b.size()) cout << b.test(i) << " ";
     cout << '\n';
 
     //  any function returns true, if atleast 1 bit is set
@@ -131,8 +129,7 @@ inline void solve() {
         cout << "b has all bit set.\n";
 
     //  none function returns true, if none of the bit is set
-    if (!b.none())
-        cout << "b has some bit set\n";
+    if (!b.none()) cout << "b has some bit set\n";
 
     //  set() sets all bits
     cout << b.set() << '\n';
