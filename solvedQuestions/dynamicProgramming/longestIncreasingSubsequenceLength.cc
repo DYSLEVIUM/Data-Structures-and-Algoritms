@@ -21,6 +21,7 @@ class Solution
             }else{
                 int idx = lower_bound(lisArr.begin(), lisArr.end(), arr[i])-lisArr.begin();
                 
+             //  updating the lisArray to update it with smallest element so that we increase the probability of getting a better length
                 lisArr[idx] = arr[i];
             }
         }
