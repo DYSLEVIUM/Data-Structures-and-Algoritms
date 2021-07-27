@@ -78,7 +78,7 @@ inline void solve() {
 
   ll ans = -1;
   ll i = 0;
-  while (i, a.size()) {
+  while (i<a.size()) {
     if (a[i] == x) {
       ans = i;
       break;
