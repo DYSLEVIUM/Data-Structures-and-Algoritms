@@ -1,17 +1,22 @@
 template <typename T>
 class SegmentTree {
- public:
+ private:
   size_t leftmost, rightmost;
 
   SegmentTree<T>* leftChild;
   SegmentTree<T>* rightChild;
 
   T(*compa)
-  (T, T);
+  (const T&, const T&);
 
   T value;
 
-  SegmentTree(const size_t startIdx, const size_t endIdx, T* arr, T (*fun)(T, T)) : leftmost(startIdx), rightmost(endIdx), compa(fun) {
+  void recalculateVal() {
+    this->value = this->compa(this->leftChild->value, this->rightChild->value);
+  }
+
+ public:
+  SegmentTree(const size_t& startIdx, const size_t& endIdx, vector<T>& arr, T (*fun)(const T&, const T&)) : leftmost(startIdx), rightmost(endIdx), compa(fun) {
     if (this->leftmost == this->rightmost) {  //  leaf
       this->value = arr[this->leftmost];      //  filling the segment tree from left
 
@@ -28,11 +33,7 @@ class SegmentTree {
     }
   }
 
-  void recalculateVal() {
-    this->value = this->compa(this->leftChild->value, this->rightChild->value);
-  }
-
-  T rangeQuery(const size_t l, const size_t r) {
+  T rangeQuery(const size_t& l, const size_t& r) {
     //  disjoint
     if (l > this->rightmost || r < this->leftmost) return 0;
 
@@ -43,7 +44,7 @@ class SegmentTree {
     return this->compa(this->leftChild->rangeQuery(l, r), this->rightChild->rangeQuery(l, r));
   }
 
-  void pointUpdate(size_t idx, const T& val) {
+  void pointUpdate(const size_t& idx, const T& val) {
     if (this->leftmost == this->rightmost) {
       this->value = val;
       return;
