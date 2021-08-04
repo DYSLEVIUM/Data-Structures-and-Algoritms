@@ -115,7 +115,7 @@ inline void solve() {
   adjList.emplace_back(vpl{});
 
   auto dijkstra = [](vector<vpl>& gr, ll start) {
-    vl visited(gr.size(), false);
+    vector<bool> visited(gr.size(), false);
     vl dist(gr.size(), __LONG_LONG_MAX__);
 
     vl prev(gr.size(), -1);  //  this vector is used to calcultate the optimal path
