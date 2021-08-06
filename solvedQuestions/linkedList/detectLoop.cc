@@ -46,16 +46,32 @@ class Solution
 {
     public:
     //Function to check if the linked list has a loop.
+    //Time O(n)
+    //Space O(n)
     bool detectLoop(Node* head)
     {
-        // your code here
-        unordered_set<Node*> se;
-        while(head!=NULL){
-            if(se.find(head)==se.end()){
-                se.insert(head);
-            }else return true;
+	//Time O(n)
+    	//Space O(n)
+	    
+//         unordered_set<Node*> se;
+//         while(head!=NULL){
+//             if(se.find(head)==se.end()){
+//                 se.insert(head);
+//             }else return true;
             
-            head=head->next;
+//             head=head->next;
+//         }
+        
+//         return false;
+	    
+        //Time O(n)
+        //Space O(1)
+	Node *slow = head, *fast = head;
+        
+        while(fast!=NULL && slow!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow==fast) return true;
         }
         
         return false;
