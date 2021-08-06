@@ -82,16 +82,68 @@ class Solution
     {
         // code here
         // just remove the loop without losing any nodes
-        unordered_set<Node *> se;
         
-        while(head!=NULL){
-            if(se.find(head->next)==se.end()){
-                se.insert(head);
-            }else{
-                head->next=NULL;
+        //  Time O(n)
+        //  Space O(n)
+        
+        // unordered_set<Node *> se;
+        
+        // while(head!=NULL){
+        //     if(se.find(head->next)==se.end()){
+        //         se.insert(head);
+        //     }else{
+        //         head->next=NULL;
+        //     }
+        //     head=head->next;
+        // }
+        
+        //  Time O(n)
+        //  Space O(1)
+        auto removeLoop = [&head](Node* loopNode){
+            Node* p1 = loopNode;
+            Node* p2 = loopNode;
+            
+            //  count the number of nodes in the loop
+            int k=1, i;
+            while(p1->next!=p2){
+                p1=p1->next;
+                ++k;
             }
-            head=head->next;
-        }
+            
+            //  fix one pointer to headd
+            p1=head;
+            
+            //  other pointer to k nodes after head
+            p2=head;
+            while(k--) p2=p2->next;
+            
+            //  move both the pointers at the same pace, they will meet at the loop starting node
+            while(p2!=p1){
+                p1=p1->next;
+                p2=p2->next;
+            }
+            
+            //  get pointer to the last node
+            while(p2->next!=p1) p2=p2->next;
+            
+            //  remove the loop
+            p2->next=NULL;
+        };
+        
+        auto detectandRemove = [&head, &removeLoop](){
+            Node *slow = head, *fast = head;
+        
+            while(fast!=NULL && slow!=NULL && fast->next!=NULL){
+                slow = slow->next;
+                fast = fast->next->next;
+                if(slow==fast){
+                    removeLoop(slow);
+                    return;
+                }
+            }
+        };
+        
+        detectandRemove();
     }
 };
 
