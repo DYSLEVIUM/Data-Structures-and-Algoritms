@@ -134,9 +134,7 @@ bool solveSudoku(unsigned short int* board, unsigned short int r, unsigned short
 
     if (c == 9) return solveSudoku(board, r + 1, 0);
 
-    if (board[r * 9 + c] != 0) {
-        return solveSudoku(board, r, c + 1);
-    }
+    if (board[r * 9 + c] != 0) return solveSudoku(board, r, c + 1);
 
     fo(i, 9) {
         if (canPlace(board, r, c, i + 1)) {
