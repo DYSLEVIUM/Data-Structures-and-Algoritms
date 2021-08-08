@@ -128,9 +128,7 @@ bool canPlace(unsigned short int* board, unsigned short int r, unsigned short in
 }
 
 bool solveSudoku(unsigned short int* board, unsigned short int r, unsigned short int c) {
-    if (r == 9) {
-        return 1;
-    }
+    if (r == 9) return 1;
 
     if (c == 9) return solveSudoku(board, r + 1, 0);
 
