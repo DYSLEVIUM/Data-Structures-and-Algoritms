@@ -24,12 +24,12 @@ class Solution
 	        qu.pop();
 	        ans.push_back(fr);
 	        
-            for(int i=0;i<adj[fr].size();++i){
-                if(!visited[adj[fr][i]]){
-                    visited[adj[fr][i]]=true;
-                    qu.push(adj[fr][i]);
-                }
-            }
+			for(int i=0;i<adj[fr].size();++i){
+				if(!visited[adj[fr][i]]){
+					visited[adj[fr][i]]=true;
+					qu.push(adj[fr][i]);
+				}
+			}
 	    }
 	    
 	    return ans;
