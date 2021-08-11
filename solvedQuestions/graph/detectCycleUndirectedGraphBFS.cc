@@ -29,10 +29,10 @@ class Solution
 	            qu.pop();
 	            
 	            for(auto neighbour: adj[node]){
-    	            if(!visited[neighbour]){
-    	                visited[neighbour] = true;
-    	                qu.push({neighbour, node});
-    	            }else if(parent!=neighbour) return true;
+			    if(!visited[neighbour]){
+				visited[neighbour] = true;
+				qu.push({neighbour, node});
+			    }else if(parent!=neighbour) return true;
 	            }
 	        }
 	        
