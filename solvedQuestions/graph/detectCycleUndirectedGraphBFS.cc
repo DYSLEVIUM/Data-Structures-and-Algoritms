@@ -32,8 +32,7 @@ class Solution
     	            if(!visited[neighbour]){
     	                visited[neighbour] = true;
     	                qu.push({neighbour, node});
-    	            }else if(parent!=neighbour) 
-						return true;
+    	            }else if(parent!=neighbour) return true;
 	            }
 	        }
 	        
