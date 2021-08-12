@@ -111,7 +111,7 @@ inline void solve() {
 
     ll i = n - 1;  //  index of ordering array
 
-    auto dfs = [](ll at, vector<bool>& visited, vi& ordering, ll& i, vector<vi>& graph, auto&& dfs) -> void {
+    auto dfs = [&visited, &ordering, &graph, &i](const ll& at, const auto& dfs) -> void {
       visited[at] = true;
 
       vi edges = graph[at];
@@ -126,7 +126,7 @@ inline void solve() {
 
     fo(j, n) {
       if (!visited[j]) {
-        dfs(j, visited, ordering, i, graph, dfs);
+        dfs(j, dfs);
       }
     }
 
