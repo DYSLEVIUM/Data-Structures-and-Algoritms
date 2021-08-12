@@ -112,10 +112,10 @@ inline void solve() {
 
   //	building the graph
   adjList.emplace_back(vl{1, 4});
-  adjList.emplace_back(vl{0, 2, 4});
-  adjList.emplace_back(vl{1, 3});
   adjList.emplace_back(vl{2, 4});
-  adjList.emplace_back(vl{0, 1, 3});
+  adjList.emplace_back(vl{3});
+  adjList.emplace_back(vl{4});
+  adjList.emplace_back(vl{});
   adjList.emplace_back(vl{});
 
   auto topSort = [](const vvl& gr) {
