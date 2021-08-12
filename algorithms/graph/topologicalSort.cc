@@ -1,76 +1,81 @@
 #define _USE_MATH_DEFINES
 #pragma GCC optimize("Ofast,fast-math,unroll-loops")
 
-#include <algorithm>
-#include <bitset>
-#include <chrono>
-#include <cmath>
-#include <cstring>
-#include <ctime>
-#include <deque>
-#include <functional>
-#include <iomanip>
-#include <iostream>
-#include <iterator>
-#include <list>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <random>
-#include <set>
-#include <stack>
-#include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <utility>
-#include <vector>
+#ifdef DYSLEVIUM
+#include "dyslevium.h"
+#else
+#include <bits/stdc++.h>
+#endif
 
 typedef long long ll;
 typedef long double ld;
-typedef std::pair<int, int> pii;
-typedef std::pair<long, long> pl;
-typedef std::vector<int> vi;
+typedef std::pair<ll, ll> pl;
 typedef std::vector<ll> vl;
-typedef std::vector<pii> vpii;
 typedef std::vector<pl> vpl;
-typedef std::vector<vi> vvi;
 typedef std::vector<vl> vvl;
-typedef std::map<int, int> mii;
-typedef std::priority_queue<int> pqd;
-typedef std::priority_queue<int, vi, std::greater<int>> pqi;
+typedef std::map<ll, ll> mll;
+typedef std::priority_queue<ll> pqd;
+typedef std::priority_queue<ll, vl, std::greater<ll>> pqi;
 
 #define pb push_back
 #define eb emplace_back
 #define F first
 #define S second
-#define MOD (long long)1e9 + 7
-#define PI 3.14159265358979323846
-#define INF __builtin_inff()
+#define MOD (ll)(1e9 + 7)
 
-#define fo(i, n) for (ll i = 0; i < n; ++i)
-#define Fo(i, k, n) for (ll i = k; k < n ? i < n : i > n; k < n ? ++i : --i)
-#define allC(x) x.begin(), x.end()
-#define clr(x) memset(x, 0, sizeof(x))
-#define deb(x) std::cout << '\n' \
-                         << #x << " = " << x << '\n'
-#define sortall(x) sort(x.begin(), x.end())
+std::mt19937_64 RNG(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+
+//  macro functions
+#define fo(i, n) for (ll i = 0; i < (ll)n; ++i)
+#define Fo(i, k, n) for (ll i = k; k < (ll)n ? i < (ll)n : i > (ll)n; k < (ll)n ? ++i : --i)
+#define all(x) x.begin(), x.end()
 #define tr(it, a) for (auto it = a.begin(); it != a.end(); ++it)
 #define ps(x, y) std::fixed << std::setprecision(y) << x
 #define setbits(x) __builtin_popcountll(x)
 #define zerobits(x) __builtin_ctzll(x)
-#define mk(arr, n, type) type* arr = new type[n]
+#define modAdd(a, b) ((((a % MOD) + (b % MOD)) % MOD) + MOD) % MOD
+#define modSub(a, b) ((((a % MOD) - (b % MOD)) % MOD) + MOD) % MOD
+#define modMul(a, b) ((((a % MOD) * (b % MOD)) % MOD) + MOD) % MOD
 
-std::mt19937_64 rng(
-    std::chrono::high_resolution_clock::now().time_since_epoch().count());
+//  template functions
+template <typename T>
+inline T gcd(const T& a, const T& b) {
+  if (b) return gcd(b, a % b);
+  return a;
+}
+template <typename T>
+inline T binPowIter(T x, T n) {
+  T res = 1;
+  while (n) {
+    if (n & 1) res = modMul(res, x);
+    x = modMul(x, x);
+    n >>= 1;
+  }
+  return res % MOD;
+}
+template <typename T>
+inline T modInverse(const T& a) { return binPowIter(a, MOD - 2); }
+template <typename T>
+inline T modDiv(const T& a, const T& b) { return (modMul(a, modInverse(b)) + MOD) % MOD; }
 
+//  debuging
+#ifdef DYSLEVIUM
+#define deb(x) std::cerr << #x << " = " << x << '\n'
+#else
+#define deb(x)
+#endif
+
+//  initial setup
 inline void setup() {
   std::ios_base::sync_with_stdio(false);
-  std::cin.tie(NULL);
-  std::cout.tie(NULL);
+  std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
+  std::cerr.tie(nullptr);
 
-#ifdef LOCAL_PROJECT  // run with -DLOCAL_PROJECT during compilation
-  freopen("input.txt", "r", stdin);
-  // freopen("output.txt", "w", stdout);
+#ifdef DYSLEVIUM
+  freopen("input.in", "r", stdin);
+  freopen("output.out", "w", stdout);
+  freopen("error.err", "w", stderr);
 #endif
 }
 
@@ -79,61 +84,71 @@ inline void solve();
 int main(int argc, char* argv[]) {
   setup();
 
+  auto startTime = std::chrono::high_resolution_clock::now();
+
   ll t = 1;
   // std::cin >> t;
 
   while (t--) solve();
 
+  auto endTime = std::chrono::high_resolution_clock::now();
+
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+#ifdef DYSLEVIUM
+  std::cerr << "Time: " << duration.count();
+#endif
+
   return 0;
 }
 
 using namespace std;
-//  Compile and run: g++ -g -Wshadow -Wall practice.cpp -DLOCAL_PROJECT -o a -Ofast -Wno-unused-result && ./a
+
+//  Compile and run: g++ -std=c++17 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a -Ofast -Wno-unused-result && ./a
 
 inline void solve() {
-  //  topological sort is valid for DAGs(Directed Acyclic Graphs)
-  //  to verify if a graph doesn't contain a directed cycle, we can use Tarjan's strongly connected component algorithm
-
-  vector<vi> adjList;  //	graph as adjency List
+  //  topsort is always valid in DAG
+  vvl adjList;  //	graph as adjency List
 
   //	building the graph
-  adjList.emplace_back(vi{1, 4});
-  adjList.emplace_back(vi{0, 2, 4});
-  adjList.emplace_back(vi{1, 3});
-  adjList.emplace_back(vi{2, 4});
-  adjList.emplace_back(vi{0, 1, 3});
-  adjList.emplace_back(vi{});
+  adjList.emplace_back(vl{1, 4});
+  adjList.emplace_back(vl{0, 2, 4});
+  adjList.emplace_back(vl{1, 3});
+  adjList.emplace_back(vl{2, 4});
+  adjList.emplace_back(vl{0, 1, 3});
+  adjList.emplace_back(vl{});
 
-  auto topSort = [](vector<vi>& graph) {
-    ll n = graph.size();             //  number of nodes
-    vector<bool> visited(n, false);  //  all nodes are initially not visited
-    vi ordering(n, -1);
+  auto topSort = [](const vvl& gr) {
+    vector<bool> visited(gr.size(), false);
+    stack<ll> ordering;
 
-    ll i = n - 1;  //  index of ordering array
+    auto dfs = [&gr, &visited, &ordering](const ll& node, const auto& dfs) -> void {
+      visited[node] = true;
 
-    auto dfs = [&visited, &ordering, &graph, &i](const ll& at, const auto& dfs) -> void {
-      visited[at] = true;
-
-      vi edges = graph[at];
-
-      tr(edge, edges) {
-        if (!visited[*edge]) {
-          dfs(*edge, visited, ordering, i, graph, dfs);
-        }
+      for (auto neighbour : gr[node]) {
+        if (!visited[neighbour]) dfs(neighbour, dfs);
       }
-      ordering[i--] = at;
+      ordering.emplace(node);
     };
 
-    fo(j, n) {
-      if (!visited[j]) {
-        dfs(j, dfs);
+    fo(i, gr.size()) {
+      if (!visited[i]) {
+        dfs(i, dfs);
       }
     }
 
-    return ordering;
+    vl ans;
+    while (!ordering.empty()) {
+      ll tp = ordering.top();
+      ordering.pop();
+
+      ans.emplace_back(tp);
+    }
+
+    return ans;
   };
 
-  auto v = topSort(adjList);
+  auto order = topSort(adjList);
 
-  tr(it, v) cout << *it << ' ';
+  tr(it, order) cout << *it << ' ';
 }
