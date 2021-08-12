@@ -8,24 +8,24 @@ public:
 	bool isBipartite(int V, vector<int>adj[]){
 	    // Code here
 	    
-	    vector<int> col(V, -1);
+	    vector<int> color(V, -1);
 	    
-	    auto checkBi = [&adj, &col](int node){
+	    auto checkBi = [&adj, &color](int node){
 	        queue<int> qu;
 	        
 	        qu.push(node);
-	        col[node]=0;
+	        color[node]=0;
 	        
 	        while(!qu.empty()){
 	            int fr = qu.front();
 	            qu.pop();
 	            
 	            for(auto neighbour: adj[fr]){
-	                if(col[neighbour]==-1){
-	                    col[neighbour]=1-col[fr];
+	                if(color[neighbour]==-1){
+	                    color[neighbour]=1-color[fr];
 	                    qu.push(neighbour);
 	                }else{
-	                    if(col[neighbour]==col[fr]) return false;
+	                    if(color[neighbour]==color[fr]) return false;
 	                }
 	            }
 	        }
@@ -34,7 +34,7 @@ public:
 	    };
 	    
 	    for(int i=0;i<V;++i){
-	        if(col[i]==-1){
+	        if(color[i]==-1){
 	            if(!checkBi(i)) return false;
 	        }
 	    }
