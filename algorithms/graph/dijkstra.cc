@@ -122,7 +122,7 @@ inline void solve() {
 
     dist[start] = 0;
 
-    priority_queue<pl> pq;
+    priority_queue<pl, vector<pl>, greater<pl>> pq;
     pq.emplace(0, start);
 
     while (!pq.empty()) {
