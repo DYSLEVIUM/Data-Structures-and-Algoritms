@@ -121,7 +121,6 @@ inline void solve() {
   }
 
   auto dijkstra = [](const vector<vpl>& gr, const ll& stNode = 1) {
-    // vector<bool> visited(gr.size(), false);
     vl dist(gr.size(), LONG_LONG_MAX);
 
     vl prev(gr.size(), -1);
