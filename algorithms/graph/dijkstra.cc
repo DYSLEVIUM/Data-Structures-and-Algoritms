@@ -115,7 +115,6 @@ inline void solve() {
   adjList.emplace_back(vpl{});
 
   auto dijkstra = [](vector<vpl>& gr, ll start) {
-    vector<bool> visited(gr.size(), false);
     vl dist(gr.size(), __LONG_LONG_MAX__);
 
     vl prev(gr.size(), -1);  //  this vector is used to calcultate the optimal path
@@ -130,13 +129,9 @@ inline void solve() {
       ll idx = pq.top().second;
       pq.pop();
 
-      //  using visited so that each node is processed once
-      visited[idx] = true;
-
       if (dist[idx] < minDist) continue;  //optimization, if we already have a minimum distance, we skip the below, which ignores the stale pairs in PQ
 
       tr(edge, gr[idx]) {
-        if (visited[edge->first]) continue;
         ll newDist = dist[idx] + edge->second;
 
         if (newDist < dist[edge->first]) {
