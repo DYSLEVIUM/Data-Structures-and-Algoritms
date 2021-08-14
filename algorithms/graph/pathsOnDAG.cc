@@ -106,82 +106,6 @@ using namespace std;
 
 //  Compile and run: g++ -std=c++17 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a -Ofast -Wno-unused-result && ./a
 
-// inline void solve1() {
-//   vvl adjList;  //	graph as adjency List
-
-//   //	building the graph
-//   adjList.emplace_back(vl{1, 4});
-//   adjList.emplace_back(vl{0, 2, 4});
-//   adjList.emplace_back(vl{1, 3});
-//   adjList.emplace_back(vl{2, 4});
-//   adjList.emplace_back(vl{0, 1, 3});
-//   adjList.emplace_back(vl{});
-
-//   auto topSort = [](vvl& graph) {
-//     ll n = graph.size();             //  number of nodes
-//     vector<bool> visited(n, false);  //  all nodes are initially not visited
-//     vl ordering(n, -1);
-
-//     ll i = n - 1;  //  index of ordering array
-
-//     auto dfs = [](ll at, vector<bool>& visited, vl& ordering, ll& i, vvl& graph, auto&& dfs) -> void {
-//       visited[at] = true;
-
-//       vl edges = graph[at];
-
-//       tr(edge, edges) {
-//         if (!visited[*edge]) {
-//           dfs(*edge, visited, ordering, i, graph, dfs);
-//         }
-//       }
-//       ordering[i--] = at;
-//     };
-
-//     fo(j, n) {
-//       if (!visited[j]) {
-//         dfs(j, visited, ordering, i, graph, dfs);
-//       }
-//     }
-
-//     return ordering;
-//   };
-
-//   //  the Single Source Shortest Path (SSSP) problem can be solved efficiently on a DAG in O(V+E) time. This is due to the fact that the nodes can be ordered in a topological ordering and processed sequentially
-
-//   //  initially the distances are infinite, and at each iteration we compute the minimum distance to that node and if we get a minimum, we replace it
-
-//   auto sssp = [&topSort](auto gr, ll start) {
-//     auto topSortSequence = topSort(gr);
-
-//     vl dist(topSortSequence.size(), __LONG_LONG_MAX__);  //  distance vector to keep the distance from start node to current node and initializing it with infinity
-
-//     dist[start] = 0;
-
-//     fo(i, topSortSequence.size()) {
-//       ll nodeIndex = topSortSequence[i];
-
-//       //  this condition is necessary so that we start from the startNode
-//       if (dist[nodeIndex] != __LONG_LONG_MAX__) {
-//         vl adjEdges = gr[nodeIndex];
-
-//         if (!adjEdges.empty()) {
-//           tr(edge, adjEdges) {
-//             ll newDist = dist[nodeIndex] + edge->weight;
-
-//             dist[edge->to] = min(dist[edge->to], newDist);
-//           }
-//         }
-//       }
-//     }
-
-//     return dist;
-//   };
-
-//   auto path = sssp(adjList, 0);
-
-//   //  similar to the SSSP we can compute the Longest Path on DAG in O(V+E) by negating each edge's weight, then find the shortest path and negate the result
-// }
-
 inline void solve() {
   vector<vpl> adjList;
 
@@ -192,6 +116,10 @@ inline void solve() {
   adjList.eb(vpl{});
   adjList.eb(vpl{pl{2, 2}, pl{5, 4}});
   adjList.eb(vpl{pl{3, 1}});
+
+  //  the Single Source Shortest Path (SSSP) problem can be solved efficiently on a DAG in O(V+E) time. This is due to the fact that the nodes can be ordered in a topological ordering and processed sequentially
+
+  //  initially the distances are infinite, and at each iteration we compute the minimum distance to that node and if we get a minimum, we replace it
 
   auto sssp = [](const vector<vpl>& gr, const ll& stNode, const ll& endNode) {
     auto topSortSequence = [&gr]() {
@@ -224,6 +152,7 @@ inline void solve() {
     fo(i, topSortSequence.size()) {
       ll node = topSortSequence[i];
 
+      //  this condition is necessary so that we start from the startNode
       if (dist[node] != LONG_LONG_MAX) {
         for (auto neighbour : gr[node]) {
           dist[neighbour.first] = min(dist[neighbour.first], dist[node] + neighbour.second);  //  minimum of previous distance and previous + this node
@@ -235,4 +164,6 @@ inline void solve() {
   };
 
   cout << sssp(adjList, 0, 1) << '\n';
+
+  //  similar to the SSSP we can compute the Longest Path on DAG in O(V+E) by negating each edge's weight, then find the shortest path and negate the result
 }
