@@ -29,7 +29,8 @@ public:
 //       }
       
 //       return k;
-      
+        
+        //  the next numbers will move by total repeated in prefix of idx = i
         int cnt = 0;
         for(int i = 1; i < nums.size(); i++){
             if(nums[i] == nums[i-1]) cnt++;
