@@ -109,11 +109,13 @@ using namespace std;
 //  time complexity is o(α(N)), where α(N) is the inverse Ackermann functions which grows very slowly => equivalent to O(4) for N < 1e600 with path compression and union by size
 template <typename T>
 class DSU {
+ private:
   vector<T> rank;
   vector<T> parent;
 
+ public:
   // store other info as required
-  DSU(size_t n) {
+  DSU(const size_t& n) {
     this->rank.resize(n);
     fill(all(this->rank), 0);
 
@@ -121,14 +123,14 @@ class DSU {
     iota(all(this->parent), 0);
   }
 
-  T find(T node) {
+  T find(const T& node) {
     //  path compression
-    return this->parent[node] = (this->parent[node] == node ? node : find(this->parent[node]));
+    return this->parent[node] = (this->parent[node] == node ? node : this->find(this->parent[node]));
   }
 
-  void merge(T node1, T node2) {
-    node1 = find(node1);
-    node2 = find(node2);
+  void merge(const T& node1, const T& node2) {
+    node1 = this->find(node1);
+    node2 = this->find(node2);
 
     //  both the nodes are present in the same set
     if (node1 == node2) return;
