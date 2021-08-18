@@ -128,7 +128,7 @@ class DSU {
     return this->parent[node] = (this->parent[node] == node ? node : this->find(this->parent[node]));
   }
 
-  void merge(const T& node1, const T& node2) {
+  void merge(T node1, T node2) {
     node1 = this->find(node1);
     node2 = this->find(node2);
 
