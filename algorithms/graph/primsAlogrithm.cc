@@ -187,8 +187,9 @@ inline void solve() {
 
       if (mstSet[v] == false && weight < key[v]) {  //  if node v is not part of the MST and the weight associated is less
         parent[v] = u;
-        minHeap.push({key[v], v});
         key[v] = weight;
+        minHeap.push({key[v], v});
+
       }
     }
   }
