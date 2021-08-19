@@ -13,7 +13,7 @@ class Solution
         // vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size(), false));
     
         auto dfs = [&grid](const int& i, const int& j, const auto& dfs){
-            if(i<0 || i>=grid.size() || j<0 || j>=grid[0].size() || grid[i][j]=='0') return;
+            if(i<0 || i>=grid.size() || j<0 || j>=grid[0].size() || grid[i][j]=='0') return;    //  check for visited here also
             
             // visited[i][j] = true;
             grid[i][j] = '0';   //  added this for space optimization
