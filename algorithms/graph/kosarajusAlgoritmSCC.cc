@@ -146,8 +146,6 @@ inline void solve() {
 
   reverse(all(topologicalOrder));
 
-  // tr(it, topologicalOrder) cout << *it << ' ';
-
   //  transpose the graph
   vvl transpose(adjL.size());
 
@@ -156,14 +154,6 @@ inline void solve() {
       transpose[adjL[i][j]].eb(i);
     }
   }
-
-  // fo(i, transpose.size()) {
-  //   cout << i << "=>";
-  //   fo(j, transpose[i].size()) {
-  //     cout << transpose[i][j] << ' ';
-  //   }
-  //   cout << '\n';
-  // }
 
   //  dfs on the topological ordering on the transpose of the graph
   vector<bool> visited(transpose.size(), false);
