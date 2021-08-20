@@ -16,8 +16,8 @@ class ListNode {
     }
 
     virtual ~ListNode() {
-        next = nullptr;
         delete next;
+        next = nullptr;
     }
 };
 
