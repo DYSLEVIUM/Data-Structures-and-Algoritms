@@ -106,13 +106,15 @@ using namespace std;
 
 //  Compile and run: g++ -std=c++17 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a -Ofast -Wno-unused-result && ./a
 
+//  https://www.geeksforgeeks.org/number-subarrays-m-odd-numbers/
+
 inline void solve() {
   vl a{2, 2, 5, 6, 9, 2, 11};
   ll k = 2;
 
   auto countSubArrays = [](const vl& x, ll& k) {
     ll cnt = 0;
-    vl pre(x.size() + 1, 0);
+    vl pre(x.size() + 1, 0);  //  prefix array contains number of prefixes which has i odd numbers
     ll odd = 0;
 
     fo(i, x.size()) {
