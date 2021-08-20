@@ -189,7 +189,6 @@ inline void solve() {
         parent[v] = u;
         key[v] = weight;
         minHeap.push({key[v], v});
-
       }
     }
   }
