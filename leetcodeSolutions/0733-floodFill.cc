@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        if(image[sr][sc]==newColor) return image;
+        if(image[sr][sc]==newColor) return image;   //  if the source color is the same as the newColor, nothing to do
         
         vector<vector<int>> ds = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
         
@@ -11,7 +11,7 @@ public:
             return true;
         };
                 
-        int srcCol = image[sr][sc];
+        int srcCol = image[sr][sc]; //  storing the color of the source node, so as to fill the other neighbours
         
         queue<vector<int>> qu;
         qu.push({sr, sc});
