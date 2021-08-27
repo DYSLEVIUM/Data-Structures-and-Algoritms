@@ -83,7 +83,7 @@ inline void solve() {
 
   Fo(i, 1, arr.size()) {
     fo(j, i) {
-      if (arr[i] > arr[j] && lis[i] <= lis[j]) {
+      if (arr[i] > arr[j] && lis[i] < lis[j] + 1) {
         lis[i] = lis[j] + 1;
       }
     }
