@@ -32,4 +32,12 @@
 # this also doesn't return null when the count is not present
 # SELECT Salary AS SecondHighestSalary FROM Employee E1 WHERE 1 = (SELECT COUNT(DISTINCT Salary) FROM Employee E2 WHERE E2.Salary > E1.Salary);
 
-SELECT MAX(Salary) AS SecondHighestSalary FROM Employee WHERE Salary NOT IN (SELECT MAX(Salary) FROM Employee);
+# SELECT MAX(Salary) AS SecondHighestSalary FROM Employee WHERE Salary NOT IN (SELECT MAX(Salary) FROM Employee);
+
+# this will give wrong answer if offset is more than more than total, we can overcome it by making it temporary table
+# SELECT DISTINCT Salary AS SecondHighestSalary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1;
+
+# SELECT (SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1) AS SecondHighestSalary;
+
+# we can also use the IFNULL function
+SELECT IFNULL((SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1), NULL) AS SecondHighestSalary;
