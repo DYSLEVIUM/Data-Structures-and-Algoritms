@@ -2,7 +2,7 @@
 
 # common table expression solution // doesn't return null as when rank is not present
 # WITH TMP AS(
-#     SELECT Salary, DENSE_RANK() OVER (ORDER BY Salary DESC) as DENSERANK FROM Employee
+#     SELECT Salary, DENSE_RANK() OVER (ORDER BY Salary DESC) AS DENSERANK FROM Employee
 # )
 # SELECT Salary AS SecondHighestSalary FROM TMP WHERE TMP.DENSERANK=2;
 
