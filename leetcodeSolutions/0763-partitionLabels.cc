@@ -5,7 +5,7 @@ public:
         
         for(int i=0;i<26;++i) fa[i] = INT_MIN;
         
-        for(int i=0;i<s.length();++i) fa[s[i]-'a'] = max(i, fa[s[i]-'a']);
+        for(int i=0;i<s.length();++i) fa[s[i]-'a'] = i;
         
         vector<int> ans;
         
