@@ -5,9 +5,7 @@ public:
         if(nums.size()==1) return nums[0];
         if(nums.size()==2) return max(nums[0], nums[1]);
         if(nums.size()==3) return max({nums[0], nums[1], nums[2]});
-        
-        int ans = INT_MIN;
-        
+
         //  case 1: take first element and don't take the last element
         vector<int> dp1(nums.size());
         
