@@ -151,5 +151,5 @@ inline void solve() {
     }
   };
 
-  build(0, 0, sz - 1, build);
+  build(1, 0, sz - 1, build);   //  start vertex from 1
 }
