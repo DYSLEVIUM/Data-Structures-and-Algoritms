@@ -18,7 +18,7 @@ public:
                 
                 ++taken;
                 
-                if(taken%sz==0){
+                if(taken==sz){
                     ans.push_back(currAns);
                     taken=0;
                 }
