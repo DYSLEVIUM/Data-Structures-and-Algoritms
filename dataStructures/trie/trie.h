@@ -67,7 +67,7 @@ class Trie {
   void remove(string data) {
     if (this->root == nullptr) return;
 
-    auto removeHelper = [&](Node* currNode, string data, ll idx = 0, const auto& removeHelper) -> bool {
+    auto removeHelper = [&](const auto& removeHelper, Node* currNode, string data, ll idx = 0) -> bool {
       //  end of the string
       if ((ll)data.size() == idx && currNode->isLeaf) {
         if (!this->haveChildren()) {
@@ -81,7 +81,7 @@ class Trie {
         }
       } else {
         // recur for the node corresponding to the next character in the string and if it returns true, delete the current node if it is non-leaf
-        if (currNode->mp.find(data[idx]) != currNode->mp.end() && removeHelper(currNode->mp[data[idx]], data, idx + 1, removeHelper) && currNode->isLeaf == false) {
+        if (currNode->mp.find(data[idx]) != currNode->mp.end() && removeHelper(removeHelper, currNode->mp[data[idx]], data, idx + 1) && currNode->isLeaf == false) {
           if (!this->haveChildren()) {
             delete currNode;
             currNode = nullptr;
@@ -94,7 +94,7 @@ class Trie {
       return false;
     };
 
-    removeHelper(this->root, data, 0, removeHelper);
+    removeHelper(removeHelper, this->root, data, 0);
   }
 
   ~Trie() {
