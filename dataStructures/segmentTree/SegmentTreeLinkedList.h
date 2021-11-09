@@ -6,17 +6,17 @@ class SegmentTree {
   SegmentTree<T>* leftChild;
   SegmentTree<T>* rightChild;
 
-  T(*compa)
+  T(*comp)
   (const T&, const T&);
 
   T value;
 
   void recalculateVal() {
-    this->value = this->compa(this->leftChild->value, this->rightChild->value);
+    this->value = this->comp(this->leftChild->value, this->rightChild->value);
   }
 
  public:
-  SegmentTree(const size_t& startIdx, const size_t& endIdx, vector<T>& arr, T (*fun)(const T&, const T&)) : leftmost(startIdx), rightmost(endIdx), compa(fun) {
+  SegmentTree(const size_t& startIdx, const size_t& endIdx, vector<T>& arr, T (*fun)(const T&, const T&)) : leftmost(startIdx), rightmost(endIdx), comp(fun) {
     if (this->leftmost == this->rightmost) {  //  leaf
       this->value = arr[this->leftmost];      //  filling the segment tree from left
 
@@ -41,7 +41,7 @@ class SegmentTree {
     if (l <= this->leftmost && r >= this->rightmost) return this->value;
 
     //  partial overlap
-    return this->compa(this->leftChild->rangeQuery(l, r), this->rightChild->rangeQuery(l, r));
+    return this->comp(this->leftChild->rangeQuery(l, r), this->rightChild->rangeQuery(l, r));
   }
 
   void pointUpdate(const size_t& idx, const T& val) {
