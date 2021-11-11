@@ -10,7 +10,7 @@ class FenwickTree {
   (const T&, const T&);
 
  public:
-  FenwickTree(vector<T>& arr, T (*fun)(const T&, const T&)) : _size(arr.size() + 1), comp(fun) {
+  FenwickTree(const vector<T>& arr, T (*fun)(const T&, const T&)) : _size(arr.size() + 1), comp(fun) {
     this->_data.assign(this->_size + 1, 0);
 
     Fo(i, 1, this->_size) this->update(i, arr[i - 1]);
@@ -28,7 +28,7 @@ class FenwickTree {
     return val;
   }
 
-  void update(size_t x, T delta) {
+  void update(size_t x, const T& delta) {
     ++x;  // 0 to 1 based indexing
     while (x < this->_size) {
       this->_data[x] = comp(this->_data[x], delta);  // add the delta to all the nodes, updating the subtrees
