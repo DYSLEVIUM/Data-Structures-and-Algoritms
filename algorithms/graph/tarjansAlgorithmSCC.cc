@@ -143,7 +143,7 @@ inline void solve() {
 
   vvl SCC;
 
-  auto find_SCC_tarjan = [&SCC](vvl gr) {
+  auto find_SCC_tarjan = [&SCC](const vvl& gr) {
     vl disc(N, -1);  //  -1 represents not visited
     vl low_link(N);
 
