@@ -98,7 +98,7 @@ inline void solve() {
   //  tarjan's algorithm to find Strongly Connected Components
 
   /*
-    Types of edeges:
+    Types of edges:
       1. Tree Edge: (U, V) => U is parent and V is child
       2. Forward Edge: (U, V) => U is ancestor and V is descendent
       3. Back Edge: (U, V) => U is the descendant and V is the ancestor
