@@ -95,7 +95,7 @@ using namespace std;
 // clang-format on
 
 inline void solve() {
-  //  tarjan's algorithm to find Strongly Connected Components
+  //  tarjan's algorithm to find Strongly Connected Components O(V+E)
 
   /*
     Types of edges:
