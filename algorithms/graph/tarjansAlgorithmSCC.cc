@@ -153,7 +153,7 @@ inline void solve() {
 
     ll time = 0;
 
-    auto dfs = [&](const auto& dfs, const ll u) -> void {
+    auto dfs = [&](const auto& dfs, const ll& u) -> void {
       disc[u] = low_link[u] = time++;
       st.push(u);
       present_in_stack[u] = true;
