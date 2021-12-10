@@ -9,6 +9,9 @@ public:
             return ((x % MOD) + (y % MOD)) % MOD;
         };
         
+        //  f signifies fully filled
+        //  p signifies partially filled
+        
         int f_prev = 1;
         int f_curr = 2;
         int p_curr = 1;
