@@ -29,7 +29,7 @@ class Trie {
 
   Trie() : root(nullptr) {}
 
-  void insert(string data) {
+  void insert(const string& data) {
     //  if the trie is intially empty
     if (this->root == nullptr) this->root = new Node();
 
@@ -49,13 +49,13 @@ class Trie {
     currNode->isLeaf = true;
   }
 
-  bool find(string data) {
+  bool find(const string& data) {
     if (this->root == nullptr) return false;
 
     Node* currNode = this->root;
 
     fo(i, data.size()) {
-      //  if node doesn;t exist, data is not present
+      //  if node doesn't exist, data is not present
       if (currNode->mp.find(data[i]) == currNode->mp.end()) return false;
 
       currNode = currNode->mp[data[i]];
@@ -64,7 +64,7 @@ class Trie {
     return currNode->isLeaf;
   }
 
-  void remove(string data) {
+  void remove(const string& data) {
     if (this->root == nullptr) return;
 
     auto removeHelper = [&](const auto& removeHelper, Node* currNode, string data, ll idx = 0) -> bool {
