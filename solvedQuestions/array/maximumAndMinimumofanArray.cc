@@ -74,9 +74,10 @@ inline void solve() {
   auto getMinMax = [](ll* a, ll lo, ll hi, auto&& getMinMax) -> pl {
     pl minMax;
 
-    if (lo == hi) minMax.first = a[lo];
+    if (lo == hi) minMax.first = a[lo], minMax.second = a[lo];
 
-    if (lo + 1 == hi) {
+    //  when there are only two elements in this sub-problem
+    if (lo + 1 == hi) { 
       minMax.first = min(a[hi], a[lo]);
       minMax.second = max(a[hi], a[lo]);
 
@@ -86,7 +87,6 @@ inline void solve() {
     ll mid = lo + (hi - lo) / 2;
 
     pl le = getMinMax(a, lo, mid, getMinMax);
-
     pl ri = getMinMax(a, mid, hi, getMinMax);
 
     minMax.first = min(le.first, ri.first);
