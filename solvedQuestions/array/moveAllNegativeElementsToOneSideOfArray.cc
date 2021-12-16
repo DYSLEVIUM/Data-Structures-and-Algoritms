@@ -96,15 +96,13 @@ using namespace std;
 // clang-format on
 
 inline void solve() {
-  vl a{-12, 11, -13, -5, 6, -7, 5, -3, -6};
+  vl a{-12, -11, -13, -5, 6, 7, 5, 3, 6};
 
   ll ptr1 = 0, ptr2 = a.size() - 1;
 
   while (ptr1 < ptr2) {
     while (ptr1 < ptr2 && a[ptr1] < 0) ++ptr1;
     while (ptr1 < ptr2 && a[ptr2] > 0) --ptr2;
-
-    if (ptr1 >= ptr2) break;
 
     swap(a[ptr1++], a[ptr2--]);
   }
