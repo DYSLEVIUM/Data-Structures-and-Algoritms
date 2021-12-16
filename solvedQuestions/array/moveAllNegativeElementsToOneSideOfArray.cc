@@ -103,6 +103,9 @@ inline void solve() {
   while (ptr1 < ptr2) {
     while (ptr1 < ptr2 && a[ptr1] < 0) ++ptr1;
     while (ptr1 < ptr2 && a[ptr2] > 0) --ptr2;
+
+    if (ptr1 >= ptr2) break;
+
     swap(a[ptr1++], a[ptr2--]);
   }
 
