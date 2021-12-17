@@ -7,136 +7,94 @@ using namespace std;
  // } Driver Code Ends
 // User function Template for C++
 
-typedef long long ll;
-typedef long double ld;
-typedef std::pair<ll, ll> pl;
-typedef std::vector<ll> vl;
-typedef std::vector<pl> vpl;
-typedef std::vector<vl> vvl;
-typedef std::map<ll, ll> mll;
-typedef std::priority_queue<ll> pqd;
-typedef std::priority_queue<ll, vl, std::greater<ll>> pqi;
-
-#define pb push_back
-#define eb emplace_back
-#define F first
-#define S second
-#define MOD (ll)(1e9 + 7)
-
-std::mt19937_64 RNG(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-
-//  macro functions
-#define fo(i, n) for (ll i = 0; i < (ll)n; ++i)
-#define Fo(i, k, n) for (ll i = k; k < (ll)n ? i < (ll)n : i > (ll)n; k < (ll)n ? ++i : --i)
-#define all(x) x.begin(), x.end()
-#define tr(it, a) for (auto it = a.begin(); it != a.end(); ++it)
-#define ps(x, y) std::fixed << std::setprecision(y) << x
-#define setbits(x) __builtin_popcountll(x)
-#define zerobits(x) __builtin_ctzll(x)
-#define modAdd(a, b) ((((a % MOD) + (b % MOD)) % MOD) + MOD) % MOD
-#define modSub(a, b) ((((a % MOD) - (b % MOD)) % MOD) + MOD) % MOD
-#define modMul(a, b) ((((a % MOD) * (b % MOD)) % MOD) + MOD) % MOD
-
-class Trie {
-  class Node {
-    bool isLeaf;
-
-    unordered_map<char, Node*> mp;
-
-    Node() : isLeaf(false) {}
-
-    virtual ~Node() {
-      for (auto it : mp) {
-        delete it.second;
-        it.second = nullptr;
+class Trie{
+  class Node{
+      bool is_leaf;
+      unordered_map<char, Node*> mp;
+      
+      Node(): is_leaf(false) {}
+      
+      virtual ~Node(){
+        for(auto& it: mp){
+            delete it.second;
+            it.second = nullptr;
+        }
       }
-    }
-
-    friend class Trie;
+      
+      friend class Trie;
   };
-
-  bool haveChildren() {
-    for (auto it : this->root->mp) {
-      if (it.second != nullptr) return true;
+  
+  bool have_children(){
+    for(auto& it: this->root->mp){
+        if(it.second!=nullptr) return true;
     }
-
     return false;
   }
-
- public:
+  
   Node* root;
-
-  Trie() : root(nullptr) {}
-
-  void insert(string data) {
-    //  if the trie is intially empty
-    if (this->root == nullptr) this->root = new Node();
-
-    Node* currNode = this->root;
-
-    fo(i, data.size()) {
-      //  create a node if the path doesn't exist
-      if (currNode->mp.find(data[i]) == currNode->mp.end()) {
-        currNode->mp[data[i]] = new Node();
-      }
-
-      //  go to next node
-      currNode = currNode->mp[data[i]];
+  
+  public:
+  
+  Trie(): root(nullptr){}
+  
+  void insert(const string& data){
+    if(this->root==nullptr) this->root = new Node();
+    
+    Node* curr_node = this->root;
+  
+    for(auto& ch:data){
+        if(curr_node->mp.find(ch)==curr_node->mp.end()) curr_node->mp[ch] = new Node();
+        
+        curr_node = curr_node->mp[ch];
     }
-
-    //  after inserting the word, it is valid
-    currNode->isLeaf = true;
-  }
-
-  bool find(string data) {
-    if (this->root == nullptr) return false;
-
-    Node* currNode = this->root;
-
-    fo(i, data.size()) {
-      //  if node doesn;t exist, data is not present
-      if (currNode->mp.find(data[i]) == currNode->mp.end()) return false;
-
-      currNode = currNode->mp[data[i]];
-    }
-
-    return currNode->isLeaf;
+    
+    curr_node->is_leaf = true;
   }
   
-  vector<string> findSubTree(string data){
-      vector<string> res;
-      if(this->root==nullptr) return res;
+  bool find(const string& data){
+      if(this->root==nullptr) return false;
       
-      Node* currNode = this->root;
+      Node* curr_node = this->root;
       
-      int match = 0;
-      //    go to the last possible ans char
-      fo(i, data.size()){
-          if(currNode->mp.find(data[i])==currNode->mp.end()) break;
-            
-          ++match;
-          currNode = currNode->mp[data[i]];
+      for(auto& ch:data){
+          if(curr_node->mp.find(ch)==curr_node->mp.end()) return false;
+          
+          curr_node = curr_node->mp[ch];
       }
       
-      //    do dfs from this point
-      auto dfs = [&](const Node* node, const string currAns,const auto& dfs)->void{
-        if(node->isLeaf) res.emplace_back(currAns);
+      return curr_node->is_leaf;
+  }
+  
+  vector<string> get_matching(const string str){
+      if(this->root==nullptr) return vector<string>(1, "0");
+      
+      Node* curr_node = this->root;
+      
+      for(auto& ch:str){
+          if(curr_node->mp[ch]==nullptr) return vector<string>(1, "0");
+          curr_node = curr_node->mp[ch];
+      }
+      
+      vector<string> ans;
+      
+      auto dfs = [&ans](const auto& dfs, const Node* const new_node, const string& curr_str)->void{
+        if(new_node->is_leaf) ans.push_back(curr_str);
         
-        if(this->haveChildren()==false) return;
-        
-        for(auto x: node->mp) dfs(x.second, currAns+x.first, dfs);
+        for(auto& it:new_node->mp){
+            if(it.second!=nullptr) dfs(dfs, it.second, curr_str + it.first);
+        }
       };
       
-      if(match==data.size()) dfs(currNode, data, dfs);
+      dfs(dfs, curr_node, str);
       
-      sort(all(res));
+      sort(ans.begin(), ans.end());
       
-      if(res.size()==0) res.emplace_back("0");
+      if(ans.size()==0) ans.push_back("0");
       
-      return res;
+      return ans;
   }
-
-  ~Trie() {
+  
+  ~Trie(){
     delete this->root;
     this->root = nullptr;
   }
@@ -148,16 +106,16 @@ public:
     {
         // code here
         
-        Trie contactList;
+        Trie contact_list;
         
-        for(int i=0;i<n;++i) contactList.insert(contact[i]);
-        
+        for(int i=0;i<n;++i) contact_list.insert(contact[i]);
+    
         vector<vector<string>> ans;
         
-        string temp = "";
-        for(auto x: s){
-            temp += x;
-            ans.emplace_back(contactList.findSubTree(temp));
+        string curr_s = "";
+        for(auto& ch:s){
+            curr_s += ch;
+            ans.push_back(contact_list.get_matching(curr_s));
         }
         
         return ans;
