@@ -9,33 +9,39 @@ class Solution
     //Function to return a list of integers denoting spiral traversal of matrix.
     vector<int> spirallyTraverse(vector<vector<int> > matrix, int r, int c) 
     {
-        // code here
         vector<int> ans;
+
+        //  empty matrix
+        if(matrix.size() == 0) return ans;
         
-        int row = 0, col = 0;
+        int rows = matrix.size(), cols = matrix[0].size();
         
-        while(row<r && col<c){
-            //  print first row
-            for(int j=col;j<c;++j) ans.push_back(matrix[row][j]);
-            ++row;
+        int top = 0, left = 0, bottom = rows - 1, right = cols - 1;
+        
+        while(top<=bottom && left<=right){
+            //  top row
+            for(int j=left;j<=right;++j) ans.push_back(matrix[top][j]);
+            ++top;
             
-            // print the last column
-            for(int i=row;i<r;++i) ans.push_back(matrix[i][c-1]);
-            --c;
+            //  checking this condition again as only a single row matrix can exist itself
+            if(top>bottom) break;
             
-            // print the last row from the remaining rows
-            if(row < r){
-                for(int j=c-1;j>=col;--j) ans.push_back(matrix[r-1][j]);
-                --r;
-            }
+            //  right column
+            for(int i=top;i<=bottom;++i) ans.push_back(matrix[i][right]);
+            --right;
             
-            //  print the first column from the remaining columns
-            if (col < c) {
-                for (int i = r - 1; i >= row; --i) ans.push_back(matrix[i][col]);
-                ++col;
-            }
+            //  checking this condition again as only a single column matrix can exist itself
+            if(left>right) break;
+            
+            //  bottom row
+            for(int j=right;j>=left;--j) ans.push_back(matrix[bottom][j]);
+            --bottom;
+            
+            //  left column
+            for(int i=bottom;i>=top;--i) ans.push_back(matrix[i][left]);
+            ++left;
         }
-    
+        
         return ans;
     }
 };
