@@ -1,4 +1,4 @@
-//  it must be a full binary tree, i.e., left child should be filled before the right child
+//  it must be a complete binary tree, i.e., left child should be filled before the right child
 template <typename T, typename __comp = std::less<T>>
 class Heap {
  private:
