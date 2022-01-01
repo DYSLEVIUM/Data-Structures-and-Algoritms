@@ -1,7 +1,7 @@
 template <typename T>
 class NTT {
  private:
-  T get_length(const size_t& s) const { return s > 1 ? 32 - __builtin_clz(s - 1) : 0; }
+  size_t get_length(const size_t& s) const { return s > 1 ? 32 - __builtin_clz(s - 1) : 0; }
 
   void ntt(vector<T>& a) {
     T n = a.size();
