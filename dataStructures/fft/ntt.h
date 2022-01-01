@@ -25,7 +25,7 @@ class NTT {
     for (size_t i = 2; i < n; ++i) roots[i] = mod_mul(roots[i - 1], roots[1], this->_mod);
 
     for (size_t len = 2; len <= n; len <<= 1) {
-      T te = len / 2;
+      size_t te = len / 2;
       for (size_t i = 0; i < n; i += len) {
         for (size_t j = 0; j < te; ++j) {
           T z = mod_mul(a[te + i + j], roots[n / len * j], this->_mod);
