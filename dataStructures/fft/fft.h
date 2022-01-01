@@ -45,7 +45,6 @@ class FFT {
     reverse(a.begin() + 1, a.end());
   }
 
- public:
   //  convolution a * b
   vector<complex<double>> conv(vector<complex<double>> a, vector<complex<double>> b) {
     size_t s = a.size() + b.size() - 1;
@@ -68,6 +67,7 @@ class FFT {
     return a;
   }
 
+ public:
   vector<T> conv(const vector<T>& a, const vector<T>& b) {
     vector<complex<double>> X = conv(vector<complex<double>>(a.begin(), a.end()), vector<complex<double>>(b.begin(), b.end()));
 
