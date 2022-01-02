@@ -11,8 +11,16 @@ class Sparse_Table {
   bool _is_idempotent;
 
   void build() {
+    //  we take two numbers from previous column, i and i+(2^(j-1))
     for (size_t j = 1; j <= this->max_log; ++j) {
       for (size_t i = 0; i + (1 << j) <= this->_size; ++i) this->_table[i][j] = this->_fun(this->_table[i][j - 1], this->_table[i + (1 << (j - 1))][j - 1]);
+    }
+
+    fo(i, _table.size()) {
+      fo(j, _table[i].size()) {
+        cerr << _table[i][j] << ' ';
+      }
+      cerr << '\n';
     }
   }
 
@@ -58,3 +66,14 @@ class Sparse_Table {
     return ans;
   }
 };
+
+inline void solve() {
+  vl a(25);
+  iota(all(a), 1);
+
+  auto sum = [](const ll& x, const ll& y) { return x + y; };
+
+  Sparse_Table<ll> sp(a, sum, 0, false);
+
+  cout << sp.query(2, 6) << '\n';
+}
