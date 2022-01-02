@@ -1,4 +1,4 @@
-emplate <typename T>
+template <typename T>
 class Sparse_Table {
  private:
   vector<vector<T>> _table;
@@ -11,8 +11,8 @@ class Sparse_Table {
   bool _is_idempotent;
 
   void build() {
-    for (size_t i = 1; i <= this->max_log; ++i) {
-      for (size_t j = 0; j + (1 << i) <= this->_size; ++j) this->_table[j][i] = this->_fun(this->_table[j][i - 1], this->_table[j + (1 << (i - 1))][i - 1]);
+    for (size_t j = 1; j <= this->max_log; ++j) {
+      for (size_t i = 0; i + (1 << j) <= this->_size; ++i) this->_table[i][j] = this->_fun(this->_table[i][j - 1], this->_table[i + (1 << (j - 1))][j - 1]);
     }
   }
 
