@@ -22,7 +22,7 @@ class FenwickTree {
 
     while (x > 0) {
       val = comp(this->_data[x], val);
-      x -= (x & -x);  // getting val from the other nodes
+      x -= (x & -x);  // flipping the lowest set bit to get lower index that is responsible
     }
 
     return val;
@@ -32,7 +32,7 @@ class FenwickTree {
     ++x;  // 0 to 1 based indexing
     while (x < this->_size) {
       this->_data[x] = comp(this->_data[x], delta);  // add the delta to all the nodes, updating the subtrees
-      x += (x & -x);                                 // (x&-x) isolates the last set bit
+      x += (x & -x);                                 // (x&-x) isolates the last set bit, update all the nodes above
     }
   }
 };
