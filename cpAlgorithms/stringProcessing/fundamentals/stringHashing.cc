@@ -80,7 +80,7 @@ inline void solve() {
 
   //  Obviously m should be a large number since the probability of two random strings colliding is about ≈1m. Sometimes m=264 is chosen, since then the integer overflows of 64-bit integers work exactly like the modulo operation. However, there exists a method, which generates colliding strings (which work independently from the choice of p). So in practice, m=264 is not recommended. A good choice for m is some large prime number. The code in this article will just use m=109+9. This is a large number, but still small enough so that we can perform multiplication of two values using 64-bit integers.
 
-  auto computeHash = [](string const& s) {
+  auto polynomial_rolling_hash = [](string const& s) {
     //  better to randomize the base so as to prevent from being hacked in contests
     const ll p = 31;
     const ll m = 1e9 + 7;
@@ -96,15 +96,15 @@ inline void solve() {
     return hash;
   };
 
-  deb(computeHash("asdsdads"));
-  deb(computeHash("asdsdads"));
+  deb(polynomial_rolling_hash("asdsdads"));
+  deb(polynomial_rolling_hash("asdsdads"));
 
   //  search for duplicate strings in an array of strings
-  auto groupIdenticalStrings = [&computeHash](vector<string> const& s) {
+  auto groupIdenticalStrings = [&polynomial_rolling_hash](vector<string> const& s) {
     ll n = s.size();
     vpl hashes(n);
 
-    fo(i, n) hashes[i] = {computeHash(s[i]), i};
+    fo(i, n) hashes[i] = {polynomial_rolling_hash(s[i]), i};
 
     sort(all(hashes));
 
