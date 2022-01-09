@@ -136,7 +136,7 @@ inline void solve() {
 
   vector<vl> dp(n + 1, vl(v + 1, INT_MAX));
 
-  fo(i, n + 1) dp[i][0] = 0;  //  take no elements
+  fo(i, n + 1) dp[i][0] = 0;  //  as value is 0, optimal will be to take no elements so as they don't contribute to the weight 
 
   //  only first element is present, base case
   dp[1][0] = 0;
