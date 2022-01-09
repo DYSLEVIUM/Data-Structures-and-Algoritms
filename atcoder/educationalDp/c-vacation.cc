@@ -1,105 +1,155 @@
-#define _USE_MATH_DEFINES
-#pragma GCC optimize("Ofast,fast-math")
+// pragmas
+#pragma GCC optimize("Ofast,fast-math,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 
+// headers
+#ifdef DYSLEVIUM
+#include "dyslevium.h"
+#else
 #include <bits/stdc++.h>
 
-typedef long long ll;
-typedef long double ld;
-typedef std::pair<int, int> pii;
-typedef std::pair<long, long> pl;
-typedef std::vector<int> vi;
-typedef std::vector<ll> vl;
-typedef std::vector<pii> vpii;
-typedef std::vector<pl> vpl;
-typedef std::vector<vi> vvi;
-typedef std::vector<vl> vvl;
-typedef std::map<int, int> mii;
-typedef std::priority_queue<int> pqd;
-typedef std::priority_queue<int, vi, std::greater<int>> pqi;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#endif
 
-#define eb emplace_back
+//  custom functions
+std::mt19937_64 RNG(std::chrono::high_resolution_clock::now().time_since_epoch().count());  // generator for shuffle and other generator which require random numbers
+
+class custom_hash {
+ public:
+  static uint64_t splitmix64(uint64_t x) {
+    x += 0x9e3779b97f4a7c15;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+    return x ^ (x >> 31);
+  }
+
+  size_t operator()(uint64_t x) const {
+    static const uint64_t FIXED_RANDOM = RNG();
+    return splitmix64(x + FIXED_RANDOM);
+  }
+};
+
+//  aliases
+using ll = long long;
+using ld = long double;
+using pl = std::pair<ll, ll>;
+using vl = std::vector<ll>;
+using vpl = std::vector<pl>;
+using mll = __gnu_pbds::gp_hash_table<ll, ll, custom_hash>;
+
+//  constants
+constexpr ll INF(2e18);
+constexpr ld EPS(1e-9);
+constexpr ll MOD(1e9 + 7);  //  or (119 << 23) + 1; primitive_root = 3; // = 998244353
+constexpr ld PI(3.14159265358979323846);
+
+// clang-format off
+
+template <typename T> constexpr T mod_add(const T& a, const T&  b, const T& mod) { return a + b > mod ? a + b - mod : (a + b); }
+template <typename T> constexpr T mod_sub(const T& a, const T&  b, const T& mod) { return a - b < 0 ? a - b + mod : (a - b); }
+template <typename T> constexpr T mod_mul(const T& a, const T&  b, const T& mod) { return ((((a % mod) * (b % mod)) % mod) + mod) % mod; };
+
+//  macros
+#define pb push_back
 #define F first
 #define S second
-#define MOD (long long)1e9 + 7
-#define PI 3.14159265358979323846
-#define INF __builtin_inff()
-
-#define fo(i, n) for (ll i = 0; i < n; ++i)
-#define Fo(i, k, n) for (ll i = k; k < n ? i < n : i > n; k < n ? ++i : --i)
-#define allC(x) x.begin(), x.end()
-#define clr(x) memset(x, 0, sizeof(x))
-#define deb(x) std::cout << '\n' \
-                         << #x << " = " << x << '\n'
-#define sortall(x) sort(x.begin(), x.end())
-#define tr(it, a) for (auto it = a.begin(); it != a.end(); ++it)
+#define fo(i, n) for (ll i = 0; i < (ll)n; ++i)
+#define Fo(i, k, n) for (ll i = k; k < (ll)n ? i < (ll)n : i > (ll)n; k < (ll)n ? ++i : --i)
+#define all(x) x.begin(), x.end()
+#define tr(it, a) for (auto& it : a)
 #define ps(x, y) std::fixed << std::setprecision(y) << x
-#define setbits(x) __builtin_popcountll(x)
-#define zerobits(x) __builtin_ctzll(x)
-#define mk(arr, n, type) type* arr = new type[n]
+#define set_bits(x) __builtin_popcountll(x)
+#define zero_bits(x) __builtin_ctzll(x)
 
-std::mt19937_64 rng(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+// template functions
+template <typename T> using ordered_set = __gnu_pbds::tree<T, __gnu_pbds::null_type, std::less<T>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update>;  // find_by_order, order_of_key
+template <typename T> inline T bin_pow(T x, T n) {T res = 1; while (n) { if (n & 1) res *= x; x *= x; n >>= 1; } return res; }
+template <typename T> inline T bin_pow_m(T x, T n, const T& mod) {T res = 1; while (n) { if (n & 1) res = mod_mul(res, x, mod); x = mod_mul(x, x, mod); n >>= 1; } return res % mod; }
+template <typename T> inline T mod_inverse(const T& a, const T& mod) { return bin_pow_m(a, mod - 2, mod); }
+template <typename T> inline T mod_div(const T& a, const T& b, const T& mod) { return (mod_mul(a, mod_inverse(b, mod), mod) + mod) % mod; }
 
-inline void setup() {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    std::cout.tie(NULL);
+//  operator overloading
+template<typename T> std::istream& operator>>(std::istream &istream, std::vector<T> &v){ for (auto &it : v) std::cin >> it; return istream; }
+template<typename T> std::ostream& operator<<(std::ostream &ostream, const std::vector<T> &v) { for (auto &it : v) std::cout << it << ' '; return ostream; }
 
-#ifdef LOCAL_PROJECT  // run with -DLOCAL_PROJECT during compilation
-    freopen("input.txt", "r", stdin);
+// debuging
+#ifdef DYSLEVIUM
+  #define deb(x) std::cerr << #x << " = " << x << '\n'
 #else
-#ifndef ONLINE_JUDGE  // runs automatically for supported online judges
-    freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
+  #define deb(x)
 #endif
-#endif
+
+// initial setup
+inline void setup() {
+  std::ios_base::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+
+  #ifdef DYSLEVIUM
+    freopen("input.in", "r", stdin);
+    freopen("output.out", "w", stdout);
+    freopen("error.err", "w", stderr);
+  #endif
 }
 
 inline void solve();
 
 int main(int argc, char* argv[]) {
-    setup();
+  setup();
 
-    ll t = 1;
-    // std::cin >> t;
+  auto startTime = std::chrono::high_resolution_clock::now();
 
-    while (t--)
-        solve();
+  ll t = 1;
+  // std::cin >> t;
 
-    return 0;
+  while (t--) {
+    solve();
+    #ifdef DYSLEVIUM
+      std::cout << "----------\n" ;
+    #endif
+  }
+
+  auto endTime = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+  #ifdef DYSLEVIUM
+    std::cerr << "\nTime: " << duration.count();
+  #endif
+
+  return 0;
 }
 
 using namespace std;
-//  Compile and run: g++ -g -Wshadow -Wall practice.cpp -o a.exe -Ofast -Wno-unused-result && ./a.exe
+
+// Compile and run: g++ -std=c++20 -g -Wshadow -Wall main.cc -D DYSLEVIUM -o a.exe -Ofast -Wno-unused-result && ./a.exe
+
+// clang-format on
 
 inline void solve() {
-    ll n;
-    cin >> n;
+  ll n;
+  cin >> n;
 
-    mk(d, n, ll*);
-    fo(i, n) d[i] = new ll[3];
+  constexpr ll activities = 3;
 
-    fo(i, n) fo(j, 3) cin >> d[i][j];
-
-    mk(dp, n, ll*);
-    fo(i, n) dp[i] = new ll[3];
-
-    dp[0][0] = d[0][0];
-    dp[0][1] = d[0][1];
-    dp[0][2] = d[0][2];
-
-    Fo(i, 1, n) {
-        fo(j, 3) {
-            fo(k, 3) {
-                if (k != j)
-                    dp[i][j] = max(dp[i - 1][k] + d[i][j], dp[i][j]);  //  taking previous max + current and calculating all max from this state
-            }
-        }
+  vector<vl> in(n, vl(activities));
+  fo(i, n) {
+    fo(j, activities) {
+      cin >> in[i][j];
     }
+  }
 
-    ll ans = LONG_LONG_MIN;
-    //  ans will be max happiness of last day
-    fo(i, 3)
-        ans = max(dp[n - 1][i], ans);
+  vector<vl> dp(n, vl(activities, INT_MIN));
 
-    cout << ans;
+  fo(j, activities) dp[0][j] = in[0][j];
+
+  Fo(i, 1, n) {
+    fo(j, activities) {
+      fo(k, activities) {
+        if (k == j) continue;
+        dp[i][j] = max(dp[i][j], dp[i - 1][k] + in[i][j]);
+      }
+    }
+  }
+
+  cout << *max_element(dp[n - 1].begin(), dp[n - 1].end()) << '\n';
 }
