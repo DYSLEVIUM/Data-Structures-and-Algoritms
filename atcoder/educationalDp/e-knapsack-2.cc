@@ -139,7 +139,6 @@ inline void solve() {
   fo(i, n + 1) dp[i][0] = 0;  //  as value is 0, optimal will be to take no elements so as they don't contribute to the weight 
 
   //  only first element is present, base case
-  dp[1][0] = 0;
   dp[1][v_e[0]] = w_e[0];
 
   //  from 2 elements to n elements
