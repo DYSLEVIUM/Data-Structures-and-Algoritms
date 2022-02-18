@@ -227,7 +227,7 @@ inline void solve() {
         //  w.r.t p, if q is on the left from point or is collinear
         if (p.area(q, point) <= 0) break;
 
-        //  backtracking, if
+        //  backtracking
         convex_hull.pop_back();
       }
       convex_hull.push_back(point);
