@@ -217,15 +217,17 @@ inline void solve() {
 
   vector<Vector2d<ll>> convex_hull;
   fo(i, 2) {
+    //  for the second run, we want to ignore all the elements from the top hull
+    ll sz = convex_hull.size();
     for (auto& point : points) {
-      while (convex_hull.size() >= 2) {
+      while (convex_hull.size() - sz >= 2) {
         Vector2d<ll> p = convex_hull.end()[-2];  //  second last element
         Vector2d<ll> q = convex_hull.end()[-1];  //  last element
 
         //  w.r.t p, if q is on the left from point or is collinear
         if (p.area(q, point) <= 0) break;
 
-        //  backtracking, if 
+        //  backtracking, if
         convex_hull.pop_back();
       }
       convex_hull.push_back(point);
