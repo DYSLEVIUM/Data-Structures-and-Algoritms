@@ -124,48 +124,71 @@ inline void solve() {
     gr[y].pb(x);
   }
 
-  vl height(n, 1);  // node itself counts as 1
-  auto max_height = [&gr, &height](const auto& max_height, const ll& node,
-                                   const ll& parent) {
-    if (height[node] != 1) return;
+  // vl height(n, 1);  // node itself counts as 1
+  // auto max_height = [&gr, &height](const auto& max_height, const ll& node,
+  //                                  const ll& parent) {
+  //   if (height[node] != 1) return;
 
+  //   for (auto& child : gr[node]) {
+  //     if (child == parent) continue;
+  //     max_height(max_height, child, node);
+  //   }
+
+  //   for (auto& child : gr[node]) {
+  //     if (child == parent) continue;
+  //     height[node] = max(height[node], 1 + height[child]);
+  //   }
+  // };
+  // max_height(max_height, 0, -1);
+
+  // auto diameter = [&gr, &height](const auto& diameter, const ll& node,
+  //                                const ll& parent) -> ll {
+  //   priority_queue<ll, vector<ll>, greater<ll>> min_heap;
+
+  //   for (auto& child : gr[node]) {
+  //     if (child == parent) continue;
+  //     min_heap.push(height[child]);
+  //     if (min_heap.size() > 2) min_heap.pop();
+  //   }
+
+  //   //  make this 1, if we need to get the distance based on number of nodes
+  //   ll dia = 0;
+  //   while (!min_heap.empty()) {
+  //     dia += min_heap.top();
+  //     min_heap.pop();
+  //   }
+
+  //   for (auto& child : gr[node]) {
+  //     if (child == parent) continue;
+  //     dia = max(dia, diameter(diameter, child, node));
+  //   }
+
+  //   return dia;
+  // };
+
+  // //  rooting the tree at 0
+  // cout << diameter(diameter, 0, -1);
+
+  vl dist(n);
+  // using dfs
+  auto dfs = [&gr, &dist](const auto& dfs, const ll& node,
+                          const ll& parent) -> void {
     for (auto& child : gr[node]) {
       if (child == parent) continue;
-      max_height(max_height, child, node);
-    }
-
-    for (auto& child : gr[node]) {
-      if (child == parent) continue;
-      height[node] = max(height[node], 1 + height[child]);
+      dist[child] = dist[node] + 1;
+      dfs(dfs, child, node);
     }
   };
-  max_height(max_height, 0, -1);
 
-  auto diameter = [&gr, &height](const auto& diameter, const ll& node,
-                                 const ll& parent) -> ll {
-    priority_queue<ll, vector<ll>, greater<ll>> min_heap;
+  dfs(dfs, 0, -1);
 
-    for (auto& child : gr[node]) {
-      if (child == parent) continue;
-      min_heap.push(height[child]);
-      if (min_heap.size() > 2) min_heap.pop();
-    }
+  //  get the farthest node
+  ll idx = max_element(all(dist)) - dist.begin();
 
-    //  make this 1, if we need to get the distance based on number of nodes
-    ll dia = 0;
-    while (!min_heap.empty()) {
-      dia += min_heap.top();
-      min_heap.pop();
-    }
+  dist[idx] = 0;
 
-    for (auto& child : gr[node]) {
-      if (child == parent) continue;
-      dia = max(dia, diameter(diameter, child, node));
-    }
+  //  geting the farthest node from this as root
+  dfs(dfs, idx, -1);
 
-    return dia;
-  };
-
-  //  rooting the tree at 0
-  cout << diameter(diameter, 0, -1);
+  cout << *max_element(all(dist));
 }
