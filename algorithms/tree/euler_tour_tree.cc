@@ -123,6 +123,7 @@ class TreeNode {
   explicit TreeNode(T da) : data(da) {}
 };
 
+//  reference: https://codeforces.com/blog/entry/18369
 inline void solve() {
   constexpr ll MAX_N = 8;
   static_assert(MAX_N == 8);  //  making it compile time
