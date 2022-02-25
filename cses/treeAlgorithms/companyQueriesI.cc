@@ -134,13 +134,16 @@ inline void solve() {
 
   vvl sparse_table(
       n, vl(LOG));  //  initially there is no parent of the node, so -1
+  // initializing the 0th ancestor to be the self
   fo(i, n) sparse_table[i][0] = employee_boss[i];
 
+  // we swap the loops, as we first get the 1st ancestor of every node and the find for others
   Fo(j, 1, LOG) {
     fo(i, n) {
+      // will cause runtime error if -1 is not checked
       sparse_table[i][j] = sparse_table[i][j - 1] == -1
                                ? -1
-                               : sparse_table[sparse_table[i][j - 1]][j - 1];
+                               : sparse_table[sparse_table[i][j - 1]][j - 1]; // setting the ancestor
     }
   }
 
