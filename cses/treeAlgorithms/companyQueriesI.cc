@@ -144,8 +144,6 @@ inline void solve() {
     }
   }
 
-  fo(i, n) deb(sparse_table[i]);
-
   while (q--) {
     ll x, k;
     cin >> x >> k;
