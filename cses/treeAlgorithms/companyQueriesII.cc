@@ -119,7 +119,7 @@ using namespace std;
 // clang-format on
 inline void solve() {
   //  here we are using binary lifting, but this question can also be done with
-  //  euler tour tree
+  //  euler tour
 
   //  we first re assign the nodes in level order fashion
   //  we then flatten the tree, such that the subtree of a node lie within the
