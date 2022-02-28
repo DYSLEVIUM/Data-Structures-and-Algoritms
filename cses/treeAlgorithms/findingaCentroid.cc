@@ -134,13 +134,10 @@ inline void solve() {
   vl subtree_size(n);
   auto get_subtree_size = [&gr, &subtree_size](const auto& get_subtree_size,
                                                const ll& node,
-                                               const ll& parent) {
+                                               const ll& parent = -1) {
     if (subtree_size[node]) return;
 
-    subtree_size[node] =
-        parent == -1 ? gr[node].size()
-                     : gr[node].size() -
-                           1;  //  -1 to exclude the parent except the root node
+    subtree_size[node] = 1;
 
     for (auto& child : gr[node]) {
       if (child != parent) {
@@ -149,24 +146,25 @@ inline void solve() {
       }
     }
   };
-  get_subtree_size(get_subtree_size, 0, -1);
+  get_subtree_size(get_subtree_size, 0);
 
-  //  a centroid is a node on whose removal splits the given tree into a forest of trees where each of the resulting trees contains no more than n/2 nodes
-  //  alternatively, a centroid is a node, when taken as the root, each subtree has at most n/2 nodes
-  
+  //  a centroid is a node on whose removal splits the given tree into a forest
+  //  of trees where each of the resulting trees contains no more than n/2 nodes
+  //  alternatively, a centroid is a node, when taken as the root, each subtree
+  //  has at most n/2 nodes
+
   //  a tree can have multiple centroids
   auto centroid = [&n, &gr, &subtree_size](const auto& centroid, const ll& node,
-                                           const ll& parent) -> ll {
+                                           const ll& parent = -1) -> ll {
     for (auto& child : gr[node]) {
       if (child != parent) {
         //  lemma: only one subtree can have number of nodes > n / 2
-        if (subtree_size[child] >= n / 2)
-          return centroid(centroid, child, node);
+        if (subtree_size[child] > n / 2) return centroid(centroid, child, node);
       }
     }
 
     return node;
   };
 
-  cout << centroid(centroid, 0, -1) + 1;
+  cout << centroid(centroid, 0) + 1;
 }
