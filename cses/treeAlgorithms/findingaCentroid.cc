@@ -151,6 +151,9 @@ inline void solve() {
   };
   get_subtree_size(get_subtree_size, 0, -1);
 
+  //  a centroid is a node on whose removal splits the given tree into a forest of trees where each of the resulting trees contains no more than n/2 nodes
+  //  alternatively, a centroid is a node, when taken as the root, each subtree has at most n/2 nodes
+  
   //  a tree can have multiple centroids
   auto centroid = [&n, &gr, &subtree_size](const auto& centroid, const ll& node,
                                            const ll& parent) -> ll {
