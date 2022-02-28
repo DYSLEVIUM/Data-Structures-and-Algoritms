@@ -159,7 +159,7 @@ inline void solve() {
                                            const ll& parent) -> ll {
     for (auto& child : gr[node]) {
       if (child != parent) {
-        //  lemma: only one subtree can have number of nodes >= n / 2
+        //  lemma: only one subtree can have number of nodes > n / 2
         if (subtree_size[child] >= n / 2)
           return centroid(centroid, child, node);
       }
