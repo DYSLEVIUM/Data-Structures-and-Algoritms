@@ -67,6 +67,9 @@ public:
 //       vector<vector<int>> dp(n + 1, vector<int>(n + 1));
 //       auto get_total_ways = [&mod_mul, &dp](const auto& get_total_ways, const int& unpicked, const int& undelivered){
 //         if(!unpicked && !undelivered) return 1; //  this path is a valid solution
+      //  We can't pick or deliver more than N items
+      //  Number of deliveries can't exceed number of pickups 
+      //  as we can only deliver after a pickup.
 //         if(unpicked < 0 || undelivered < 0 || undelivered < unpicked) return 0; //  no solution is possible
         
 //         if(dp[unpicked][undelivered]) return dp[unpicked][undelivered];
