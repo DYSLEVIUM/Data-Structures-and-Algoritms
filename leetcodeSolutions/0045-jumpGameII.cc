@@ -17,13 +17,13 @@ public:
       
       //  bfs solution
       int curr_idx = 0, max_reach = 0;
-      int curr_reach = 0, jumps = 0;
+      int prev_max_reach = 0, jumps = 0;
       while(curr_idx < n - 1){
         max_reach = max(max_reach, curr_idx + nums[curr_idx]);
         
         //  we can go no further without making a jump
-        if(curr_idx == curr_reach){
-          curr_reach = max_reach;
+        if(curr_idx == prev_max_reach){
+          prev_max_reach = max_reach;
           ++jumps;
         }
         
