@@ -82,18 +82,16 @@ inline void solve() {
     auto partition = [](int* arr, int l, int r) {
       //  pivot should be the same position
       int pivot = arr[r];
-      int i = l - 1;
+      int prev_large_pos = l - 1;
 
       for (int j = l; j < r; ++j) {
         if (arr[j] < pivot) {
-          ++i;
-          swap(arr[i], arr[j]);
+          swap(arr[++prev_large_pos], arr[j]);  //  swapping the largest value position with the smallest value position
         }
       }
+      swap(arr[prev_large_pos + 1], arr[r]);    //  keeping the pivot just after all the smaller elements
 
-      swap(arr[i + 1], arr[r]);
-
-      return i + 1;
+      return prev_large_pos + 1;
     };
 
     if (l < r) {
