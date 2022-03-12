@@ -57,7 +57,7 @@ public:
 
 //       Node *node = head;
 //       unordered_map<Node *,Node *> mp;
-//       //  just making the new nodes abd keeping a reference of what node lead to it
+//       //  just making the new nodes and keeping a reference of what node lead to it
 //       while(node){
 //         mp[node] = new Node(node->val);
 //         node = node->next;
