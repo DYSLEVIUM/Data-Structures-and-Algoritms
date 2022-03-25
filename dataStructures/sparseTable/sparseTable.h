@@ -15,13 +15,6 @@ class Sparse_Table {
     for (size_t j = 1; j <= this->max_log; ++j) {
       for (size_t i = 0; i + (1 << j) <= this->_size; ++i) this->_table[i][j] = this->_fun(this->_table[i][j - 1], this->_table[i + (1 << (j - 1))][j - 1]);
     }
-
-    fo(i, _table.size()) {
-      fo(j, _table[i].size()) {
-        cerr << _table[i][j] << ' ';
-      }
-      cerr << '\n';
-    }
   }
 
  public:
