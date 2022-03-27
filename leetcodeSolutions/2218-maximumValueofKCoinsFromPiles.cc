@@ -38,7 +38,7 @@ public:
 //         int maxi = 0, sum = 0;
 //         for(int j = 0; j < piles[idx].size(); ++j) {
 //           sum += piles[idx][j];
-//           if(k -(j + 1) >= 0) maxi = max({maxi, sum + recur(recur, idx + 1, k - (j + 1)), recur(recur, idx + 1, k)});
+//           if(k - (j + 1) >= 0) maxi = max({maxi, sum + recur(recur, idx + 1, k - (j + 1)), recur(recur, idx + 1, k)});
 //         }
         
 //         return dp[idx][k] = maxi;
