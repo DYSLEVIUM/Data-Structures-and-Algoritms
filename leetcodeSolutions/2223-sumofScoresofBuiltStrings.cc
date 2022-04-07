@@ -3,7 +3,7 @@ public:
     vector<long long> z_function(const string& s) {
         int n = s.length();
         vector<long long> z(n);
-        z[0] = n;//
+        z[0] = n;
         for(int i = 1, l = 0, r = 0; i < n; ++i) {
             if(i <= r) {
                 z[i] = min(r - i + 1LL, z[i - l]);
