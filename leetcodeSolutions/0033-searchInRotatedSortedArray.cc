@@ -10,7 +10,7 @@ public:
         if(nums[mid] == target) return mid;
         
         //  is the left half sorted?
-        if(nums[lo] <= nums[mid]) { //  there is a check with equality also, check test case [-3, 1]
+        if(nums[lo] <= nums[mid]) { //  there is a check with equality also, check test case [3, 1]
           //  does the target lie in the first half?
           if(target >= nums[lo] && target < nums[mid]) hi = mid - 1;
           else lo = mid + 1;
