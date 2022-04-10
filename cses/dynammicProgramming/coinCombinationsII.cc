@@ -20,7 +20,7 @@ typedef std::priority_queue<int, vi, std::greater<int>> pqi;
 #define eb emplace_back
 #define F first
 #define S second
-#define MOD (ll)1e9 + 7
+#define MOD (long long)1e9 + 7
 #define PI 3.14159265358979323846
 #define INF __builtin_inff()
 
@@ -78,24 +78,18 @@ inline void solve() {
     mk(c, n, ll);
     fo(i, n) cin >> c[i];
 
-    mk(dp, n + 1, int*);
-    fo(i, n + 1) dp[i] = new int[x + 1];
+    mk(dp, x + 1, ll);
+    dp[0] = 1;
 
-    fo(i, n + 1) {
-        fo(j, x + 1) {
-            if (i == 0 || j == 0) {
-                if (i == 0) dp[i][j] = 0;
-                if (j == 0) dp[i][j] = 1;
-            } else {
-                dp[i][j] = dp[i - 1][j];
-
-                if (j - c[i - 1] >= 0) {
-                    dp[i][j] += (dp[i][j - c[i - 1]]);
-                }
-                dp[i][j] %= MOD;
+    fo(j, n) {
+      fo(i, x + 1) {  
+            if (i - c[j] >= 0) {
+                dp[i] += dp[i - c[j]];
+                dp[i] %= (ll)(1e9 + 7);
             }
-        }
+      }
     }
+    
 
-    cout << dp[n][x];
+    cout << dp[x];
 }
