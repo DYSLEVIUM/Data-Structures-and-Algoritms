@@ -17,13 +17,13 @@ public:
         //  we will to imagine the array as a 1-D array
         for(int prev_idx = 0; prev_idx < cells; ++prev_idx) {
             //  getting the row major index after k offset
-            int j = (prev_idx + k) % cells;
+            int new_idx = (prev_idx + k) % cells;
             
             //  after grid[i][j] is changed to a big value, we need to restore the original value for further computation, (NOTE: x & (2^(ceil(log2(x))) - 1) = x)
             int mask = (1 << 11) - 1;
             
             //  here, if we remove the mask, we will lose the previous value that was stored in the grid
-            grid[j / cols][j % cols] |= (grid[prev_idx / cols][prev_idx % cols] & mask) << 11;
+            grid[new_idx / cols][new_idx % cols] |= (grid[prev_idx / cols][prev_idx % cols] & mask) << 11;
         }
         
         //  getting back the numbers
