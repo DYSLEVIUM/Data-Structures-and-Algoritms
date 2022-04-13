@@ -1,30 +1,37 @@
 class Solution {
 public:
     vector<vector<int>> generateMatrix(int n) {
-      int top = 0, left = 0, right = n - 1, bottom = n - 1;
-      vector<vector<int>> ans(n, vector<int>(n));
+      //  similar as 0054-spiralMatrix.cc but here we can skip the bound check as we know that it will always be regular after every layer
+      vector<vector<int>> matrix(n, vector<int>(n));
       
-      int ptr = 1;
-      while(ptr + 1 != n * n){
-        for(int i = left; i <= right; ++i) ans[top][i] = ptr++;
+      int top = 0, right = n - 1, bottom = n - 1, left = 0;
+      int cnt = 1;
+      while(cnt <= n * n) {
+        //  print the top row
+        for(int col = left; col <= right; ++col) {
+          matrix[top][col] = cnt++;
+        }
         ++top;
         
-        //  checking this condition again as only a single row matrix can exist itself
-        if(top > bottom) break;
-        
-        for(int i = top; i <= bottom; ++i) ans[i][right] = ptr++;
+        //  print the right col
+        for(int row = top; row <= bottom; ++row) {
+          matrix[row][right] = cnt++;
+        }
         --right;
         
-        //  checking this condition again as only a single column matrix can exist itself
-        if(left > right) break;
-        
-        for(int i = right; i >= left; --i) ans[bottom][i] = ptr++;
+        //  print the bottom row
+        for(int col = right; col >= left; --col) {
+          matrix[bottom][col] = cnt++;
+        }
         --bottom;
         
-        for(int i = bottom; i >= top; --i) ans[i][left] = ptr++;
+        //  print the left col
+        for(int row = bottom; row >= top; --row){
+          matrix[row][left] = cnt++;
+        }
         ++left;
       }
       
-      return ans;
+      return matrix;
     }
 };
