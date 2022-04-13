@@ -34,7 +34,7 @@
 
 # SELECT MAX(Salary) AS SecondHighestSalary FROM Employee WHERE Salary NOT IN (SELECT MAX(Salary) FROM Employee);
 
-# this will give wrong answer if offset is more than more than total, we can overcome it by making it temporary table
+# this will give wrong answer if offset is more than total, we can overcome it by making it temporary table
 # SELECT DISTINCT Salary AS SecondHighestSalary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1;
 
 # SELECT (SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1 OFFSET 1) AS SecondHighestSalary;
