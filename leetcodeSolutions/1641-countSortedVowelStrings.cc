@@ -1,17 +1,14 @@
 class Solution {
 public:
-    //  can be done using multiset (mathematical instrument)
     int countVowelStrings(int n) {
-        int *dp = new int[5];
-        
-        for(int i = 0 ; i < 5; ++i) dp[i] = 1;
-        
-        while(n--){
-            for(int i = 1; i < 5; ++i){
-                dp[i]+=dp[i-1];
-            }
-        }
-        
-        return dp[4];
+      //  u, o, z, i, e, a
+      vector<int> dp(5, 1);
+      
+      while(n--) {
+        //  how many characters can we add to the previous vowel total till i - 1
+        for(int i = 1; i < 5; ++i) dp[i] += dp[i - 1];
+      }
+      
+      return dp[4];
     }
 };
