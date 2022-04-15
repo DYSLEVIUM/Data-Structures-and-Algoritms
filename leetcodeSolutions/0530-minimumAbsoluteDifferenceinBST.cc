@@ -18,6 +18,7 @@ public:
         
         if(prev_val != -1) minn = min(minn, abs(node->val - prev_val));
         
+        //  this cannot be const, as after we traverse to the child nodes, we update this value for the parent to use
         prev_val = node->val;
         
         if(node->right) inorder(inorder, node->right, prev_val);
