@@ -5,12 +5,7 @@ public:
       
       int iter = 0;
       while(iter < n) {
-        if(iter + k >= n) {
-          reverse(s.begin() + iter, s.end());
-        } else {
-          reverse(s.begin() + iter, s.begin() + iter + k);
-        }
-
+        reverse(s.begin() + iter, (iter + k < n) ? s.begin() + iter + k : s.end());
         iter += 2 * k;
       }
       
