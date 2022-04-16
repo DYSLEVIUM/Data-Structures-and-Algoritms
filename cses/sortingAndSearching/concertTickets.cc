@@ -134,13 +134,13 @@ inline void solve() {
     ll t;
     cin >> t;
 
-    auto lo = se.upper_bound(t);
+    auto up = se.upper_bound(t);
 
-    if (lo == se.begin()) {
+    if (up == se.begin()) {
       cout << -1;
     } else {
-      cout << *(--lo);
-      se.erase(lo);
+      cout << *(--up);
+      se.erase(up);
     }
 
     cout << '\n';
