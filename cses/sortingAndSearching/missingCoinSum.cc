@@ -124,7 +124,6 @@ inline void solve() {
 
   vl nums(n);
   cin >> nums;
-
   sort(all(nums));
 
   //  if we are at position i, and some prefix gives sums between [1, k]
@@ -142,8 +141,8 @@ inline void solve() {
 
   ll curr_sum = 0;
   for (ll& num : nums) {
-    if (curr_sum + 1 < num) break;
-    curr_sum += num;
+    if (curr_sum + 1 < num) break;  //  a gap in the range
+    curr_sum += num;                //  new endpoint
   }
 
   cout << curr_sum + 1;
