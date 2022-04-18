@@ -127,14 +127,15 @@ inline void solve() {
     cin >> schedule[i].F.F >> schedule[i].F.S;
     schedule[i].S = i;
   }
-  sort(all(schedule));
-
-  // fo(i, n) { cout << schedule[i] << '\n'; }
+  sort(all(schedule));  //  sorting by arrival time
 
   vl ans(n);
+  //  min_heap to tell us whether there are empty rooms available
   priority_queue<pl, vpl, greater<pl>> min_heap;
   ll max_rooms = 0;
   fo(i, n) {
+    //  if we have no rooms or the latest room availability is after the arrival
+    //  of the current room allocation, we need one more room
     if (min_heap.empty() || min_heap.top().F >= schedule[i].F.F) {
       ++max_rooms;
       ans[schedule[i].S] = max_rooms;
