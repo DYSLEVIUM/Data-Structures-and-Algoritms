@@ -119,6 +119,8 @@ using namespace std;
 
 // clang-format on
 inline void solve() {
+  //  similar to next greater element, but here we want the previous so we iterate
+  //  from the front
   ll n;
   cin >> n;
 
