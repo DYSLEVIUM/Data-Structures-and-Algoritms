@@ -8,7 +8,7 @@ public:
             while(ptr_s >= 0) {
                 if(s[ptr_s] == '#') {
                     ++skip_s, --ptr_s;
-                } else if(skip_s > 0) {
+                } else if(skip_s > 0) { //  if we have skips, we skip it
                     --skip_s, --ptr_s;
                 } else {
                     break;
@@ -25,8 +25,10 @@ public:
                 }
             }
             
+            //  if the indicies are valid and the letters are different, also we have exhausted our skips, so these can't be equal
             if(ptr_s >= 0 && ptr_t >= 0 && s[ptr_s] != t[ptr_t]) return false;
             
+            //  if one of them goes out of bound early, these can't be equal
             if((ptr_s >= 0) != (ptr_t >= 0)) return false;
             
             --ptr_s, --ptr_t;
