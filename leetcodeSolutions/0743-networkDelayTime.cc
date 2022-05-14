@@ -13,12 +13,16 @@ public:
       vector<int> dist(n, INT_MAX);
       dist[--k] = 0;
       
-      queue<pair<int, int>> qu;
+      priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> qu;
       qu.push({k, 0});
       
       while(!qu.empty()) {
-        auto [node, curr_dist] = qu.front();
+        auto [node, curr_dist] = qu.top();
         qu.pop();
+        
+        if(dist[node] < curr_dist) {
+          continue;
+        }
 
         for(auto &neighbour: gr[node]) {
           int new_dist = curr_dist + neighbour.second;
