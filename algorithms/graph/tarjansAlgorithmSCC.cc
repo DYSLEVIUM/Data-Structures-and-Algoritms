@@ -111,7 +111,7 @@ inline void solve() {
 
   //  if low_link[u] = disc[u], that node will be the head node
 
-  // if on DFS call we reach a back-edge, that means there is a cycle in that component and hence will be part of a SCC, low_link[u] = min(low_link[u], disc[v])
+  //  if on DFS call we reach a back-edge, that means there is a cycle in that component and hence will be part of a SCC, low_link[u] = min(low_link[u], disc[v])
 
   //  if on DFS call we reach a cross-edge, we do nothing
 
@@ -120,7 +120,7 @@ inline void solve() {
   /*
     differentiate between back-edge and cross-edge:
     • stack is required to keep track of nodes present in SCC
-    • is edge is pointing to a visited node already in stack, then it is a back edge else it is a cross edge
+    • if edge is pointing to a visited node already in stack, then it is a back edge else it is a cross edge
   */
 
   //  TLDR; if SCC is formed as a node then the graph will always be a DAG
