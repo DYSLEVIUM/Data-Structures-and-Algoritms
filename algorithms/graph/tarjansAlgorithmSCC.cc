@@ -107,7 +107,7 @@ inline void solve() {
 
   //  we will have a tuple for every node, where first will be discovery time and the second will be low-link time
 
-  //  the low_link time will be the lowest time that can be reached from that node's low-link
+  //  the low_link time will be the earliest time that can be reached from that node's low-link
 
   //  if low_link[u] = disc[u], that node will be the head node
 
