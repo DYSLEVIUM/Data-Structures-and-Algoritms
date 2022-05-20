@@ -181,7 +181,7 @@ inline void solve() {
         }
 
         current_SCC.pb(st.top());
-        present_in_stack[st.top()];
+        present_in_stack[st.top()] = false;
         st.pop();
 
         SCC.pb(current_SCC);
