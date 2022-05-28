@@ -40,10 +40,12 @@ public:
         };
         
         auto make_tree = [&](const auto &make_tree, ListNode *le, ListNode *ri) -> TreeNode *{
+            //  extreme left side edge case
             if(le == ri) {
                 return nullptr;
             }
             
+            //  extreme right side edge case
             if(le->next == ri) {
                 return new TreeNode(le->val);                                
             }
