@@ -11,11 +11,11 @@ public:
             } 
             //  we will rotate the plane w.r.t the robot
             else if(instruction == 'L') {
-                //  when we rotate the plane left, the +x becomes, +y, and, +y becomes -x
+                //  when we rotate the robot left, the +x becomes, -y, and, +y becomes +x
                 swap(dir.first, dir.second);
                 dir.first *= -1;
             } else {
-                //  when we rotate the plane right, the +x becomes, -y, and, +y becomes +x
+                //  when we rotate the robot right, the +x becomes, +y, and, +y becomes -x
                 swap(dir.first, dir.second);
                 dir.second *= -1;
             }
