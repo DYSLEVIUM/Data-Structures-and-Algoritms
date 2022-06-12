@@ -2,7 +2,7 @@ template <typename T>
 class Sparse_Table {
  private:
   vector<vector<T>> _table;
-  vector<T> log_values;
+  static vector<T> log_values;
   size_t _size;
   T max_log;
   T _identity;  //  identity element e * a = a * e = a
@@ -25,7 +25,7 @@ class Sparse_Table {
     this->log_values.resize(this->_size + 1);
     this->max_log = log2(this->_size);
     this->log_values[1] = 0;
-    for (size_t i = 2; i <= this->_size; ++i) log_values[i] = log_values[i >> 1] + 1;
+    for (size_t i = 2; i <= size_t(1e5); ++i) log_values[i] = log_values[i >> 1] + 1;
 
     //  resizing the table
     for (size_t i = 0; i < this->_size; ++i) {
