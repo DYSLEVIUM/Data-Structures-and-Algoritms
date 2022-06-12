@@ -25,7 +25,7 @@ class Sparse_Table {
     this->log_values.resize(this->_size + 1);
     this->max_log = log2(this->_size);
     this->log_values[1] = 0;
-    for (size_t i = 2; i <= size_t(1e5); ++i) log_values[i] = log_values[i >> 1] + 1;
+    for (size_t i = 2; i <= max_log; ++i) log_values[i] = log_values[i >> 1] + 1;
 
     //  resizing the table
     for (size_t i = 0; i < this->_size; ++i) {
