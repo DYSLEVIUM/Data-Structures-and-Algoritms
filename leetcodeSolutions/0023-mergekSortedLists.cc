@@ -11,8 +11,6 @@
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.empty()) return nullptr;
-        
         auto cmp = [](ListNode * const l1, ListNode * const l2){
             return l1->val > l2->val;
         };
