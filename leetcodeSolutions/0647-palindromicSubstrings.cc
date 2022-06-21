@@ -1,6 +1,7 @@
 class Solution {
 public:
     int countSubstrings(string s) {
+      //  can be achieved in O(n) with Manacher's algorithm
       int n = s.length();
       int cnt = 0;
       
