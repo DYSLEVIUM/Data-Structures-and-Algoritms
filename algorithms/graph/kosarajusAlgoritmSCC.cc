@@ -144,8 +144,6 @@ inline void solve() {
 
   vl topologicalOrder = topologicalSort(adjL);
 
-  reverse(all(topologicalOrder));
-
   //  transpose the graph
   vvl transpose(adjL.size());
 
