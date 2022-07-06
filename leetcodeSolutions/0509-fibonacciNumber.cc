@@ -1,16 +1,16 @@
 class Solution {
 public:
     int fib(int n) {
-      if(n < 2) return n;
-      
-      int prev_prev = 0, prev = 1;
-      n -= 1;
-      while(n--) {
-        int temp  = prev_prev + prev;
-        prev_prev = prev;
-        prev = temp;
+      if(n < 2) {
+        return n;
+      }
+
+      int dp[2] = {0, 1};
+      for(int i = 2; i < n + 1; ++i) {
+        dp[1] += dp[0];
+        dp[0] = dp[1] - dp[0];
       }
       
-      return prev;
+      return dp[1];
     }
 };
