@@ -3,62 +3,67 @@
 using namespace std;
 
  // } Driver Code Ends
-
 class Solution 
 {
     public:
     //Function to find minimum time required to rot all oranges. 
-    int orangesRotting(vector<vector<int>>& grid) {
+    int orangesRotting(const vector<vector<int>>& grid) {
         // Code here
-        queue<vector<int>> qu;    //  store time and node
+        int rows = grid.size(), cols = grid[0].size();
         
-        //  getting initial rotten tomatoes
-        for(int x=0;x<grid.size();++x){
-            for(int y=0;y<grid[x].size();++y){
-                if(grid[x][y] == 2) qu.push(vector<int>({x, y}));
+        vector<vector<bool>> visited(rows, vector<bool>(cols));
+        
+        auto is_valid_cell = [&](const int &row, const int &col){
+            if(row < 0 || row >= rows || col < 0 || col >= cols || visited[row][col]) {
+                return false;
             }
-        }
-        
-        vector<vector<int>> ds = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};    //  dx, dy
-    
-        auto checkIndex = [&grid](const int& x, const int& y){
-            if(x < 0 || x >= grid.size() || y < 0 || y >= grid[0].size()) return false; //  out of bounds check
-            
-            if(grid[x][y]==2 || grid[x][y]==0) return false;    //  check if it already rotten
             
             return true;
         };
         
-        int t = 0;
+        queue<pair<int, int>> qu;
+        for(int row = 0; row < rows; ++row) {
+            for(int col = 0; col < cols; ++col) {
+                if(grid[row][col] == 2) {
+                    qu.push({row, col});            
+                    visited[row][col] = true;
+                } else if(!grid[row][col]) {
+                    visited[row][col] = true;
+                }
+            }
+        }
         
-        //  multisource bfs
-        while(!qu.empty()){
-            int sz = qu.size();
-            
-            while(sz--){
-                vector<int> fr = qu.front();
+        vector<pair<int, int>> delta{{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        int ttime = 0;
+        while(!qu.empty()) {
+            int curr_size = qu.size();
+            while(curr_size--) {
+                int row = qu.front().first, col = qu.front().second;
                 qu.pop();
                 
-                for(int i=0;i<ds.size();++i){
-                    if(checkIndex(fr[0]+ds[i][0], fr[1]+ds[i][1])) {
-                        grid[fr[0]+ds[i][0]][fr[1]+ds[i][1]] = 2;   //  rotting that tomato
-                        
-                        qu.push(vector<int>({fr[0]+ds[i][0], fr[1]+ds[i][1]}));
+                for(int i = 0; i < delta.size(); ++i) {
+                    int dx = delta[i].first, dy = delta[i].second;
+                    int new_row = row + dx, new_col = col + dy;
+                    if(is_valid_cell(new_row, new_col)) {
+                        visited[new_row][new_col] = true;
+                        qu.push({new_row, new_col});
                     }
                 }
             }
             
-            if(!qu.empty()) ++t;    //  if queue is not empty, it will take at least one unit of time
+            ++ttime;
         }
+        --ttime;    //  not counting the last unit time when the queue is empty
         
-        //  checking if any fresh tomatoes are left
-        for(int x=0;x<grid.size();++x){
-            for(int y=0;y<grid[x].size();++y){
-                if(grid[x][y] == 1) return -1;
+        for(int row = 0; row < rows; ++row) {
+            for(int col = 0; col < cols; ++col) {
+                if(!visited[row][col]) {
+                    return -1;
+                }
             }
         }
         
-        return t;
+        return ttime;
     }
 };
 
