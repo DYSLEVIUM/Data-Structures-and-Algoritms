@@ -5,19 +5,6 @@ public:
       
       vector<int> ans(n);
       
-      // monotonic queue
-//       deque<int> max_queue;
-//       for(int i = n - 1; i >= 0; --i) {
-//         while(!max_queue.empty() && heights[max_queue.back()] <= heights[i]) {
-//           max_queue.pop_back();
-//           ++ans[i];
-//         }
-//         //  the just next person's height doesn't matter
-//         ans[i] += !max_queue.empty();
-        
-//         max_queue.push_back(i);
-//       }
-      
       //  how many next greater elements are there
       
       //  monotonic stack (v1)
