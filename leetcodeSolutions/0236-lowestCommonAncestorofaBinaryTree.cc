@@ -98,6 +98,7 @@ public:
         }
         
         delete invalid_node;
+        invalid_code = nullptr;
         
         return p;
     }
