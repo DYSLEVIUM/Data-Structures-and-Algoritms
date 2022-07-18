@@ -44,7 +44,7 @@ private:
   //  where on insertion, we used to heap up (for n nodes, we have to bubble up
   //  with height of log n, so time complexity is O(n log n)) and on deletion we
   //  used to heap down
-  void heapify(const uint16_t &idx) { //  heap down implementation
+  void heapify(const int &idx) { //  heap down implementation
     if (idx >= m_size)
       return;
 
