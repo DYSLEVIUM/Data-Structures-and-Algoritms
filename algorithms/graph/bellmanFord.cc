@@ -116,6 +116,7 @@ inline void solve() {
     dist[start] = 0;
 
     //  for each vertex, apply relaxation for all the edges
+    //  we relax for all the edges and assume there is no cycle, i.e., v - 1 edges
     fo(i, gr.size() - 1) {
       tr(edge, gr[i]) {
         if (dist[i] + edge->second < dist[edge->first]) dist[edge->first] = dist[i] + edge->second;
