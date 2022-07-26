@@ -87,7 +87,7 @@ using namespace std;
 //  Compile and run: g++ -g -Wshadow -Wall practice.cpp -DLOCAL_PROJECT -o a -Ofast -Wno-unused-result && ./a
 
 inline void solve() {
-  //  the Floyd-Warshall algorithm is an All-Pairs Shortest Path (APSP) algorithm. This means it can find the shortest path between all pairs of nodes. The time complexity to run FW is O(V^2)
+  //  the Floyd-Warshall algorithm is an All-Pairs Shortest Path (APSP) algorithm. This means it can find the shortest path between all pairs of nodes. The time complexity to run FW is O(V^3)
 
   //  here 1e9+7 is infinity
 
