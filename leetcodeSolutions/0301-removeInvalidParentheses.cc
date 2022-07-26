@@ -2,32 +2,7 @@ class Solution {
 public:
     vector<string> removeInvalidParentheses(string s) {
         int n = s.length();
-        
-        auto is_valid = [](const string &check_s){
-            stack<char> st;
-            for(auto &ch: check_s) {
-                if(ch == ')') {
-                    while(!st.empty() && st.top() != '(') {
-                        st.pop();
-                    }
-                    
-                    if(st.empty()) {
-                        return false;
-                    } else {
-                        st.pop();
-                    }
-                } else {
-                    st.push(ch);
-                }
-            }
-
-            while(!st.empty() && st.top() != '(' && st.top() != ')') {
-                st.pop();
-            }
-            
-            return st.empty();
-        };
-        
+         
         int best_removed = n;
         unordered_set<string> valid_str;
         auto solve = [&](const auto &solve, const int &idx, const string &curr_str, const int &curr_removed, int open_cnt, int close_cnt){
