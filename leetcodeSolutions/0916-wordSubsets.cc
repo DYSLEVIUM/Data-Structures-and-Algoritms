@@ -2,9 +2,9 @@ class Solution {
 public:
     vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
         const int CHAR_SET = 26;
-        int *mx_cnt = new int[CHAR_SET]{ 0 };
+        vector<int> mx_cnt(CHAR_SET);
         for(auto &w2 : words2) {
-            int *cnt = new int[CHAR_SET]{ 0 };
+            vector<int> cnt(CHAR_SET);
             for(auto &ch: w2) {
                 ++cnt[ch - 'a'];
                 mx_cnt[ch - 'a'] = max(mx_cnt[ch - 'a'], cnt[ch - 'a']);
@@ -13,19 +13,19 @@ public:
         
         vector<string> res;
         for(auto &w1: words1) {
-            int *cnt = new int[CHAR_SET]{ 0 };
+            vector<int> cnt(CHAR_SET);
             for(auto &ch : w1) {
                 ++cnt[ch - 'a'];
             }
             
-            bool all_char_comes = true;
+            bool all_chars_come = true;
             for(int i = 0; i < CHAR_SET; ++i) {
                 if(cnt[i] < mx_cnt[i]) {
-                    all_char_comes = false;
+                    all_chars_come = false;
                 }
             }
             
-            if(all_char_comes) {
+            if(all_chars_come) {
                 res.push_back(w1);
             }
         }
