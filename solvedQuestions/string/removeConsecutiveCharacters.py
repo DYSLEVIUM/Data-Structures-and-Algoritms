@@ -2,13 +2,12 @@
 
 class Solution:
     def removeConsecutiveCharacter(self, S):
-        n = len(S)
         ans = S[0]
-        for i in range(1, n):
+        for i in range(1, len(S)):
             if ans[-1] != S[i]:
                 ans += S[i]
         return ans
-      
+
 #{ 
  # Driver Code Starts
 #Initial Template for Python 3
