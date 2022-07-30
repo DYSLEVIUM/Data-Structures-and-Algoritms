@@ -1,46 +1,42 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 // C++ program to check if two strings are isomorphic
-#include<iostream>
-#include<string.h>
+
+
+#include<bits/stdc++.h>
+
 
 using namespace std;
 #define MAX_CHARS 256
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
     public:
     //Function to check if two strings are isomorphic.
-    bool areIsomorphic(string str1, string str2)
-    {
-        // Your code here
-        if(str1.length()!=str2.length()) return false;
-        
-        //  first to second mapping check
-        int fa1[26];
-        memset(fa1,-1,sizeof(fa1));
-        
-        for(int i=0;i<str1.length();++i){
-            if(fa1[str1[i]-'a']==-1){
-                fa1[str1[i]-'a']=str2[i]-'a';
-            }else if(fa1[str1[i]-'a']!=str2[i]-'a') return false;
-        }
+    bool areIsomorphic(string str1, string str2) {
+        auto normalize = [](const string &s){
+            unordered_map<char, char> mp;
+            char ch_ptr = 'a';
+            
+            for(auto &ch : s) {
+                if(mp.find(ch) == mp.end()) {
+                    mp[ch] = ch_ptr++;                    
+                }
+            }
 
-        //  second to first mapping check
-        int fa2[26];
-        memset(fa2,-1,sizeof(fa2));
+            string norm = "";
+            for(auto &ch : s) {
+                norm += mp[ch];
+            }
+            
+            return norm;
+        };
         
-        for(int i=0;i<str2.length();++i){
-            if(fa2[str2[i]-'a']==-1){
-                fa2[str2[i]-'a']=str1[i]-'a';
-            }else if(fa2[str2[i]-'a']!=str1[i]-'a') return false;
-        }
-        
-        return true;
+        return normalize(str1) == normalize(str2);
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 // Driver program
 int main()
@@ -56,4 +52,5 @@ int main()
     }
     
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
