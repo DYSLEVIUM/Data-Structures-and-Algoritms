@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for C++
 
 #include <bits/stdc++.h>
@@ -95,7 +95,7 @@ Node *buildTree(string str)
 }
 
 
- // } Driver Code Ends
+// } Driver Code Ends
 //User function Template for C++
 
 /*
@@ -118,37 +118,47 @@ class Solution
 {
 public:
     
-    int sumOfLongRootToLeafPath(Node *root)
-    {
-        //code here
-        if(root==NULL) return 0;
+    int sumOfLongRootToLeafPath(Node *root) {
+        if(!root) {
+            return 0;
+        }
         
-        auto getMaxHeight = [](Node* node, auto&& getMaxHeight){
-            if(node==NULL) return pair<int,int>{0,0};
-            
-            pair<int, int> l=getMaxHeight(node->left, getMaxHeight);
-            l.first+=1;
-            l.second+=node->data;
-            
-            pair<int, int> r=getMaxHeight(node->right, getMaxHeight);
-            r.first+=1;
-            r.second+=node->data;
-            
-            if(l.first==r.first){
-                if(l.second>r.second) return l;
-                return r;
-            }else if(l.first>r.first){
-                return l;
-            }else{
-                return r;
+        auto dfs = [](const auto &dfs, Node * const node){
+            if(!node) {
+                return 0;
             }
+            
+            int le = dfs(dfs, node->left);
+            int ri = dfs(dfs, node->right);
+            
+            return 1 + max(le, ri);
         };
+        int mx_depth = dfs(dfs, root);
         
-        return getMaxHeight(root, getMaxHeight).second;
+        int maxx = INT_MIN;
+        auto dfs2 = [&](const auto &dfs2, Node * const node, const int &depth, const int &sum){
+            if(!node) {
+                // depth will be - 1 as we are couting the nullptr node
+                if(depth - 1 == mx_depth) {
+                    maxx = max(maxx, sum);
+                }
+                
+                return;
+            }
+            
+            int new_sum = sum + node->data;
+            int new_depth = depth + 1;
+            
+            dfs2(dfs2, node->left, new_depth, new_sum);
+            dfs2(dfs2, node->right, new_depth, new_sum);
+        };
+        dfs2(dfs2, root, 1, 0);
+        
+        return maxx;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main()
 {
@@ -166,4 +176,5 @@ int main()
         cout << res << "\n";
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
