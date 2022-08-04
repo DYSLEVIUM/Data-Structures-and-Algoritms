@@ -1,75 +1,87 @@
-#define _USE_MATH_DEFINES
-#pragma GCC optimize("Ofast,fast-math")
-
+//{ Driver Code Starts
 #include <bits/stdc++.h>
+using namespace std;
 
-#define deb(x) cout << '\n' \
-                    << #x << " = " << x << '\n'
+vector<long long> printFirstNegativeInteger(long long int arr[],
+                                             long long int n, long long int k);
 
-inline void setup() {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    std::cout.tie(NULL);
+// Driver program to test above functions
+int main() {
+    long long int t, i;
+    cin >> t;
+    while (t--) {
+        long long int n;
+        cin >> n;
+        long long int arr[n];
+        for (i = 0; i < n; i++) {
+            cin >> arr[i];
+        }
+        long long int k;
+        cin >> k;
 
-#ifdef LOCAL_PROJECT  // run with -DLOCAL_PROJECT during compilation
-    freopen("input.txt", "r", stdin);
-#else
-#ifndef ONLINE_JUDGE  // runs automatically for supported online judges
-    freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
-#endif
-#endif
-}
-
-inline void solve();
-
-int main(int argc, char* argv[]) {
-    setup();
-
-    long long t = 1;
-    std::cin >> t;
-
-    while (t--)
-        solve();
-
+        vector<long long> ans = printFirstNegativeInteger(arr, n, k);
+        for (auto it : ans) cout << it << " ";
+        cout << endl;
+    }
     return 0;
 }
 
-//Compile: g++ -g -Wshadow -Wall main.cc -o a.exe -Ofast -Wno-unused-result
-//Build: g++ -g -Wshadow -Wall main.cc -o a.exe -D_GLIBCXX_DEBUG
-//Compile and run: g++ -g -Wshadow -Wall main.cc -o a.exe -Ofast -Wno-unused-result && ./a.exe
+// } Driver Code Ends
 
-using namespace std;
 
-//	https://practice.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k/0#
-
-inline void solve() {
-    int n;
-    cin >> n;
-
-    int* arr = new int[n];
-
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-
-    int k;
-    cin >> k;
-
-    int* res = new int[n - k + 1]{0};
-
-    stack<int> s;
-    for (int i = n - 1; i >= 0; --i)
-        if (arr[i] < 0) s.push(i);
-
-    for (int i = 0; i < n - k + 1; ++i) {
-        while (!s.empty() && s.top() < i) s.pop();
-        if (!s.empty() && s.top() > i + k - 1)
-            res[i] = 0;
-        else if (!s.empty())
-            res[i] = arr[s.top()];
-        else
-            res[i] = 0;
+vector<long long> printFirstNegativeInteger(long long int a[],
+                                             long long int n, long long int k) {
+    // O(n) space and time
+    // deque<int> dq;
+    // for(int i = 0; i < k - 1; ++i) {
+    //     if(a[i] < 0) {
+    //         dq.push_back(i);
+    //     }
+    // }
+    
+    // vector<long long> ans;
+    // for(int i = k - 1; i < n; ++i) {
+    //     while(!dq.empty() && i - dq.front() >= k) {
+    //         dq.pop_front();
+    //     }
+        
+    //     if(a[i] < 0) {
+    //         dq.push_back(i);
+    //     }
+        
+    //     int val = 0;
+    //     if(!dq.empty()) {
+    //         val = a[dq.front()];
+    //     }
+    //     ans.push_back(val);
+    // }
+    
+    // return ans;
+    
+    // O(n) time, O(1) time
+    int f_n = -1;
+    for(int i = k - 2; i >= 0; --i) {
+        if(a[i] < 0) {
+            f_n = i;
+        }
     }
-
-    for (int i = 0; i < n - k + 1; ++i) cout << res[i] << ' ';
-    cout << '\n';
+    
+    vector<long long> ans;
+    for(int i = k - 1; i < n; ++i) {
+        while(i - f_n >= k) {
+            ++f_n;
+        }
+        
+        while(a[f_n] > 0 && f_n <= i) {
+            ++f_n;
+        }
+        
+        if(f_n > i) {
+            ans.push_back(0);
+        } else {
+            ans.push_back(a[f_n]);
+        }
+    }
+    
+    return ans;
 }
