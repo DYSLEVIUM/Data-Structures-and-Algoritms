@@ -1,44 +1,57 @@
 class Solution {
 public:
     string reorganizeString(string s) {
-        priority_queue<pair<int, char>> maxHeap;
+        const int CHAR_SET = 26;
+        int n = s.length();
         
-        map<char, int> mp;
-        
-        for(auto x:s) ++mp[x];
-        
-        string newStr = "";
-        
-        for(auto x:mp) maxHeap.push({x.second,x.first});
-        
-        while(maxHeap.size()>=2){
-            pair<int, char> ff=maxHeap.top();
-            
-            maxHeap.pop();
-            
-            pair<int, char> ss=maxHeap.top();
-            
-            maxHeap.pop();
-            
-            newStr+=ff.second;
-            newStr+=ss.second;
-            
-            if(ff.first-1!=0)
-            maxHeap.push({ff.first-1,ff.second});
-            
-            if(ss.first-1!=0)
-            maxHeap.push({ss.first-1,ss.second});
+        int *fa = new int[CHAR_SET]{ 0 }, mx_cnt = 0;
+        for(auto &ch : s) {
+            int idx = ch - 'a';
+            ++fa[idx];
+            mx_cnt = max(mx_cnt, fa[idx]);
         }
         
-        if(!maxHeap.empty()){
-            if(maxHeap.top().first>1) 
-            {
-                newStr="";
-                return newStr;                
+        // impossible condition when mx_cnt is more than half
+        if(mx_cnt > (n + 1) / 2) {
+            return "";
+        }
+        
+        using PCI = pair<int, char>;
+        priority_queue<PCI> max_heap;
+        
+        for(int i = 0; i < CHAR_SET; ++i) {
+            if(fa[i]) {
+                max_heap.push({ fa[i], i + 'a' });
             }
-                newStr+=maxHeap.top().second;  
+        }
+        delete[] fa;
+        
+        string ans = "";
+        while(max_heap.size() > 1) {
+            PCI tp1 = max_heap.top();
+            max_heap.pop();
+            
+            PCI tp2 = max_heap.top();
+            max_heap.pop();
+            
+            ans += tp1.second;
+            ans += tp2.second;
+            
+            --tp1.first, --tp2.first;
+
+            if(tp1.first) {
+                max_heap.push(tp1);
+            }
+            
+            if(tp2.first) {
+                max_heap.push(tp2);
+            }
         }
         
-        return newStr;
+        if(!max_heap.empty()) {
+            ans += max_heap.top().second;
+        }
+        
+        return ans;
     }
 };
