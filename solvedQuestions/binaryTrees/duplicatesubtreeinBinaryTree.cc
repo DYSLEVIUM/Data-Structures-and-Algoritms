@@ -88,7 +88,8 @@ struct Node
   struct Node* right;
 };*/
 
-class Solution {
+// O(n^2)
+class Solution1 {
   public:
     /*This function returns true if the tree contains 
     a duplicate subtree of size 2 or more else returns false*/
@@ -140,6 +141,51 @@ class Solution {
         return false;
     }
 };
+
+class Solution {
+  public:
+    /*This function returns true if the tree contains 
+    a duplicate subtree of size 2 or more else returns false*/
+    int dupSub(Node *root) {
+        char MARKER = '#';
+        unordered_set<string> subtrees;
+        auto dupSubUtil = [&](const auto &dupSubUtil, Node * const &node) -> string {
+            string s = "";
+            
+            if(!node) {
+                return (s + MARKER);
+            }
+            
+            // found answer from left side
+            string l_str = dupSubUtil(dupSubUtil, node->left);
+            if(l_str.compare(s) == 0) {
+                return s;
+            }
+
+            // found answer from right side
+            string r_str = dupSubUtil(dupSubUtil, node->right);
+            if(r_str.compare(s) == 0) {
+                return s;
+            }
+            
+            // serialize string
+            s = s + node->data + l_str + r_str;
+            
+            // found answer
+            if(s.length() > 3 && subtrees.count(s)) {
+                return "";
+            }
+            
+            subtrees.insert(s);
+            
+            return s;
+        };
+        string str = dupSubUtil(dupSubUtil, root);
+        
+        return str.compare("") == 0;
+    }
+};
+
 
 //{ Driver Code Starts.
 
