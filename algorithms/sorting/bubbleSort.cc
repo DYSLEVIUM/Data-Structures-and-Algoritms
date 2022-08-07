@@ -6,6 +6,8 @@ int main() {
   vector<int> nums{5, 1, 4, 2, 8};
   int n = nums.size();
 
+  // here we bubble down the smallest element to its correct place
+  
   // for (int i = 0; i < n; ++i) {
   //   for (int j = i + 1; j < n; ++j) {
   //     if (nums[i] > nums[j]) {
