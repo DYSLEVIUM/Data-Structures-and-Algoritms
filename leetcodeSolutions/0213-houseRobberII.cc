@@ -1,27 +1,29 @@
 class Solution {
 public:
     int rob(vector<int>& nums) {
+      int n = nums.size();
+      
+      if(n == 1) {
+        return nums[0];
+      }
+      
+      auto get_max_rob = [&n](const auto &get_max_rob, const vector<int> &nums){
+        vector<int> curr(2), prev(2);
         
-        if(nums.size()==1) return nums[0];
-        if(nums.size()==2) return max(nums[0], nums[1]);
-        if(nums.size()==3) return max({nums[0], nums[1], nums[2]});
+        // not taking the last
+        for(int i = 1; i < n - 1 + 1; ++i) {
+          curr[0] = max(prev[0], prev[1]);
+          curr[1] = max(nums[i - 1] + prev[0], prev[1]);
 
-        //  case 1: take first element and don't take the last element
-        vector<int> dp1(nums.size());
-        
-        dp1[0] = nums[0];
-        dp1[1] = max(dp1[0], nums[1]);
-        
-        for(int i=2;i<nums.size()-1;++i) dp1[i] = max(dp1[i-1], dp1[i-2]+nums[i]);
-        
-        //  case 2: don't take first element and don't take the last element
-        vector<int> dp2(nums.size());
-        
-        dp2[1] = nums[1];
-        dp2[2] = max(nums[1], nums[2]);
-        
-        for(int i=3;i<nums.size();++i) dp2[i] = max(dp2[i-1], dp2[i-2]+nums[i]);
-        
-        return max(dp1[nums.size()-2], dp2[nums.size()-1]);
+          prev = curr;
+        }
+
+        return max(curr[0], curr[1]);
+      };
+      
+      // max of don't take last and don't take first as other states are independent
+      int ans = max(get_max_rob(get_max_rob, nums), get_max_rob(get_max_rob, vector<int>(nums.rbegin(), nums.rend())));
+      
+      return ans;
     }
 };
