@@ -12,10 +12,6 @@
 class Solution {
 public:
     int rob(TreeNode* root) {
-      if(!root) {
-        return 0;
-      }
-      
       auto dfs = [](const auto &dfs, TreeNode * const &node) -> pair<int, int> {
         if(!node) {
           return {0, 0};
