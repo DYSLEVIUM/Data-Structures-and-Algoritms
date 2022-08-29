@@ -11,11 +11,11 @@ public:
       
       int cnt = 1;
       int minn = points[0][0], maxx = points[0][1];
-      for(int i = 1; i < n; ++i) {
-        if(points[i][0] > maxx) {
+      for(auto &point : points) {
+        if(point[0] > maxx) {
           ++cnt;
-          minn = points[i][0];
-          maxx = points[i][1];
+          minn = point[0];
+          maxx = point[1];
         }
       }
       
