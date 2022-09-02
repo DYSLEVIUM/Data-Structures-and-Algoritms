@@ -10,6 +10,7 @@ public:
       
       int val = rem / n;
       vector<int> ans(n, val);
+      // adding the remainder 1
       for(int i = 0; i < rem - val * n; ++i) {
         ++ans[i];
       }
