@@ -27,7 +27,7 @@ public:
       return search(key) != se[hash].end();
     }
 private:
-  // we use chaining here, when get a collision, we could have also used linear probing or quadratic probing
+  // we use chaining here, when we get a collision, we could have also used linear probing or quadratic probing
   vector<list<int>> se;
   const int BUCKETS = 1e2;
 
