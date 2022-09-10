@@ -39,10 +39,6 @@ public:
         return {-1, -1};
       }
       
-      sort(crit_points.begin(), crit_points.end(), [](const auto &lhs, const auto &rhs){
-        return lhs.second < rhs.second;
-      });
-      
       int minn = INT_MAX;
       for(int i = 1; i < crit_points.size(); ++i) {
         minn = min(minn, crit_points[i].second - crit_points[i - 1].second);
