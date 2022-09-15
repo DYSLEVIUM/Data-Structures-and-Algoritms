@@ -13,7 +13,7 @@ public:
         int conj = last / 2;
 
         // odd element is not possible at last
-        if((last & 1) || se.count(conj)) {
+        if((last & 1) || se.find(conj) == se.end()) {
           return {};
         }
         
