@@ -2,9 +2,11 @@ class Solution {
 public:
     vector<int> minSubsequence(vector<int>& nums) {
       sort(nums.rbegin(), nums.rend());
-      long long total = accumulate(nums.begin(), nums.end(), 0LL), sum = 0;
-      int i = 0;
+      int total = accumulate(nums.begin(), nums.end(), 0), sum = 0, i = 0;
+      
+      vector<int> ans;
       while(i < nums.size()) {
+        ans.push_back(nums[i]);
         sum += nums[i++];
         
         // sum > total - sum
@@ -13,6 +15,6 @@ public:
         }
       }
       
-      return vector<int>(nums.begin(), nums.begin() + i);
+      return ans;
     }
 };
