@@ -8,6 +8,7 @@ public:
         ++mp[start];
         --mp[end];
 
+        // sweep-line algorithm (difference array)
         int booked = 0;
         for(auto &[_, val] : mp) {
             booked += val;
