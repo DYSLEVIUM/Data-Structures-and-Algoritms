@@ -10,16 +10,7 @@ public:
 
         vector<int> ans(m);
         for(int i = 0; i < m; ++i) {
-            auto it = upper_bound(nums.begin(), nums.end(), queries[i] - 1);
-
-            ans[i] = it - nums.begin();
-
-            // if we go out of bounds, or we reach an invalid pos
-            if(it == nums.end() || *it > queries[i]) {
-                --ans[i];
-            }
-
-            ++ans[i]; // convert to 1-based
+            ans[i] = upper_bound(nums.begin(), nums.end(), queries[i]) - nums.begin();
         }
 
         return ans;
