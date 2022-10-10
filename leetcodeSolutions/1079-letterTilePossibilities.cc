@@ -32,6 +32,8 @@ public:
             // take the curr index and not take the curr index
             return dfs(dfs, idx + 1, curr) + dfs(dfs, idx + 1, curr + tiles[idx]);
         };
+        // we need to sort it because, CD and DC will form the same, but in the set they will be different, so we sort them
+        sort(tiles.begin(), tiles.end());
         return dfs(dfs, 0, "") - 1; // -1 for empty string
     }
 };
