@@ -1,100 +1,30 @@
 class Solution {
 public:
     vector<vector<int>> queensAttacktheKing(vector<vector<int>>& queens, vector<int>& king) {
-        set<vector<int>> se;
+        constexpr int BOARD_SIZE = 8;
+        vector<vector<int>> board(BOARD_SIZE, vector<int>(BOARD_SIZE));
         for(auto &queen: queens) {
-            se.insert(queen);
+            board[queen[0]][queen[1]] = 1;
         }
 
-        vector<vector<int>> attacker;
-        auto is_attacked = [&](){
-            int r, c;
-
-            // row-down
-            r = king[0], c = king[1];
-            while(c < 8) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                ++c;
-            }
-
-            // row-up
-            r = king[0], c = king[1];
-            while(c >= 0) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                --c;
-            }
-
-            // col-right
-            r = king[0], c = king[1];
-            while(r < 8) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                ++r;
-            }
-
-            // col-left
-            r = king[0], c = king[1];
-            while(r >= 0) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                --r;
-            }
-
-            // left diagonal-up check
-            r = king[0], c = king[1];
-            while(r >= 0 && c >= 0) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                --r, --c;
-            }
-
-            // left diagonal-down check
-            r = king[0], c = king[1];
-            while(r < 8 && c < 8) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
+        vector<vector<int>> ans;
+        for(int dy = -1; dy <= 1; ++dy) {
+            for(int dx = -1; dx <= 1; ++dx) {
+                if(!dy && !dx) {
+                    continue;
                 }
 
-                ++r, ++c;
+                for(int row = king[0] + dy, col = king[1] + dx; 
+                    row >= 0 && col >= 0 && row < BOARD_SIZE && col < BOARD_SIZE; 
+                    row += dy, col += dx) {
+                        if(board[row][col]) {
+                            ans.push_back({row, col});
+                            break;
+                        }
+                    }
             }
+        }
 
-            // right diagonal-up check
-            r = king[0], c = king[1];
-            while(r >= 0 && c < 8) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                --r, ++c;
-            }
-
-            // right diagonal-down check
-            r = king[0], c = king[1];
-            while(r < 8 && c >= 0) {
-                if(se.count({r, c})) {
-                    attacker.push_back({r, c});
-                    break;
-                }
-                ++r, --c;
-            }
-
-            return false;
-        };
-        is_attacked();
-
-        return attacker;
+        return ans;
     }
 };
