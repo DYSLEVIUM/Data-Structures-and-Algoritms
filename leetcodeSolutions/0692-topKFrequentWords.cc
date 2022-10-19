@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> topKFrequent(vector<string>& words, int k) {
         unordered_map<string_view, int> mp;
-        for(string &word: words) ++mp[word];
+        for(const string &word: words) ++mp[word];
 
         using PSVI = pair<string_view, int>;
         auto cmp = [](const PSVI &lhs, const PSVI &rhs){
