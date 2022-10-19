@@ -1,6 +1,6 @@
 class Cashier {
 public:
-    Cashier(int n, int discount, vector<int>& products, vector<int>& prices) : m_n(n), m_discount(discount) {
+    Cashier(int n, int discount, vector<int>& products, vector<int>& prices) : m_n(n), m_discount((100 - (double)discount) / 100) {
         for(int i = 0; i < products.size(); ++i) m_prod_prices[products[i]] = prices[i];
     }
     
@@ -12,15 +12,15 @@ public:
         
         if(m_cnt == m_n) {
             m_cnt = 0;
-            cout << total << ' ';
-
-            total = total * ((100 - (double)m_discount) / 100);
+            total = total * m_discount;
         }
 
         return total;
     }
 private:
-    int m_n, m_discount, m_cnt = 0;
+    int m_cnt = 0;
+    const int m_n;
+    const double m_discount;
     unordered_map<int, int> m_prod_prices;
 };
 
