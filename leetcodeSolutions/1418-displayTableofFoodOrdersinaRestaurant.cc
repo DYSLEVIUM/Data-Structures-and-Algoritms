@@ -15,6 +15,7 @@ public:
             ++mp[table][food];
             tables.insert(table), foods.insert(food); 
         }
+        
         int rows = tables.size() + 1, cols = foods.size() + 1;
         
         vector<vector<string>> ans(rows, vector<string>(cols));
