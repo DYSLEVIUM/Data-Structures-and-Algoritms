@@ -2,6 +2,7 @@ class Solution {
 public:
     bool stoneGame(vector<int>& piles) {
         // we can actually deduce that alice will always win according to the given constraints
+        // if sum of even indexed elements > sum of odd indexed elements, alice will always take the even indexed elements, forcing bob to always take the odd indexed elements and vice-versa
         return true;
 
         // int n = piles.size();
