@@ -11,7 +11,7 @@ public:
                 power -= tokens[lo++];
                 ++score;
             } else {
-                if(score > 0) { // score can't go to negative
+                if(score > 0) { // score >= 1
                     power += tokens[ri];
                     --score;
                 }
