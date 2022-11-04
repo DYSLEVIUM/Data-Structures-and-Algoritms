@@ -1,20 +1,19 @@
 class Solution {
 public:
     string reverseVowels(string s) {
-      unordered_set<char> se({'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U'});
+        unordered_set<char> vowels{'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        int n = s.size();
 
-      int n = s.length();
-      deque<int> dq;
-      for(int i = 0; i < n; ++i) if(se.find(s[i]) != se.end()) dq.push_back(i);
-      
-      while(dq.size() > 1){
-        int fr = dq.front();
-        int bk = dq.back();
-        dq.pop_front(), dq.pop_back();
-        
-        swap(s[fr], s[bk]);
-      }
-      
-      return s;
+        int lo = 0, hi = n - 1;
+        while(lo < hi) {
+            while(lo < n && !vowels.count(s[lo])) ++lo;
+            while(hi >= 0 && !vowels.count(s[hi])) --hi;
+
+            if(lo >= hi) break;
+            
+            swap(s[lo++], s[hi--]);
+        }
+
+        return s;
     }
 };
