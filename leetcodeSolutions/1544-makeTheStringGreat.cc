@@ -1,11 +1,10 @@
 class Solution {
 public:
     string makeGood(string s) {
-        int n = s.size();
         string ans;
-        for(int i = 0; i < n; ++i) {
-            if(!ans.empty() && abs(ans.back() - s[i]) == abs('A' - 'a')) ans.pop_back();
-            else ans += s[i];
+        for(char & ch : s) {
+            if(!ans.empty() && abs(ans.back() - ch) == abs('A' - 'a')) ans.pop_back();
+            else ans += ch;
         }
 
         return ans;
