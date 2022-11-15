@@ -13,20 +13,15 @@ public:
 
         vector<int> vis(n);
         auto dfs = [&](const auto & dfs, const int & node){
-            if(vis[node]) return 0;
+            if(vis[node]) return ;
             vis[node] = 1;
-
-            int curr = 0;
-            for(int & neighbour : gr[node]) curr += dfs(dfs, neighbour);
-
-            return 1 + curr;
+            for(int & neighbour : gr[node]) dfs(dfs, neighbour);
         };
 
-        int cnt = 0;
+        int ans = 0;
         for(int i = 0; i < n; ++i) {
-            // keeping the ith node and removing all the other nodes
-            cnt += max(0, dfs(dfs, i) - 1); // if we only had one node in the component, we won't do anything
+            if(!vis[i]) dfs(dfs, i), ++ans;
         }
-        return cnt;
+        return n - ans;
     }
 };
