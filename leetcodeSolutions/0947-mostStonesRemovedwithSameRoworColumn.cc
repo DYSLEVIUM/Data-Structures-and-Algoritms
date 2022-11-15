@@ -18,10 +18,10 @@ public:
             for(int & neighbour : gr[node]) dfs(dfs, neighbour);
         };
 
-        int ans = 0;
+        int comp = 0;
         for(int i = 0; i < n; ++i) {
-            if(!vis[i]) dfs(dfs, i), ++ans;
+            if(!vis[i]) dfs(dfs, i), ++comp;
         }
-        return n - ans;
+        return n - comp;
     }
 };
