@@ -1,17 +1,16 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
-      unordered_map<char, int> mp;
-      for(char& ch: s) ++mp[ch];
+        static constexpr int CHAR_SET = 256;
+        
+        vector<int> fa(CHAR_SET);
+        for(char & ch : s) ++fa[ch];
 
-      bool exists_odd = false;
-      int ans = 0;
-      for(auto& [ch, cnt]: mp){
-        ans += 2 * (cnt / 2);
-        if(cnt & 1) exists_odd = true;
-      }
-      
-      if(ans %2 == 0 && exists_odd) ++ans;
-      return ans;
+        int cnt = 0;
+        bool contains_odd = false;
+        for(int i = 0; i < CHAR_SET; ++i) 
+            contains_odd |= fa[i] & 1, cnt += (fa[i] >> 1);
+
+        return (cnt << 1) + contains_odd;
     }
 };
