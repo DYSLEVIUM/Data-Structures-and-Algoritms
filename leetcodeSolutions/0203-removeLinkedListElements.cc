@@ -18,9 +18,7 @@ public:
         ListNode * node = head, * prev = nullptr;
         while(node) {
             while(node && node->val == val) node = node->next;
-            
             if(prev) prev->next = node;
-
             prev = node;
             if(node) node = node->next;
         }
