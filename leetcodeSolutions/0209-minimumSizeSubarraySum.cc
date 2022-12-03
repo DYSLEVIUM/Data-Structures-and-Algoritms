@@ -1,6 +1,24 @@
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
+        int n = nums.size();
+        static constexpr int INF = 0x3f3f3f3f;
+
+        int ans = INF, sum = 0;
+        for(int l = 0, r = 0; r < n; ++r) {
+            sum += nums[r];
+            while(sum >= target) {
+                ans = min(ans, r - l + 1);
+                sum -= nums[l++];
+            }
+        }
+        return ans == INF ? 0 : ans;
+    }
+};
+
+class Solution1 {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
       int n = nums.size();
 
       auto get_max_sum = [&nums, &n](int window){
