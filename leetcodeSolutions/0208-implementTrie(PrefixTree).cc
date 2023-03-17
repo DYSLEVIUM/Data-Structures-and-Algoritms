@@ -58,6 +58,7 @@ public:
 
     ~Trie() {
         delete(root);
+        root = nullptr;
     }
 };
 
