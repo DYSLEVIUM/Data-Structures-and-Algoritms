@@ -18,7 +18,7 @@ public:
         //     ans = min(ans, n - count);
         // }
 
-        // sliding window answer
+        // sliding window answer, this is faster as it runs for O(n), but the overall time complexity is still O(nlogn)
         int right_pos = 0;
         for(int i = 0; i < unique.size(); ++i) {
             while(right_pos < unique.size() && unique[i] + n > unique[right_pos]) {
