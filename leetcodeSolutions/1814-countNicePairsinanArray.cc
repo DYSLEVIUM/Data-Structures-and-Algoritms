@@ -16,10 +16,8 @@ public:
         for(const int & num : nums) {
             int key = num - rev(num);
 
-            ans += mp[key];
+            ans += mp[key]++;
             ans %= MOD;
-
-            ++mp[key];
         }
 
         return ans;
