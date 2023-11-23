@@ -1,37 +1,43 @@
 class Solution {
 public:
     vector<bool> checkArithmeticSubarrays(vector<int>& nums, vector<int>& l, vector<int>& r) {
-        auto check = [&nums](const int& l_idx, const int& r_idx){
-            auto [minn, maxx] = minmax_element(nums.begin() + l_idx, nums.begin() + r_idx + 1);
+        cin.tie(nullptr)->sync_with_stdio(false);
 
-            if(*minn == *maxx) return true;
+        auto check = [&nums](const int & le, const int & ri){
+            const auto & [minn, maxx] = minmax_element(nums.begin() + le, nums.begin() + ri + 1);
 
-            int curr_len = r_idx - l_idx + 1;
+            if(*maxx == *minn) { // all elements are same
+                return true;
+            }
 
-            //  if the common differece is not a integer
-            if((*maxx - *minn) % (curr_len - 1)) return false;
-            int comm_diff = (*maxx - *minn) / (curr_len - 1);
-                
-            //  using the formula: a_n = a_0 + (n - 1) / d
+            int sz = ri - le + 1;
+            if((*maxx - *minn) % (sz - 1)) { // (al - a1) = a + (n - 1)d - a = (n - 1)d => (al - a1) % d === 0; checking for enough elements
+                return false;
+            }
+
             unordered_set<int> se;
-            for(int i = l_idx; i <= r_idx; ++i) {
-                //  if the number is not divisible by comm_diff
-                if((nums[i] - *minn) % comm_diff) return false;
-                
-                int pos = ((nums[i] - *minn) / comm_diff) + 1;
-                if(se.find(pos) != se.end()) return false;
+            int d = (*maxx - *minn) / (sz - 1);
+            for(int i = le; i <= ri; ++i) {
+                if((nums[i] - *minn) % d) {
+                    return false;
+                }
+
+                int pos = ((nums[i] - *minn) / d);
+                if(se.count(pos)) {
+                    return false;
+                }
                 se.insert(pos);
             }
-            
+
             return true;
-        };        
-        
+        };
+
         int m = l.size();
         vector<bool> ans(m);
         for(int i = 0; i < m; ++i) {
-            ans[i] = check(l[i], r[i]);   
+            ans[i] = check(l[i], r[i]);
         }
-        
+
         return ans;
     }
 };
