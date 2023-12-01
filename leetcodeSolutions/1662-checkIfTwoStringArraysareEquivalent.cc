@@ -21,9 +21,6 @@ public:
         }
 
         // final check of reaching the end
-        bool is_valid = i == word1.size() && j == word2.size();
-        is_valid &= !ii && !jj;
-
-        return is_valid;
+        return i == word1.size() && j == word2.size();
     }
 };
