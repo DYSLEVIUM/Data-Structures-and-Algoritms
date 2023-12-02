@@ -19,17 +19,10 @@ public:
 
             bool ok = true;
             for(int i = 0; i < CHAR_SET; ++i) {
-                if(fa[i] < te[i]) {
-                    ok = false;
-                    break;
-                }
+                ok &= fa[i] >= te[i];
             }
 
-            if(!ok) {
-                continue;
-            }
-
-            ans += word.size();
+            ans += ok * word.size();
         }
 
         return ans;
