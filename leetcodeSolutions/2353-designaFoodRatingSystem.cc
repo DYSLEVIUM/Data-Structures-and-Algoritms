@@ -7,8 +7,6 @@ auto cmp = [](const PIS & lhs, const PIS & rhs){
     return lhs.first > rhs.first;
 };
 
-using SPIS = set<PIS, decltype(cmp)>;
-
 class FoodRatings {
 public:
     FoodRatings(const vector<string> & foods, const vector<string> & cuisines, const vector<int> & ratings) {
@@ -17,7 +15,8 @@ public:
         int n = foods.size();
         for(int i = 0; i < n; ++i) {
             foodToCuisine[foods[i]] = cuisines[i];
-            changeRating(foods[i], ratings[i]);
+            foodRating[foods[i]] = ratings[i];
+            highestRatedCuisine[cuisines[i]].insert({ratings[i], foods[i]});
         }
     }
     
@@ -25,10 +24,8 @@ public:
         string cuisine = foodToCuisine[food];
 
         auto oldIter = highestRatedCuisine[cuisine].find({foodRating[food], food});
-        if(oldIter != highestRatedCuisine[cuisine].end()) {
-            highestRatedCuisine[cuisine].erase(oldIter);
-        }
-        
+        highestRatedCuisine[cuisine].erase(oldIter);
+
         foodRating[food] = newRating;
         highestRatedCuisine[cuisine].insert({newRating, food});
     }
@@ -40,6 +37,8 @@ public:
 private:
     unordered_map<string, string> foodToCuisine;
     unordered_map<string, int> foodRating;
+
+    using SPIS = set<PIS, decltype(cmp)>;
     unordered_map<string, SPIS> highestRatedCuisine;
 };
 
