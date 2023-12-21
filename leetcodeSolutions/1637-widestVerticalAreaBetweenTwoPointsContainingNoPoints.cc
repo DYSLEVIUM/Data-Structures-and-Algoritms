@@ -1,14 +1,17 @@
 class Solution {
 public:
     int maxWidthOfVerticalArea(vector<vector<int>>& points) {
-        sort(points.begin(),points.end(), [](const vector<int>& a, const vector<int>& b){
-            if(a[0]==b[0]) return a[1]<b[1];
-            return a[0]<b[0];
+        cin.tie(nullptr)->sync_with_stdio(false);
+
+        sort(points.begin(), points.end(), [](const vector<int> & lhs, const vector<int> & rhs){
+            return lhs[0] < rhs[0];
         });
-        
-        int maxHoriDist = INT_MIN;
-        for(int i=0;i<points.size()-1;++i) maxHoriDist = max(maxHoriDist, points[i+1][0]-points[i][0]);
-        
-        return maxHoriDist;
+
+        int ans = 0;
+        for(int i = 1; i < points.size(); ++i) {
+            ans = max(ans, points[i][0] - points[i - 1][0]);
+        }
+
+        return ans;
     }
 };
