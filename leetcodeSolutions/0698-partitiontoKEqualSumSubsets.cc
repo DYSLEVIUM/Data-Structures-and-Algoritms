@@ -5,12 +5,14 @@ public:
     bool canPartitionKSubsets(const vector<int> & nums, const int & k) {
         cin.tie(nullptr)->sync_with_stdio(false);
 
+        constinit static int INF = 0x3f3f3f;
+
         const int n = nums.size();
         if (n < k) {
             return false;
         }
 
-        int sum = 0, maxx = -0x3f3f3f;
+        int sum = 0, maxx = -INF;
         for (int i = 0; i < n; ++i) {
             sum += nums[i];
             maxx = max(maxx, nums[i]);
