@@ -17,7 +17,7 @@ public:
             int node, cost, stops;
         };
 
-        // dijkstra's implementation, O(V²)b better use BFS to find shortest path in O(V+E)
+        // dijkstra's implementation, O(V²) better use BFS to find shortest path in O(V+E)
         auto heap_compare = [](const Route & lhs, const Route & rhs){
             return lhs.cost < rhs.cost;
         };
