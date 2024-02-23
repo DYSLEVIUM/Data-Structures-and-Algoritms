@@ -94,7 +94,7 @@ inline void solve() {
     Lazy Dijkstra
       Maintain a 'dist' array where the distance to every node is positive infinity. Mark the distance to the start node 's' to be 0.
 
-      Maintain a PQ of of (nodeIndex, distance) pairs which tell us which node to visit next based on sorted min value.
+      Maintain a PQ of (nodeIndex, distance) pairs which tell us which node to visit next based on sorted min value.
 
       Insert (s, 0) into the PQ and loop while PQ is not empty pulling out the next most promising (nodeIndex, distance) pair.
 
