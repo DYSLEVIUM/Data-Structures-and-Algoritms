@@ -16,7 +16,7 @@ class DSU {
 
   T find(const T& node) {
     //  path compression
-    return this->parent[node] = (this->parent[node] == node ? node : this->find(this->parent[node]));
+    return this->parent[node] = this->parent[node] == node ? node : this->find(this->parent[node]);
   }
 
   void merge(T node_1, T node_2) {
