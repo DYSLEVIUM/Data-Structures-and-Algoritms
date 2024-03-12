@@ -8,6 +8,13 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
     ListNode* removeZeroSumSublists(ListNode* head) {
@@ -28,8 +35,26 @@ public:
         while(node) {
             sum += node->val;
             node->next = mp[sum]->next;
+
+            // cleaning memory
+            {
+                ListNode * temp = node->next;
+                ListNode * target = mp[sum]->next;
+                while(temp != target) {
+                    ListNode * next = temp->next;
+    
+                    delete temp;
+                    temp = next;
+                }
+            }
+            
             node = node->next;
         }
+
+        head = dummy->next;
+
+        // delete dummy;
+        // dummy = nullptr;
 
         return dummy->next;
     }
