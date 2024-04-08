@@ -15,14 +15,9 @@ public:
         }
 
         for(const int & sandwich: sandwiches) {
-            if(sandwich && !req[1]) {
-                return req[0];
+            if(!req[sandwich]) { // if there are no one, to take that sandwich, other remaining won't get it, as we can't get past this
+                return req[!sandwich];
             }
-
-            if(!sandwich && !req[0]) {
-                return req[1];
-            }
-
             --req[sandwich];
         }
 
