@@ -18,11 +18,11 @@ auto _ = [](){
 class Solution {
 public:
     ListNode* modifiedList(const vector<int> & nums, const ListNode * const head) {
-        unordered_set<int> nums_se(nums.begin(), nums.end());
+        const unordered_set<int> nums_se(nums.begin(), nums.end());
 
-        ListNode dummy(0, const_cast<ListNode *>(head));
+        const ListNode dummy(0, const_cast<ListNode *>(head));
 
-        ListNode * prev = &dummy;
+        ListNode * prev = const_cast<ListNode *>(&dummy);
         const ListNode * curr = const_cast<ListNode *>(head);
         while(curr) {
             const ListNode * next = curr->next;
