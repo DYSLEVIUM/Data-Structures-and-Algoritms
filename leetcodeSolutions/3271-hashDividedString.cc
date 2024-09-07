@@ -6,8 +6,9 @@ auto _ = [](){
 
 class Solution {
 public:
-    string stringHash(const string & s, const int & k) {
-        int n = s.size();
+    string stringHash(const string & s, const int & k) const {
+        const int n = s.size();
+        const int OFFSET = 'a' * k;
 
         const auto hash_fn = [](const int & sum){
             return sum % 26;
@@ -15,22 +16,17 @@ public:
 
         string hash;
         hash.reserve(n / k);
-
-        const int offset = 'a' * k;
         
-        for(int i = 0, sum = 0; const char & ch: s) {
-            sum += ch;
-
-            if(++i != k) {
-                continue;
+        for(int i = 0; i < n; i += k) {
+            int sum = 0;
+            for(int j = 0; j < k; ++j) {
+                sum += s[i + j];
             }
             
             hash.push_back(
-                hash_fn(sum - offset) 
+                hash_fn(sum - OFFSET) 
                 + 'a'
             );
-            
-            i = sum = 0;
         }
 
         return hash;
