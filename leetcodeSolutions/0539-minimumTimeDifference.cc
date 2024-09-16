@@ -1,26 +1,31 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    int findMinDifference(vector<string>& timePoints) {
-      int n = timePoints.size(), total = 24 * 60;;
-      vector<int> res(n);
-      transform(timePoints.begin(), timePoints.end(), res.begin(), [&](const string &s){
-        int hrs = s[0] * 10 + s[1];
-        int mins = s[3] * 10 + s[4];
-        
-        return (hrs * 60 + mins) % total;
-      });
-      sort(res.begin(), res.end());
-      
-      int minn = INT_MAX;
-      for(int i = 1; i < n; ++i) {
-        minn = min(minn, res[i] - res[i - 1]); // looking backwards
-        minn = min(minn, (res[i - 1] - res[i] + total) % total); // looking forwards
-      }
-      
-      // edge case: last with first
-      minn = min(minn, (res[0] - res[n - 1] + total) % total);
-      minn = min(minn, res[n - 1] - res[0]);
-      
-      return minn;
+    int findMinDifference(vector<string> & timePoints) {
+        constinit static const int TOTAL_MINUTES = 60 * 24;
+
+        int n = timePoints.size();
+
+        auto normalize = [](string & time){
+            return stoi(time.substr(0, 2)) * 60 + stoi(time.substr(3));
+        };
+
+        sort(timePoints.begin(), timePoints.end());
+
+        int minn = TOTAL_MINUTES;
+        for(int i = 1; i < n; ++i) {
+            int prev = normalize(timePoints[i - 1]), curr = normalize(timePoints[i]);
+            minn = min(minn, curr - prev);
+        }
+
+        // edge case, last with first
+        minn = min(minn, TOTAL_MINUTES - (normalize(timePoints[n - 1]) - normalize(timePoints[0])));
+
+        return minn;
     }
 };
