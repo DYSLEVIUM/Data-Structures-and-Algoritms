@@ -1,21 +1,35 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    string largestNumber(vector<int>& nums) {
-        sort(nums.begin(), nums.end(), [](const int &n1, const int &n2){
-            string s1 = to_string(n1), s2 = to_string(n2);
-            return s1 + s2 > s2 + s1;
+    string largestNumber(vector<int> & nums) {
+        int n = nums.size();
+
+        vector<string> nums_str(n);
+        for(int i = 0; i < n; ++i) {
+            nums_str[i] = to_string(nums[i]);
+        }
+
+        sort(nums_str.begin(), nums_str.end(), [](auto & lhs, auto & rhs){
+            string x = lhs + rhs;
+            string y = rhs + lhs;
+            
+            return x > y;
         });
-        
-        string ans = "";
-        for(auto &num : nums) {
-            ans += to_string(num);
+
+        if(nums_str[0] == "0") {
+            return nums_str[0];
         }
-        
-        reverse(ans.begin(), ans.end());
-        while(ans.length() > 1 && ans.back() == '0') {
-            ans.pop_back();
+
+        string ans;
+        for(auto & num_str: nums_str) {
+            ans += num_str;
         }
-        
-        return string(ans.rbegin(), ans.rend());
+
+        return ans;
     }
 };
