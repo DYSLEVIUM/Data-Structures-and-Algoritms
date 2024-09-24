@@ -47,7 +47,7 @@ class Sparse_Table {
     }
 
     T ans = this->_identity;
-    for (size_t j = this->log_values[ri - le + 1]; j >= 0; --j) {
+    for (int j = this->log_values[ri - le + 1]; j >= 0; --j) {
       if ((1 << j) <= ri - le + 1) {
         ans = this->_fun(ans, this->_table[le][j]);
         le += 1 << j;
