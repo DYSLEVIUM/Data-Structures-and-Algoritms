@@ -5,10 +5,10 @@ class Sparse_Table {
   vector<T> log_values;
   size_t _size;
   T max_log;
-  T _identity;  //  identity element e * a = a * e = a
+  T _identity;  //  identity element, e: e * a = a * e = a
   T(*_fun)
   (const T&, const T&);
-  bool _is_idempotent;
+  bool _is_idempotent; //  idempotent property: a * a = a
 
   void build() {
     //  we take two numbers from previous column, i and i+(2^(j-1))
