@@ -48,12 +48,12 @@ class Sparse_Table {
 
     T ans = this->_identity;
     for (int j = this->log_values[ri - le + 1]; j >= 0; --j) {
-      if ((1 << j) <= ri - le + 1) {
-        ans = this->_fun(ans, this->_table[le][j]);
-        le += 1 << j;
+      if ((1 << j) > ri - le + 1) {
+        continue ;
       }
-
-      if (j == 0) break;
+     
+      ans = this->_fun(ans, this->_table[le][j]);
+      le += 1 << j;
     }
 
     return ans;
