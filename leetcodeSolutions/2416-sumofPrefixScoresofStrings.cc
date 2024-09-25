@@ -38,7 +38,7 @@ public:
         root = nullptr;
     }
 
-    int insert(const string & s) {
+    void insert(const string & s) {
         if(!root) {
             root = new TrieNode();
         }
@@ -49,19 +49,18 @@ public:
                 node->nodes[ch - BASE_CHAR] = new TrieNode();
             }
 
-            ++node->children;
             node = node->nodes[ch - BASE_CHAR];
+            ++node->children;
         }
-
-        return ++node->children;
     }
 
     int count(const string & s) {
+        int pref = 0;
+
         if(!root) {
-            return 0;
+            return pref;
         }
 
-        int cnt = 0;
         TrieNode * node = root;
         for(auto & ch : s) {
             if(!node->nodes[ch - BASE_CHAR]) {
@@ -69,10 +68,10 @@ public:
             }
 
             node = node->nodes[ch - BASE_CHAR];
-            cnt += node->children;
+            pref += node->children;
         }
 
-        return cnt;
+        return pref;
     }
 };
 
