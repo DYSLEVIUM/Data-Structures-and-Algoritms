@@ -12,6 +12,7 @@ public:
 
         int n = price.size();
 
+        int total_needs = 0;
         for(int i = 0; i < n; ++i) {
             vector<int> curr(n + 1);
 
@@ -19,16 +20,15 @@ public:
             curr[n] = price[i];
 
             special.push_back(curr);
+
+            total_needs += needs[i];
         }
 
         int ns = special.size();
 
-        int total_needs = accumulate(needs.begin(), needs.end(), 0);
-
-        vector<unordered_map<int, int>> dp(ns);
-        
         // make bitmask of how many items used from needs, and take that as state for dp
         // remaining_needs is not a state, as it is a function of mask itself
+        vector<unordered_map<int, int>> dp(ns);
         auto recur = [&](
             const auto & recur,
             const int & remaining_needs,
@@ -62,6 +62,7 @@ public:
                 }
 
                 new_mask |= new_need << (ENCODING_SIZE * i);
+
                 added_needs += special[idx][n - 1 - i];
             }
 
