@@ -6,20 +6,18 @@ auto _ = [](){
 
 class Solution {
 public:
-    bool canArrange(vector<int> arr, const int & k) {
-        unordered_map<int, int> mp;
+    bool canArrange(const vector<int> & arr, const int & k) {
+        vector<int> freq(k, 0);
         for(auto & num : arr) {
-            ++mp[(num % k + k) % k];
+            ++freq[(num % k + k) % k];
         }
 
-        for(auto & num : arr) {
-            int rem = (num % k + k) % k;
+        if(freq[0] & 1) {
+            return false;
+        }
 
-            if(!rem) {
-                if(mp[rem] & 1) {
-                    return false;
-                }
-            } else if(mp[rem] != mp[k - rem]) {
+        for(int i = 1; i < k; ++i) {
+            if(freq[i] != freq[k - i]) {
                 return false;
             }
         }
