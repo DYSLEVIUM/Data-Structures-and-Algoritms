@@ -1,3 +1,9 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
     int minSubarray(vector<int>& nums, const int & p) {
