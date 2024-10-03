@@ -25,7 +25,7 @@ public:
         unordered_map<int, int> mp;
         mp[0] = -1;
 
-        int minn = INF, curr = 0;
+        int minn = n, curr = 0;
         for(int i = 0; i < n; ++i) {
             curr += nums[i];
             curr %= p;
@@ -38,6 +38,6 @@ public:
             mp[curr] = i;
         }
 
-        return minn == INF ? -1 : minn;
+        return minn == n ? -1 : minn;
     }
 };
