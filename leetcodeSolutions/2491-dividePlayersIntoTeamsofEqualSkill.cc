@@ -1,21 +1,41 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    long long dividePlayers(vector<int>& skill) {
+    long long dividePlayers(vector<int> & skill) {
         int n = skill.size();
 
-        sort(skill.begin(), skill.end());
+        int teams = n >> 1;
 
-        long long ans = 0;
-
-        int i = 0, j = n - 1;
-        int prev = skill.front() + skill.back();        
-        while(i < j) {
-            if(prev != skill[i] + skill[j]) {
-                return -1;
-            }
-            ans += 1LL * skill[i++] * skill[j--];
+        int sum = 0;
+        for(int i = 0; i < n; ++i) {
+            sum += skill[i];
         }
 
-        return ans;
+        int target = sum / teams;
+        if(sum != target * teams) {
+            return -1;
+        }
+
+        unordered_map<int, int> mp;
+        for(int i = 0; i < n; ++i) {
+            ++mp[skill[i]];
+        }
+
+        long long chemistry = 0;
+        for(int i = 0; i < n; ++i) {
+            int need = abs(skill[i] - target); // skill is always positive
+            if(--mp[need] < 0) {
+                return -1;
+            }
+            
+            chemistry += 1LL * skill[i] * need;
+        }
+
+        return chemistry >> 1;
     }
 };
