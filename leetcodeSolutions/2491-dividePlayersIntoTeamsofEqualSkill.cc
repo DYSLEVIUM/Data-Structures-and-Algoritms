@@ -28,7 +28,7 @@ public:
 
         long long chemistry = 0;
         for(int i = 0; i < n; ++i) {
-            int need = abs(skill[i] - target); // skill is always positive
+            int need = target - skill[i];
             if(--mp[need] < 0) {
                 return -1;
             }
