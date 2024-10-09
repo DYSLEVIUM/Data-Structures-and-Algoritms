@@ -1,19 +1,26 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    int minAddToMakeValid(string s) {
-        stack<int> st;
-        
-        int ans = 0;
-        for(const auto & x: s){
-            if(x == '(') st.push('(');
-            else {
-                if(!st.empty() && st.top() == '(') st.pop();
-                else ++ans; //  we add a bracket any time we it becomes invalid
+    int minAddToMakeValid(string & s) {
+        int open = 0, cnt = 0;
+        for(auto & ch : s) {
+            if(ch == '(') {
+                ++open;
+                continue;
+            }
+            
+            if(open) {
+                --open;
+            } else {
+                ++cnt;
             }
         }
-        
-        ans += st.size(); //  for multiple ( at end
-        
-        return ans;
+
+        return open + cnt;
     }
 };
