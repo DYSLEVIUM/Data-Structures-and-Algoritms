@@ -1,23 +1,32 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
     int countMaxOrSubsets(vector<int>& nums) {
-        int n = nums.size(), ans = 0, maxx = INT_MIN;
-        auto dfs = [&](const auto &dfs, const int &idx, const int &orr){
+        static const int INF = 0x3f3f3f3f;
+
+        const int n = nums.size(), maxx = accumulate(nums.begin(), nums.end(), 0, bit_or());
+
+        vector<unordered_map<int, int>> dp(n);
+        auto recur = [&](const auto & recur, const int & idx, const int & mask, const int & orr) -> int {
             if(idx == n) {
-                if(orr == maxx) {
-                    ++ans;
-                } else if(orr > maxx) {
-                    ans = 1;
-                    maxx = orr;
-                }
-                return ;
+                return maxx == orr;
             }
 
-            dfs(dfs, idx + 1, orr); // don't take
-            dfs(dfs, idx + 1, orr | nums[idx]); // take
-        };
-        recur(recur, 0, 0);
+            if(dp[idx].count(mask)) {
+                return dp[idx][mask];
+            }
 
-        return ans;
+            int take = recur(recur, idx + 1, mask | (1 << idx), orr | nums[idx]);
+            int not_take = recur(recur, idx + 1, mask, orr);
+
+            return dp[idx][mask] = take + not_take;
+        };
+
+        return recur(recur, 0, 0, 0);
     }
 };
