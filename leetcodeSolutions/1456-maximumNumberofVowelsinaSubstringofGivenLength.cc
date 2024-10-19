@@ -1,17 +1,25 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    int maxVowels(string s, int k) {
-        unordered_set<char> se{'a', 'e', 'i', 'o', 'u'};
-        int cnt = 0, maxx = 0;
-        for(int i = 0; i < k - 1; ++i) {
-            cnt += se.count(s[i]);
+    int maxVowels(string & s, const int & k) {
+        static const unordered_set<char> VOWELS{'a', 'e', 'i', 'o', 'u'};
+
+        const int n = s.size();
+
+        int cnt = 0;
+        for(int i = 0; i < k; ++i) {
+            cnt += VOWELS.count(s[i]);
         }
 
-        for(int i = k - 1; i < s.size(); ++i) {
-            cnt += se.count(s[i]);
+        int maxx = cnt;
+        for(int i = k; i < n; ++i) {
+            cnt += VOWELS.count(s[i]) - VOWELS.count(s[i - k]);
             maxx = max(maxx, cnt);
-
-            cnt -= se.count(s[i - k + 1]);
         }
 
         return maxx;
