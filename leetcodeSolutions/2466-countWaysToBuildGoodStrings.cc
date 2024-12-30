@@ -21,6 +21,6 @@ public:
             return dp[end];
         };
 
-        return (MOD + (countGoodStrings(high) % MOD) - (countGoodStrings(low - 1) % MOD)) % MOD;
+        return (MOD + countGoodStrings(high) - countGoodStrings(low - 1)) % MOD;
     }
 };
