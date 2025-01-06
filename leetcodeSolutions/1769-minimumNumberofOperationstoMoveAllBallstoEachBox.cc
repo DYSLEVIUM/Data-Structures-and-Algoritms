@@ -1,4 +1,4 @@
-#pragma GCC("03", "optimize-loops")
+#pragma GCC optimize("O3", "unroll-loops")
 
 auto _ = [](){
     return cin.tie(nullptr)->sync_with_stdio(false);
