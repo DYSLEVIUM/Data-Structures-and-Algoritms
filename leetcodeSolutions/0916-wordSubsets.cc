@@ -1,33 +1,42 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
-        const int CHAR_SET = 26;
-        vector<int> mx_cnt(CHAR_SET);
-        for(auto &w2 : words2) {
-            vector<int> cnt(CHAR_SET);
-            for(auto &ch: w2) {
-                ++cnt[ch - 'a'];
-                mx_cnt[ch - 'a'] = max(mx_cnt[ch - 'a'], cnt[ch - 'a']);
+    vector<string> wordSubsets(const vector<string> & words1, const vector<string> & words2) {
+        static constinit const int CHAR_SET = 26;
+
+        array<int, CHAR_SET> mx_cnt{};
+        for(const auto & w2 : words2) {
+            array<int, CHAR_SET> cnt{};
+            for(const auto & ch: w2) {
+                mx_cnt[ch - 'a'] = max(mx_cnt[ch - 'a'], ++cnt[ch - 'a']);
             }
         }
         
         vector<string> res;
-        for(auto &w1: words1) {
-            vector<int> cnt(CHAR_SET);
-            for(auto &ch : w1) {
+        for(const auto & w1: words1) {
+            array<int, CHAR_SET> cnt{};
+            for(const auto &ch : w1) {
                 ++cnt[ch - 'a'];
             }
             
-            bool all_chars_come = true;
+            bool all_char_comes = true;
             for(int i = 0; i < CHAR_SET; ++i) {
                 if(cnt[i] < mx_cnt[i]) {
-                    all_chars_come = false;
+                    all_char_comes = false;
+                    break;
                 }
             }
             
-            if(all_chars_come) {
-                res.push_back(w1);
+            if(!all_char_comes) {
+                continue;
             }
+            
+            res.push_back(w1);
         }
         
         return res;
