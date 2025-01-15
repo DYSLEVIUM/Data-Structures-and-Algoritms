@@ -1,11 +1,20 @@
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
 public:
-    int minimizeXor(int num1, int num2) {
-        int cnt = __builtin_popcount(num2);
+    int minimizeXor(const int & num1, const int & num2) {
+        static constinit const int BITS = 31;
 
+        int cnt = __builtin_popcount(num2);
+    
         int ans = 0;
-        // making the MSB's 0
-        for(int i = 31; i >= 0; --i) {
+
+        // start making 0 for ans based on num1
+        for(int i = BITS; i >= 0; --i) {
             int mask = 1 << i;
             if((num1 & mask) && cnt) {
                 ans |= mask;
@@ -13,12 +22,12 @@ public:
             }
         }
 
-        // filling extra 1's from the back to minimize xor
-        for(int i = 0; i <= 31; ++i) {
+        // rest of the 1's are going from first if available
+        for(int i = 0; i <= BITS; ++i) {
             int mask = 1 << i;
-            if((ans & mask) == 0 && cnt) {
+            if(!(ans & mask) && cnt) {
                 ans |= mask;
-                --cnt;
+                --cnt; 
             }
         }
 
