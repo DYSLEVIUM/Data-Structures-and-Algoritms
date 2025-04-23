@@ -1,79 +1,55 @@
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+#pragma GCC optimize("O3", "unroll-loops")
 
-template <typename T> using pbds_set = __gnu_pbds::tree<T, __gnu_pbds::null_type, std::less_equal<T>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update>;  // find_by_order, order_of_key
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
 
+template <typename T>
+class FenwickTree{
+    size_t size;
+    vector<T> bit;
+
+    public:
+    FenwickTree(const int & sz): size(sz), bit(sz) {    }
+
+    void update(int idx, const T & delta) {
+        ++idx;
+
+        while(idx < bit.size()) {
+            bit[idx] += delta;
+            idx += (idx & -idx);
+        }
+    }
+
+    T query(int idx) {
+        ++idx;
+
+        T val = 0;
+        while(idx > 0) {
+            val += bit[idx];
+            idx -= (idx & -idx);
+        }
+
+        return val;
+    }
+};
 
 class Solution {
 public:
     vector<int> countSmaller(vector<int>& nums) {
-      //  checking if non-decreasing
-      int j=1;
-      while(j<n && nums[j-1]<=nums[j]) j++;
-      if(j==n) return counts; 
+        static constinit const int TRANSLATE = 1e4 + 1;
+        
+        const int n = nums.size();
 
-      //  checking if non-increasing and updating as required
-      j = n - 2;
-      while(j>-1 && nums[j]>=nums[j+1]){
-       if(nums[j]>nums[j+1]) counts[j] = n-j-1;
-       if(nums[j]==nums[j+1]) counts[j] = counts[j+1];
-       --j;
-      }
-      
-      if(j==-1) return counts;
-      
-      //  pbds implementation
-//       pbds_set<int> se;
-     
-//       int n = nums.size();
-//       vector<int> counts(n, 0);
-      
-//       for(int i = n-1; i>=0; --i) {
-//         se.insert(nums[i]);
-//         counts[i] = se.order_of_key(nums[i]);
-//       }
-      
-//       return counts;
-      
-      // bst implementation
-      class Node {
-       int data;
-       Node *left, *right;
-       int left_count;
+        vector<int> ans(n);
+        FenwickTree<int> bit(TRANSLATE << 1);
+        for(int i = n - 1; i >= 0; --i) {
+            int new_num = nums[i] + TRANSLATE;
 
-       public:
-         Node(int data): data(data), left(nullptr), right(nullptr), left_count(0) {}
+            ans[i] = bit.query(new_num - 1);
+            bit.update(new_num, 1);
+        }
 
-         int insert(int key) {
-           Node *node = this;
-           Node *ri = nullptr;
-           int cnt = 0;
-
-           while(node){
-             ri = node;
-             if(node->data >= key){
-               ++node->left_count;
-               node = node->left;
-             }else{
-               cnt += 1 + node->left_count;
-               node = node->right;
-             }
-           }
-
-           Node *pos = new Node(key);
-           if(pos->data <= ri->data) ri->left = pos;
-           else ri->right = pos;
-
-           return cnt;
-         }
-      };
-
-      int n = nums.size();
-      vector<int> counts(n, 0);
-      
-      Node* bst = new Node(nums[n-1]);
-      for(int i=n-2;i>=0;--i) counts[i] = bst->insert(nums[i]);
-      
-      return counts;
+        return ans;
     }
 };
