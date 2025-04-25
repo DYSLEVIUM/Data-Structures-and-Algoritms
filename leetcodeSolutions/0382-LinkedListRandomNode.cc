@@ -8,21 +8,44 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+#pragma GCC optimize("O3", "unroll-loops")
+
+auto _ = [](){
+    return cin.tie(nullptr)->sync_with_stdio(false);
+}();
+
 class Solution {
+    ListNode *head;
 public:
-    Solution(ListNode* head) {
-        while(head) {
-            m_nodes.push_back(head);
-            head = head->next;
-        }
-    }
+    Solution(ListNode* head): head(head) {}
     
+    // reservoir sampling
+    /*
+        1. The key point is before we process the N-th element, the probability of each previous N-1 element is equal to each other. This is very important.
+        2. So after processing N-th element, the probability of each previous N-1 element is still equal to each other.
+        3. At this time, the probability of N-th element is 1/N with no doubt, and the rest (1 - 1 / N) = (N - 1) / N will be shared equally by previous N - 1 elements, that is (1 - 1 / N) / (N - 1) = K(N - 1) / N / (N - 1) = 1 / N
+        4. Cost O(N) for getRandom every time
+        5. You may wonder since the time complexity is still O(N), why do we have to spend so much; that is because in the case of streaming data, we cannot traverse all the data to obtain the length, and then traverse the data again.
+    */
     int getRandom() {
-        int randd = rand() % m_nodes.size();
-        return m_nodes[randd]->val;
+        ListNode * node = head;
+
+        ListNode * random_node = nullptr;
+        int i = 0;
+        while(node) {
+            ++i;
+            
+            int prob = rand() % i;
+            if(!prob) {
+                random_node = node;
+            }
+
+            node = node->next;
+        }
+
+        return random_node->val;
     }
-private:
-    vector<ListNode *> m_nodes;
 };
 
 /**
