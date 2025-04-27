@@ -151,5 +151,7 @@ inline void solve() {
     }
   };
 
+  //! incomplete implementation, query is missing
+
   build(1, 0, sz - 1, build);   //  start vertex from 1
 }
