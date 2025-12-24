@@ -179,7 +179,7 @@ class Trie {
                 max_xor |= (1 << i);
             } else {
                 // xor is 0 for this bit, as same bit is there
-                desired = bit; // forced to go, as desired is not not there
+                desired = bit;  // forced to go, as desired is not not there
             }
             node = node->children[desired];
         }
@@ -208,5 +208,5 @@ inline void solve() {
         maxx = max(maxx, rem);
     }
 
-    cout << max(maxx, curr_pref); // complete subarray as xor sum
+    cout << max(maxx, curr_pref);  // complete subarray as xor sum
 }
