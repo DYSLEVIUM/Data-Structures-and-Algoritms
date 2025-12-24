@@ -205,8 +205,8 @@ inline void solve() {
         tr.insert(curr_pref);
 
         ll rem = tr.find(curr_pref);
-        maxx = max({maxx, rem, curr_pref});  // max of prev, rem and curr_pref
+        maxx = max(maxx, rem);
     }
 
-    cout << maxx;
+    cout << max(maxx, curr_pref); // complete subarray as xor sum
 }
